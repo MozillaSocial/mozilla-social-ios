@@ -34,7 +34,7 @@ class DiscoverViewModel: LoadableObject {
                 self.isSearching = term.count >= 3 ? true : false
                 if isSearching {
                     self.store.searchRecommendations(by: term)
-                } else {
+                } else if term.isEmpty {
                     self.store.clearSearch()
                 }
             }
