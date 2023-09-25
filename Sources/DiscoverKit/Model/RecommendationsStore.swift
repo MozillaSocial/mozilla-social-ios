@@ -32,7 +32,8 @@ final class InMemoryRecommendationsStore: RecommendationsStore, ObservableObject
     }
 
     func searchRecommendations(by term: String) {
-        let filteredList = self.storage.filter { $0.title.contains(term) }
+        let lowercasedTerm = term.lowercased()
+        let filteredList = self.storage.filter { $0.title.lowercased().contains(term) }
         recommendations = filteredList
     }
 
