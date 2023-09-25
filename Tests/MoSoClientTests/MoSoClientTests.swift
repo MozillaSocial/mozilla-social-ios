@@ -1,7 +1,11 @@
-import XCTest
-@testable import mozilla_social_ios
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-final class mozilla_social_iosTests: XCTestCase {
+import XCTest
+@testable import MoSoClient
+
+final class MoSoClientTests: XCTestCase {
     func testExample() throws {
         // XCTest Documentation
         // https://developer.apple.com/documentation/xctest

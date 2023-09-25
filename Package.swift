@@ -4,20 +4,37 @@
 import PackageDescription
 
 let package = Package(
-    name: "mozilla-social-ios",
+    name: "MoSoContentKit",
+    defaultLocalization: "en",
+    platforms: [.iOS("16"), .macOS("13")],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "mozilla-social-ios",
-            targets: ["mozilla-social-ios"]),
+        .library(name: "MoSoCore",targets: ["MoSoCore"]),
+        .library(name: "MoSoClient",targets: ["MoSoClient"]),
+        .library(name: "DiscoverKit",targets: ["DiscoverKit"]),
+        .library(name: "ReadingListKit",targets: ["ReadingListKit"]),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "mozilla-social-ios"),
+            name: "MoSoCore"),
         .testTarget(
-            name: "mozilla-social-iosTests",
-            dependencies: ["mozilla-social-ios"]),
+            name: "MoSoCoreTests",
+            dependencies: ["MoSoCore"]),
+        .target(
+            name: "MoSoClient"),
+        .testTarget(
+            name: "MoSoClientTests",
+            dependencies: ["MoSoClient"]),
+        .target(
+            name: "DiscoverKit",
+            dependencies: ["MoSoCore", "MoSoClient"]
+        ),
+        .testTarget(
+            name: "DiscoverKitTests",
+            dependencies: ["DiscoverKit"]),
+        .target(
+            name: "ReadingListKit"),
+        .testTarget(
+            name: "ReadingListKitTests",
+            dependencies: ["ReadingListKit"]),
     ]
 )
