@@ -10,8 +10,14 @@ struct RecommendationsView: View {
 
     var body: some View {
         NavigationStack {
-            ListView(recommendations: recommendations)
-                .navigationDestination(for: Recommendation.self) { RecommendationDetailView(recommendation: $0) }
+            ZStack {
+                Color(.mosoLayerColor1).ignoresSafeArea()
+                ListView(recommendations: recommendations)
+                    .navigationDestination(for: Recommendation.self) {
+                        RecommendationDetailView(recommendation: $0)
+                            .navigationBarTitleDisplayMode(.inline)
+                    }
+            }
         }
         .searchable(text: $viewModel.term)
     }
@@ -27,6 +33,7 @@ struct ListView: View {
                 RecommendationRow(recommendation: recommendation)
             }
         }
+        .listStyle(.plain)
         .navigationTitle("Today's Top Picks")
         .refreshable {
             viewModel.load()

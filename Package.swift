@@ -12,6 +12,7 @@ let package = Package(
         .library(name: "MoSoClient",targets: ["MoSoClient"]),
         .library(name: "DiscoverKit",targets: ["DiscoverKit"]),
         .library(name: "ReadingListKit",targets: ["ReadingListKit"]),
+        .library(name: "DesignKit",targets: ["DesignKit"]),
     ],
     targets: [
         .target(
@@ -26,7 +27,7 @@ let package = Package(
             dependencies: ["MoSoClient"]),
         .target(
             name: "DiscoverKit",
-            dependencies: ["MoSoCore", "MoSoClient"]
+            dependencies: ["MoSoCore", "MoSoClient", "DesignKit"]
         ),
         .testTarget(
             name: "DiscoverKitTests",
@@ -36,5 +37,10 @@ let package = Package(
         .testTarget(
             name: "ReadingListKitTests",
             dependencies: ["ReadingListKit"]),
+        .target(
+            name: "DesignKit"),
+        .testTarget(
+            name: "DesignKitTests",
+            dependencies: ["DesignKit"]),
     ]
 )
