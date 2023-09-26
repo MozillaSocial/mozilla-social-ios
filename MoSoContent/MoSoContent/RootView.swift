@@ -3,24 +3,73 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import DiscoverKit
+import DesignKit
 import ReadingListKit
 import SwiftUI
 
 struct RootView: View {
+    @State private var selection: Tab = .discover
     let configurator: AppConfigurator
 
     var body: some View {
-        TabView {
-            configurator.makeDiscoverTab()
-                .tabItem {
-                    Label("Discover", systemImage: "safari")
-                }
-            ReadingListView()
-                .tabItem {
-                    Label("My List", systemImage: "list.bullet.circle")
-                }
+        TabView(selection: $selection) {
+            Group {
+                configurator.makeDiscoverTab()
+                    .tabItem {
+                        TabIcon(
+                            imageName: selection.discoverImageName,
+                            accessibilityIdentifier: Tab.discover.accessibilityIdentifier
+                        )
+                    }
+                    .tag(Tab.discover)
+
+                ReadingListView()
+                    .tabItem {
+                        TabIcon(
+                            imageName: selection.readingListImageName,
+                            accessibilityIdentifier: Tab.readingList.accessibilityIdentifier
+                        )
+                    }
+                    .tag(Tab.readingList)
+
+            }
+            .toolbar(.visible, for: .tabBar)
+            .toolbarBackground(Color(.mosoLayerColor1), for: .tabBar)
+
         }
-        .accentColor(Color("AccentColor"))
+        .accentColor(Color(.mosoIconColorAccent))
+    }
+}
+
+struct TabIcon: View {
+    let imageName: ImageCatalog
+    let accessibilityIdentifier: String
+    var body: some View {
+        Label(
+            title: { Text("") },
+            icon: { Image(imageName).renderingMode(.template) }
+        ).accessibilityIdentifier(accessibilityIdentifier)
+    }
+}
+
+
+enum Tab {
+    case discover
+    case readingList
+
+    var accessibilityIdentifier: String {
+        switch self {
+            case .discover: return "discover-tab-bar-button"
+            case .readingList: return "readingList-tab-bar-button"
+        }
+    }
+
+    var discoverImageName: ImageCatalog {
+        return self == .discover ? .discoverFill : .discover
+    }
+
+    var readingListImageName: ImageCatalog {
+        return self == .readingList ? .saveFill : .save
     }
 }
 
