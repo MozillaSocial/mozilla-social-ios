@@ -10,8 +10,14 @@ struct RecommendationsView: View {
 
     var body: some View {
         NavigationStack {
-            ListView(recommendations: recommendations)
-                .navigationDestination(for: Recommendation.self) { RecommendationDetailView(recommendation: $0) }
+            ZStack {
+                Color(.mosoLayerColor1).ignoresSafeArea()
+                ListView(recommendations: recommendations)
+                    .navigationDestination(for: Recommendation.self) {
+                        RecommendationDetailView(recommendation: $0)
+                            .navigationBarTitleDisplayMode(.inline)
+                    }
+            }
         }
         .searchable(text: $viewModel.term)
     }
@@ -23,10 +29,15 @@ struct ListView: View {
 
     var body: some View {
         List(recommendations) { recommendation in
-            NavigationLink(value: recommendation) {
+            // Workaround for removing ">"
+            ZStack {
                 RecommendationRow(recommendation: recommendation)
-            }
+                NavigationLink(value: recommendation) {
+                    EmptyView()
+                }.opacity(0)
+            }.listRowBackground(Color(.mosoLayerColor1))
         }
+        .listStyle(.plain)
         .navigationTitle("Today's Top Picks")
         .refreshable {
             viewModel.load()

@@ -20,7 +20,6 @@ struct AsyncImageView: View {
         AsyncContentView(source: loader) { uiImage in
             Image(uiImage: uiImage)
                 .resizable()
-                .cornerRadius(8.0)
         } errorContent: { _ in
             // TODO: we might want to do something different here if the image fails to load
             EmptyView()
