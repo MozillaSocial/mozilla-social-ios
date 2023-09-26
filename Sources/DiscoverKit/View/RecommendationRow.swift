@@ -47,6 +47,7 @@ struct RecommendationRow: View {
         HStack {
             Spacer()
             Image(.save)
+                .renderingMode(.template)
                 .frame(width: 24, height: 24)
                 .padding(.trailing, 16)
             ShareLink(item: recommendation.url) {
