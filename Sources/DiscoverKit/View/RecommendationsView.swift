@@ -29,9 +29,13 @@ struct ListView: View {
 
     var body: some View {
         List(recommendations) { recommendation in
-            NavigationLink(value: recommendation) {
+            // Workaround for removing ">"
+            ZStack {
                 RecommendationRow(recommendation: recommendation)
-            }
+                NavigationLink(value: recommendation) {
+                    EmptyView()
+                }.opacity(0)
+            }.listRowBackground(Color(.mosoLayerColor1))
         }
         .listStyle(.plain)
         .navigationTitle("Today's Top Picks")
