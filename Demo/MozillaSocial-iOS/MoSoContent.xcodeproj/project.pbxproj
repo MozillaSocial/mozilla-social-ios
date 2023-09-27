@@ -48,7 +48,7 @@
 		AA7BDC762AB2571900ACCACF /* MoSoContentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoSoContentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7BDC7A2AB2571900ACCACF /* MoSoContentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoSoContentUITests.swift; sourceTree = "<group>"; };
 		AA7BDC7C2AB2571900ACCACF /* MoSoContentUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoSoContentUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		AA7BDC892AB2578100ACCACF /* MoSoContentKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MoSoContentKit; path = ..; sourceTree = "<group>"; };
+		AA7BDC892AB2578100ACCACF /* MoSoContentKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MoSoContentKit; path = ../..; sourceTree = "<group>"; };
 		AA7BDC8D2AB25C2200ACCACF /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		AA7BDC982AB2C3B700ACCACF /* secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = secrets.xcconfig; sourceTree = "<group>"; };
 		AA7BDC992AB2C54200ACCACF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
