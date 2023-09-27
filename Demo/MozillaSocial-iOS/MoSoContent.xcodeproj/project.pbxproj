@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8AA6BA352AC491E000B93B6C /* secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8AA6BA342AC491E000B93B6C /* secrets.xcconfig */; };
+		8AA6BA372AC496C800B93B6C /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8AA6BA362AC496C800B93B6C /* DesignKit */; };
 		AA7BDC602AB2571800ACCACF /* MoSoContentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7BDC5F2AB2571800ACCACF /* MoSoContentApp.swift */; };
 		AA7BDC642AB2571900ACCACF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA7BDC632AB2571900ACCACF /* Assets.xcassets */; };
 		AA7BDC672AB2571900ACCACF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA7BDC662AB2571900ACCACF /* Preview Assets.xcassets */; };
@@ -39,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8AA6BA342AC491E000B93B6C /* secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = secrets.xcconfig; path = ../../../../MoSoContent/MoSoContent/Config/secrets.xcconfig; sourceTree = "<group>"; };
 		AA7BDC5C2AB2571800ACCACF /* MoSoContent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoSoContent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7BDC5F2AB2571800ACCACF /* MoSoContentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoSoContentApp.swift; sourceTree = "<group>"; };
 		AA7BDC632AB2571900ACCACF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 				AA7BDC922AB26EFC00ACCACF /* ReadingListKit in Frameworks */,
 				AAE52B662AB2D39900956FBE /* MoSoClient in Frameworks */,
 				AAE52B682AB4CEF400956FBE /* MoSoCore in Frameworks */,
+				8AA6BA372AC496C800B93B6C /* DesignKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +167,7 @@
 		AA7BDC972AB2C38C00ACCACF /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				8AA6BA342AC491E000B93B6C /* secrets.xcconfig */,
 				AA7BDC982AB2C3B700ACCACF /* secrets.xcconfig */,
 			);
 			path = Config;
@@ -178,6 +183,7 @@
 				AA7BDC582AB2571800ACCACF /* Sources */,
 				AA7BDC592AB2571800ACCACF /* Frameworks */,
 				AA7BDC5A2AB2571800ACCACF /* Resources */,
+				8AA6BA332AC4916F00B93B6C /* Run Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -189,6 +195,7 @@
 				AA7BDC912AB26EFC00ACCACF /* ReadingListKit */,
 				AAE52B652AB2D39900956FBE /* MoSoClient */,
 				AAE52B672AB4CEF400956FBE /* MoSoCore */,
+				8AA6BA362AC496C800B93B6C /* DesignKit */,
 			);
 			productName = MoSoContent;
 			productReference = AA7BDC5C2AB2571800ACCACF /* MoSoContent.app */;
@@ -278,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AA6BA352AC491E000B93B6C /* secrets.xcconfig in Resources */,
 				AA7BDC672AB2571900ACCACF /* Preview Assets.xcassets in Resources */,
 				AA7BDC642AB2571900ACCACF /* Assets.xcassets in Resources */,
 			);
@@ -298,6 +306,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8AA6BA332AC4916F00B93B6C /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint > /dev/null; then\n    swiftlint --strict\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AA7BDC582AB2571800ACCACF /* Sources */ = {
@@ -345,7 +375,7 @@
 /* Begin XCBuildConfiguration section */
 		AA7BDC7E2AB2571900ACCACF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA7BDC982AB2C3B700ACCACF /* secrets.xcconfig */;
+			baseConfigurationReference = 8AA6BA342AC491E000B93B6C /* secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -381,7 +411,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -444,7 +474,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -645,6 +675,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8AA6BA362AC496C800B93B6C /* DesignKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignKit;
+		};
 		AA7BDC8F2AB26EFC00ACCACF /* DiscoverKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DiscoverKit;

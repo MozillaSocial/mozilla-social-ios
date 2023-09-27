@@ -6,6 +6,7 @@ import DiscoverKit
 import MoSoCore
 import SwiftUI
 
+// swiftlint:disable todo
 // TODO: this is a barebone example for now. Session will be received from login and auth services as needed
 struct AppConfigurator {
     let discoverProvider = DiscoverProvider(session: MoSoSession(isLoggedIn: true))
@@ -15,3 +16,4 @@ struct AppConfigurator {
         discoverProvider.makeDiscoverRootView()
     }
 }
+// swiftlint:enable todo

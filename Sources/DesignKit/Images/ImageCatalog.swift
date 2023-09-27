@@ -17,4 +17,12 @@ public enum ImageCatalog: String {
     case save = "save"
     case saveFill = "save.fill"
     case share = "share"
+
+    var accessibilityIdentifier: String {
+        switch self {
+            case .discover: return "discover-tab-bar-button"
+            case .save: return "readingList-tab-bar-button"
+            default: return ""
+        }
+    }
 }

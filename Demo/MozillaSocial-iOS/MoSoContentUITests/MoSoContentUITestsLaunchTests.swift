@@ -5,7 +5,6 @@
 import XCTest
 
 final class MoSoContentUITestsLaunchTests: XCTestCase {
-
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
