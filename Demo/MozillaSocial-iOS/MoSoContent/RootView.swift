@@ -17,7 +17,7 @@ struct RootView: View {
                 configurator.makeDiscoverTab()
                     .tabItem {
                         TabIcon(
-                            imageName: selection.discoverImageName,
+                            imageName: selection.discoverImage,
                             accessibilityIdentifier: Tab.discover.accessibilityIdentifier
                         )
                     }
@@ -26,7 +26,7 @@ struct RootView: View {
                 ReadingListView()
                     .tabItem {
                         TabIcon(
-                            imageName: selection.readingListImageName,
+                            imageName: selection.readingListImage,
                             accessibilityIdentifier: Tab.readingList.accessibilityIdentifier
                         )
                     }
@@ -34,20 +34,20 @@ struct RootView: View {
 
             }
             .toolbar(.visible, for: .tabBar)
-            .toolbarBackground(Color(.mosoLayerColor1), for: .tabBar)
+            .toolbarBackground(MoSoColors.layer1, for: .tabBar)
 
         }
-        .accentColor(Color(.mosoIconColorAccent))
+        .accentColor(MoSoColors.iconAccent)
     }
 }
 
 struct TabIcon: View {
-    let imageName: ImageCatalog
+    let imageName: Image
     let accessibilityIdentifier: String
     var body: some View {
         Label(
             title: { Text("") },
-            icon: { Image(imageName).renderingMode(.template) }
+            icon: { imageName.renderingMode(.template) }
         ).accessibilityIdentifier(accessibilityIdentifier)
     }
 }
@@ -64,12 +64,12 @@ enum Tab {
         }
     }
 
-    var discoverImageName: ImageCatalog {
-        return self == .discover ? .discoverFill : .discover
+    var discoverImage: Image {
+        return self == .discover ? MoSoIcons.discoverFill : MoSoIcons.discover
     }
 
-    var readingListImageName: ImageCatalog {
-        return self == .readingList ? .saveFill : .save
+    var readingListImage: Image {
+        return self == .readingList ? MoSoIcons.saveFill : MoSoIcons.save
     }
 }
 

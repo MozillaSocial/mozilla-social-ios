@@ -16,7 +16,7 @@ struct RootView: View {
             ErrorView(error: error)
 
         }
-        .background(Color(.mosoLayerColor1))
+        .background(MoSoColors.layer1)
         .environmentObject(viewModel)
     }
 }

@@ -46,12 +46,12 @@ struct RecommendationRow: View {
     func makeFooterView() -> some View {
         HStack {
             Spacer()
-            Image(.save)
+            MoSoIcons.save
                 .renderingMode(.template)
                 .frame(width: 24, height: 24)
                 .padding(.trailing, 16)
             ShareLink(item: recommendation.url) {
-                Image(.share)
+                MoSoIcons.share
                     .renderingMode(.template)
                     .frame(width: 24, height: 24)
             }

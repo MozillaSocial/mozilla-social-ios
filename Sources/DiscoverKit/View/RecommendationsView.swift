@@ -3,6 +3,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import SwiftUI
+import DesignKit
 
 struct RecommendationsView: View {
     let recommendations: [Recommendation]
@@ -11,7 +12,7 @@ struct RecommendationsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(.mosoLayerColor1).ignoresSafeArea()
+                MoSoColors.layer1.ignoresSafeArea()
                 ListView(recommendations: recommendations)
                     .navigationDestination(for: Recommendation.self) {
                         RecommendationDetailView(recommendation: $0)
@@ -35,7 +36,7 @@ struct ListView: View {
                 NavigationLink(value: recommendation) {
                     EmptyView()
                 }.opacity(0)
-            }.listRowBackground(Color(.mosoLayerColor1))
+            }.listRowBackground(MoSoColors.layer1)
         }
         .listStyle(.plain)
         .navigationTitle("Today's Top Picks")

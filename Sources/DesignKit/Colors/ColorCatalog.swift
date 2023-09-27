@@ -4,13 +4,7 @@
 
 import SwiftUI
 
-public extension Color {
-    init(_ asset: ColorCatalog) {
-        self.init(asset.rawValue, bundle: .module)
-    }
-}
-
-public enum ColorCatalog: String {
-    case mosoLayerColor1 = "moso-layer-color-1"
-    case mosoIconColorAccent = "moso-icon-color-accent"
+public struct MoSoColors {
+    public static let layer1 = Color("moso-layer-color-1", bundle: .module)
+    public static let iconAccent = Color("moso-icon-color-accent", bundle: .module)
 }
