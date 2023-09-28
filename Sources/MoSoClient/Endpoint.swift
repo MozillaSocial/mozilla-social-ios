@@ -13,13 +13,13 @@ protocol Endpoint {
 struct RecommendationsEndpoint: Endpoint {
     private let queryItems: [URLQueryItem]
 
-    init(count: Int? = nil) throws {
+    init(recommendationCount: Int? = nil) throws {
         guard let info = Bundle.main.infoDictionary, let key = info[Constants.consumerKeyKey] as? String else {
             throw MoSoClientError.consumerKeyNotFound
         }
         var actualCount = Constants.defaultRecommendationsCount
-        if let count, count >= 0, count <= Constants.defaultRecommendationsCount {
-            actualCount = count
+        if let recommendationCount, recommendationCount >= 0, recommendationCount <= Constants.defaultRecommendationsCount {
+            actualCount = recommendationCount
         }
         self.queryItems = [
             URLQueryItem(name: Constants.consumerKey, value: key),

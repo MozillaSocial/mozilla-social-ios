@@ -97,5 +97,10 @@ analyzer_rules: # Rules run by `swiftlint analyze`
   - capture_variable
   - unused_import
 
+included:
+  - ../../Sources
+  - ../../Tests
+  - ../../MoSoContent
+
 # reporter: "json" # reporter type (xcode, json, csv, checkstyle)
 reporter: 'xcode' # reporter type (xcode, json, csv, checkstyle)

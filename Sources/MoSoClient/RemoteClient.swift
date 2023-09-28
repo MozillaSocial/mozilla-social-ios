@@ -17,7 +17,7 @@ public struct RestRemoteClient: RemoteClient {
     public init() {}
 
     public func getRecommendations(count: Int) async throws -> [RemoteRecommendation] {
-        let container: RemoteRecommendations = try await getJsonDecodedData(endpoint: RecommendationsEndpoint(count: count))
+        let container: RemoteRecommendations = try await getJsonDecodedData(endpoint: RecommendationsEndpoint(recommendationCount: count))
         return container.recommendations
     }
 
