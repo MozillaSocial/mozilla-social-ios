@@ -236,13 +236,16 @@
 				TargetAttributes = {
 					AA7BDC5B2AB2571800ACCACF = {
 						CreatedOnToolsVersion = 15.0;
+						ProvisioningStyle = Automatic;
 					};
 					AA7BDC6B2AB2571900ACCACF = {
 						CreatedOnToolsVersion = 15.0;
+						ProvisioningStyle = Automatic;
 						TestTargetID = AA7BDC5B2AB2571800ACCACF;
 					};
 					AA7BDC752AB2571900ACCACF = {
 						CreatedOnToolsVersion = 15.0;
+						ProvisioningStyle = Automatic;
 						TestTargetID = AA7BDC5B2AB2571800ACCACF;
 					};
 				};
@@ -487,11 +490,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoSoContent/Preview Content\"";
-				DEVELOPMENT_TEAM = 43AQ936H96;
+				DEVELOPMENT_TEAM = EX3VH4YFCH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoSoContent/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = mozilla.social;
+				INFOPLIST_KEY_CFBundleDisplayName = Ebony;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -503,7 +506,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.mozilla.ios.Social;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReadItLater.Ebony;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -513,17 +516,18 @@
 		};
 		AA7BDC822AB2571900ACCACF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA7BDC982AB2C3B700ACCACF /* secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoSoContent/Preview Content\"";
-				DEVELOPMENT_TEAM = 43AQ936H96;
+				DEVELOPMENT_TEAM = EX3VH4YFCH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoSoContent/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = mozilla.social;
+				INFOPLIST_KEY_CFBundleDisplayName = Ebony;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -535,7 +539,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.mozilla.ios.Social;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReadItLater.Ebony;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
