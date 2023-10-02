@@ -14,7 +14,6 @@ struct RootView: View {
             RecommendationsView(recommendations: recommendations)
         } errorContent: { error in
             ErrorView(error: error)
-
         }
         .background(Color(.mosoLayerColor1))
         .environmentObject(viewModel)

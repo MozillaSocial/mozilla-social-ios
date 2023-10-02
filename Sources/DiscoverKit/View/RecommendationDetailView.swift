@@ -5,7 +5,6 @@
 import SwiftUI
 import WebKit
 
-
 // TODO: at this moment, this just loads an url in a web view. We will add a proper recommendation view after beta
 struct RecommendationDetailView: UIViewRepresentable {
     let recommendation: Recommendation

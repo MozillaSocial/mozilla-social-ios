@@ -9,15 +9,13 @@ import MoSoClient
 final class PreviewStore: RecommendationsStore {
     func clearSearch() {
     }
-    
+
     @Published var recommendations: [Recommendation] = []
     public var recommendationsPublisher: Published<[Recommendation]>.Publisher { $recommendations }
 
     func fetchRecommendations(count: Int) async throws {
-
     }
-    
-    func searchRecommendations(by term: String) {
 
+    func searchRecommendations(by term: String) {
     }
 }

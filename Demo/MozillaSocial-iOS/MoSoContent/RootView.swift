@@ -31,11 +31,9 @@ struct RootView: View {
                         )
                     }
                     .tag(Tab.readingList)
-
             }
             .toolbar(.visible, for: .tabBar)
             .toolbarBackground(Color(.mosoLayerColor1), for: .tabBar)
-
         }
         .accentColor(Color(.mosoIconColorAccent))
     }
@@ -52,15 +50,14 @@ struct TabIcon: View {
     }
 }
 
-
 enum Tab {
     case discover
     case readingList
 
     var accessibilityIdentifier: String {
         switch self {
-            case .discover: return "discover-tab-bar-button"
-            case .readingList: return "readingList-tab-bar-button"
+        case .discover: return "discover-tab-bar-button"
+        case .readingList: return "readingList-tab-bar-button"
         }
     }
 

@@ -8,11 +8,11 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.iOS("16"), .macOS("13")],
     products: [
-        .library(name: "MoSoCore",targets: ["MoSoCore"]),
-        .library(name: "MoSoClient",targets: ["MoSoClient"]),
-        .library(name: "DiscoverKit",targets: ["DiscoverKit"]),
-        .library(name: "ReadingListKit",targets: ["ReadingListKit"]),
-        .library(name: "DesignKit",targets: ["DesignKit"]),
+        .library(name: "MoSoCore", targets: ["MoSoCore"]),
+        .library(name: "MoSoClient", targets: ["MoSoClient"]),
+        .library(name: "DiscoverKit", targets: ["DiscoverKit"]),
+        .library(name: "ReadingListKit", targets: ["ReadingListKit"]),
+        .library(name: "DesignKit", targets: ["DesignKit"]),
     ],
     targets: [
         .target(

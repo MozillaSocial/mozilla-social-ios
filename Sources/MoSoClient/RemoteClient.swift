@@ -17,10 +17,10 @@ public struct RestRemoteClient: RemoteClient {
     public init() {}
 
     public func getRecommendations(count: Int) async throws -> [RemoteRecommendation] {
-        let container: RemoteRecommendations = try await getJsonDecodedData(endpoint: RecommendationsEndpoint(count: count))
+        let container: RemoteRecommendations = try await getJsonDecodedData(endpoint: RecommendationsEndpoint(recommendationCount: count))
         return container.recommendations
     }
-    
+
     /// Dacodes values from a Json response
     /// - Parameter endpoint: the endpoint that returns the Json
     /// - Returns: the decoded data, or throws an error
@@ -34,7 +34,6 @@ public struct RestRemoteClient: RemoteClient {
     /// - Parameter request: tthe endpoint that returns the data
     /// - Returns: The retrieved data, or throws an error
     private func getData(from endpoint: Endpoint) async throws -> Data {
-
         let url = try endpoint.url()
 
         let (data, response) = try await URLSession.shared.data(from: url)
