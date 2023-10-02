@@ -19,7 +19,7 @@ struct RecommendationsEndpoint: Endpoint {
             actualCount = recommendationCount
         }
         self.queryItems = [
-            URLQueryItem(name: Constants.locale, value: Locale.current.language.minimalIdentifier),
+            URLQueryItem(name: Constants.locale, value: Locale.current.identifier(.bcp47)),
             URLQueryItem(name: Constants.count, value: "\(actualCount)")
         ]
     }
