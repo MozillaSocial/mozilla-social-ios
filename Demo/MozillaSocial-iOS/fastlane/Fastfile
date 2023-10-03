@@ -28,11 +28,11 @@ platform :ios do
       scheme: "MoSoContent",
       export_method: "app-store",
       configuration: "Release"
-      # export_options: {
-      #   provisioningProfiles: {
-      #     "com.ReadItLater.Ebony" => "EbonyDistributionProfile"
-      #   }
-      # }
+      export_options: {
+        provisioningProfiles: {
+          "com.ReadItLater.Ebony" => "EbonyDistributionProfile"
+        }
+      }
     )
     upload_to_testflight
   end
