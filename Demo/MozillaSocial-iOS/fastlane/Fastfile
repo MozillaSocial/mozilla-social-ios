@@ -27,8 +27,7 @@ platform :ios do
     build_app(
       scheme: "MoSoContent",
       export_method: "app-store",
-      configuration: "Release",
-      xcargs: "-allowProvisioningUpdates"
+      configuration: "Release"
       # export_options: {
       #   provisioningProfiles: {
       #     "com.ReadItLater.Ebony" => "EbonyDistributionProfile"
