@@ -14,17 +14,12 @@ struct RecommendationsEndpoint: Endpoint {
     private let queryItems: [URLQueryItem]
 
     init(recommendationCount: Int? = nil) throws {
-        guard let info = Bundle.main.infoDictionary, let key = info[Constants.consumerKeyKey] as? String else {
-            throw MoSoClientError.consumerKeyNotFound
-        }
         var actualCount = Constants.defaultRecommendationsCount
         if let recommendationCount, recommendationCount >= 0, recommendationCount <= Constants.defaultRecommendationsCount {
             actualCount = recommendationCount
         }
         self.queryItems = [
-            URLQueryItem(name: Constants.consumerKey, value: key),
-            URLQueryItem(name: Constants.locale, value: Locale.current.language.minimalIdentifier),
-            URLQueryItem(name: Constants.region, value: Locale.current.region?.identifier),
+            URLQueryItem(name: Constants.locale, value: Locale.current.identifier(.bcp47)),
             URLQueryItem(name: Constants.count, value: "\(actualCount)")
         ]
     }
@@ -43,16 +38,12 @@ struct RecommendationsEndpoint: Endpoint {
     }
 
     enum Constants {
-        static let defaultRecommendationsCount = 30
-        static let host = "firefox-api-proxy.cdn.mozilla.net"
+        static let defaultRecommendationsCount = 24
+        static let host = "mozilla.social"
         static let scheme = "https"
-        // key to retrieve the actual consumer key
-        static let consumerKeyKey = "DiscoverApiConsumerKey"
-        static let path = "/desktop/v1/recommendations"
+        static let path = "/content-feed/moso/v1/discover"
         // query items keys
         static let locale = "locale"
-        static let region = "region"
         static let count = "count"
-        static let consumerKey = "consumer_key"
     }
 }
