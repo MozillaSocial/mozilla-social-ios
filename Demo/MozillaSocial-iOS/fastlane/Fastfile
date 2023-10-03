@@ -28,7 +28,7 @@ platform :ios do
       certificate_path: ENV["BITRISE_CERTIFICATE_URL"],
       certificate_password: ENV["BITRISE_CERTIFICATE_PASSPHRASE"],
       keychain_name: "login",
-      keychain_path: "$HOME/Library/Keychains/login.keychain",
+      # keychain_path: "$HOME/Library/Keychains/login.keychain",
       keychain_password: ENV["BITRISE_KEYCHAIN_PASSWORD"]
     )
     disable_automatic_code_signing(path: "MoSoContent.xcodeproj", profile_name: "EbonyDistributionProfile")
