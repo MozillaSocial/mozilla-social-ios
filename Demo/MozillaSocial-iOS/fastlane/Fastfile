@@ -26,7 +26,8 @@ platform :ios do
     fetch_and_increment_build_number
     build_app(
       scheme: "MoSoContent",
-      export_method: "app-store" #,
+      export_method: "app-store",
+      configuration: "Release"
       # export_options: {
       #   provisioningProfiles: {
       #     "com.ReadItLater.Ebony" => "EbonyDistributionProfile"
