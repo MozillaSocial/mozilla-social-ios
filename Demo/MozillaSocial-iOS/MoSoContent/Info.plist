@@ -2,6 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLName</key>
+			<string>com.mozilla.mozillasocial</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>mozillasocial</string>
+			</array>
+		</dict>
+	</array>
 	<key>DiscoverApiConsumerKey</key>
 	<string>$(DISCOVER_API_CONSUMER_KEY)</string>
 </dict>
