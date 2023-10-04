@@ -20,6 +20,7 @@ class DiscoverViewModel: LoadableObject {
     init(store: RecommendationsStore) {
         self.store = store
         store.recommendationsPublisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] recommendations in
                 self?.state = .ready(recommendations)
