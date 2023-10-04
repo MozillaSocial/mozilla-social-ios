@@ -24,13 +24,6 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     fetch_and_increment_build_number
-    import_certificate(
-      certificate_path: ENV["BITRISE_CERTIFICATE_URL"],
-      certificate_password: ENV["BITRISE_CERTIFICATE_PASSPHRASE"],
-      keychain_name: "login",
-      # keychain_path: "$HOME/Library/Keychains/login.keychain",
-      keychain_password: ENV["BITRISE_KEYCHAIN_PASSWORD"]
-    )
     disable_automatic_code_signing(path: "MoSoContent.xcodeproj", profile_name: "EbonyDistributionProfile")
     build_app(
       scheme: "MoSoContent",
