@@ -38,6 +38,9 @@ final class InMemoryRecommendationsStore: RecommendationsStore, ObservableObject
     }
 
     func clearSearch() {
-        recommendations = storage
+        // TODO: remove this hack once we implement a proper search
+        if !storage.isEmpty {
+            recommendations = storage
+        }
     }
 }
