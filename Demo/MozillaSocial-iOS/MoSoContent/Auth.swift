@@ -77,15 +77,11 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding {
             fatalError()
         }
 
-        let queryItems = [URLQueryItem(name: "code", value: code),
-                          URLQueryItem(name: "grant_type", value: "authorization_code"),
-                          URLQueryItem(name: "redirect_uri", value: redirectURI),
-                          URLQueryItem(name: "scope", value: "read write push"),
-                          URLQueryItem(name: "client_secret", value: client.clientSecret),
-                          URLQueryItem(name: "client_id", value: client.clientId)]
-
-        url.append(queryItems: queryItems)
-
+        url.append(queryItems:[URLQueryItem(name: "code", value: code),
+                               URLQueryItem(name: "grant_type", value: "authorization_code"),
+                               URLQueryItem(name: "redirect_uri", value: redirectURI),
+                               URLQueryItem(name: "client_secret", value: client.clientSecret),
+                               URLQueryItem(name: "client_id", value: client.clientId)])
         return url
     }
 
@@ -94,12 +90,10 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding {
             fatalError()
         }
 
-        let queryItems = [URLQueryItem(name: "client_name", value: "MozillaSocialDemo"),
-                          URLQueryItem(name: "redirect_uris", value: redirectScheme + "://auth"),
-                          URLQueryItem(name: "scope", value: "read write push"),
-                          URLQueryItem(name: "website", value: "https://mozilla.social/")]
-        registerURL.append(queryItems: queryItems)
-
+        registerURL.append(queryItems: [URLQueryItem(name: "client_name", value: "MozillaSocialDemo"),
+                                        URLQueryItem(name: "redirect_uris", value: redirectScheme + "://auth"),
+                                        URLQueryItem(name: "scopes", value: "read write push"),
+                                        URLQueryItem(name: "website", value: "https://mozilla.social/")])
         return registerURL
     }
 
