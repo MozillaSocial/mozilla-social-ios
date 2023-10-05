@@ -5,6 +5,11 @@
 import Foundation
 import AuthenticationServices
 
+let isProd = false
+let baseURL = isProd ? "https://mozilla.social" : "https://stage.moztodon.nonprod.webservices.mozgcp.net"
+let redirectScheme = "mozillasocial"
+let redirectURI = redirectScheme + "://auth"
+
 class Auth: NSObject, ASWebAuthenticationPresentationContextProviding {
 
     var authToken: Token?
@@ -81,7 +86,8 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding {
                                URLQueryItem(name: "grant_type", value: "authorization_code"),
                                URLQueryItem(name: "redirect_uri", value: redirectURI),
                                URLQueryItem(name: "client_secret", value: client.clientSecret),
-                               URLQueryItem(name: "client_id", value: client.clientId)])
+                               URLQueryItem(name: "client_id", value: client.clientId),
+                               URLQueryItem(name: "scope", value: "read+write+push+follow")])
         return url
     }
 
@@ -91,9 +97,8 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding {
         }
 
         registerURL.append(queryItems: [URLQueryItem(name: "client_name", value: "MozillaSocialDemo"),
-                                        URLQueryItem(name: "redirect_uris", value: redirectScheme + "://auth"),
-                                        URLQueryItem(name: "scopes", value: "read write push"),
-                                        URLQueryItem(name: "website", value: "https://mozilla.social/")])
+                                        URLQueryItem(name: "redirect_uris", value: redirectURI),
+                                        URLQueryItem(name: "scopes", value: "read write push follow")])
         return registerURL
     }
 
@@ -101,6 +106,7 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding {
         var signInURL = URL(string: baseURL + "/oauth/authorize")!
         signInURL.append(queryItems: [URLQueryItem(name: "response_type", value: "code"),
                                       URLQueryItem(name: "client_id", value: clientId),
+                                      URLQueryItem(name: "scope", value: "read+write+push+follow"),
                                       URLQueryItem(name: "redirect_uri", value: redirectURI)])
         return signInURL
     }

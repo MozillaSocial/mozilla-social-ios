@@ -5,11 +5,6 @@
 import Foundation
 import SwiftUI
 
-let isProd = false
-let baseURL = isProd ? "https://mozilla.social" : "https://stage.moztodon.nonprod.webservices.mozgcp.net"
-let redirectScheme = "mozillasocial"
-let redirectURI = redirectScheme + "://auth"
-
 struct LoginView: View {
     let auth = Auth()
 
