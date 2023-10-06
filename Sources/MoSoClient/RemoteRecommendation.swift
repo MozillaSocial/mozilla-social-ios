@@ -19,7 +19,11 @@ public struct RemoteRecommendation: Decodable {
         case title
         case excerpt
         case publisher
-        case imageUrl
+        case image
+    }
+
+    enum ImageCodingKeys: String, CodingKey {
+        case sizes
     }
 
     public init(from decoder: Decoder) throws {
@@ -28,12 +32,15 @@ public struct RemoteRecommendation: Decodable {
         self.title = try container.decode(String.self, forKey: .title)
         self.excerpt = try container.decode(String.self, forKey: .excerpt)
         self.publisher = try container.decode(String.self, forKey: .publisher)
-        self.imageUrl = try container.decodeIfPresent(String.self, forKey: .imageUrl)
+        let imagesContainer = try container.nestedContainer(keyedBy: ImageCodingKeys.self, forKey: .image)
+        let images = try imagesContainer.decode([RecommendationImage].self, forKey: .sizes)
+        // TODO: in this simple implementation, we just extract the first url (if any). we will need to change it if/when we need to use more than one size.
+        self.imageUrl = images.first?.url
     }
 }
 
 struct RemoteRecommendations: Decodable {
-    public let recommendations: [RemoteRecommendation]
+    let recommendations: [RemoteRecommendation]
 
     enum CodingKeys: String, CodingKey {
         case data
@@ -42,5 +49,22 @@ struct RemoteRecommendations: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         recommendations = try container.decode([RemoteRecommendation].self, forKey: .data)
+    }
+}
+
+struct RecommendationImage: Decodable {
+    let url: String
+    let width: Int
+    let height: Int
+
+    enum CodingKeys: String, CodingKey {
+        case url, width, height
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.url = try container.decode(String.self, forKey: .url)
+        self.width = try container.decode(Int.self, forKey: .width)
+        self.height = try container.decode(Int.self, forKey: .height)
     }
 }
