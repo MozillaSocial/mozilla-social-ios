@@ -6,17 +6,19 @@ import Foundation
 import AuthenticationServices
 import Combine
 
-let isProd = false
-let baseURL = isProd ? "https://mozilla.social" : "https://stage.moztodon.nonprod.webservices.mozgcp.net"
-let redirectScheme = "mozillasocial"
-let redirectURI = redirectScheme + "://auth"
-
 class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, ObservableObject {
 
     @Published var authToken: Token?
     @Published var accountDetails: AccountDetails?
 
     private var subscribers: Set<AnyCancellable> = []
+
+    private enum URLConstants {
+        static let isProd = false
+        static let baseURL = URLConstants.isProd ? "https://mozilla.social" : "https://stage.moztodon.nonprod.webservices.mozgcp.net"
+        static let redirectScheme = "mozillasocial"
+        static let redirectURI = URLConstants.redirectScheme + "://auth"
+    }
 
     init(authToken: Token? = nil, accountDetails: AccountDetails? = nil) {
         super.init()
@@ -62,7 +64,7 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, Observabl
     func signIn(client: ClientEntity) {
         let authURL = signInURL(with: client.clientId)
 
-        let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: redirectScheme) { (url, error) in
+        let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: URLConstants.redirectScheme) { (url, error) in
             guard error == nil else {
                 print("ERROR: \(String(describing: error))")
                 return
@@ -104,7 +106,7 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, Observabl
     }
 
     func fetchAccountDetails(for bearerToken: String) async -> AccountDetails? {
-        guard let url = URL(string: baseURL + "/api/v1/accounts/verify_credentials") else {
+        guard let url = URL(string: URLConstants.baseURL + "/api/v1/accounts/verify_credentials") else {
             fatalError()
         }
 
@@ -128,13 +130,13 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, Observabl
     // MARK: - URL Builders
 
     private func authTokenURL(for client: ClientEntity, with code: String) -> URL {
-        guard var url = URL(string: baseURL + "/oauth/token") else {
+        guard var url = URL(string: URLConstants.baseURL + "/oauth/token") else {
             fatalError()
         }
 
         url.append(queryItems:[URLQueryItem(name: "code", value: code),
                                URLQueryItem(name: "grant_type", value: "authorization_code"),
-                               URLQueryItem(name: "redirect_uri", value: redirectURI),
+                               URLQueryItem(name: "redirect_uri", value: URLConstants.redirectURI),
                                URLQueryItem(name: "client_secret", value: client.clientSecret),
                                URLQueryItem(name: "client_id", value: client.clientId),
                                URLQueryItem(name: "scope", value: "read+write+push+follow")])
@@ -142,22 +144,22 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, Observabl
     }
 
     private func registerAppURL() -> URL {
-        guard var registerURL = URL(string: baseURL + "/api/v1/apps") else {
+        guard var registerURL = URL(string: URLConstants.baseURL + "/api/v1/apps") else {
             fatalError()
         }
 
         registerURL.append(queryItems: [URLQueryItem(name: "client_name", value: "MozillaSocialDemo"),
-                                        URLQueryItem(name: "redirect_uris", value: redirectURI),
+                                        URLQueryItem(name: "redirect_uris", value: URLConstants.redirectURI),
                                         URLQueryItem(name: "scopes", value: "read write push follow")])
         return registerURL
     }
 
     private func signInURL(with clientId: String) -> URL {
-        var signInURL = URL(string: baseURL + "/oauth/authorize")!
+        var signInURL = URL(string: URLConstants.baseURL + "/oauth/authorize")!
         signInURL.append(queryItems: [URLQueryItem(name: "response_type", value: "code"),
                                       URLQueryItem(name: "client_id", value: clientId),
                                       URLQueryItem(name: "scope", value: "read+write+push+follow"),
-                                      URLQueryItem(name: "redirect_uri", value: redirectURI)])
+                                      URLQueryItem(name: "redirect_uri", value: URLConstants.redirectURI)])
         return signInURL
     }
 
