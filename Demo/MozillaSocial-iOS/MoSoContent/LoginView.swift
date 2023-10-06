@@ -6,19 +6,62 @@ import Foundation
 import SwiftUI
 
 struct LoginView: View {
-    let auth = Auth()
+    @ObservedObject var auth = Auth()
 
     var body: some View {
-        Button("Login!") {
-            Task {
-                guard let clientEntity = await auth.registerApp() else {
-                    print("Client Entitiy Nil")
-                    return
+        VStack {
+            HStack {
+                Image(systemName: "person.circle")
+                    .resizable()
+                    .frame(width: 70, height: 70)
+                VStack(alignment: .leading) {
+                    Text("DisplayName")
+                    Text("AccountID")
+                    Text("HomeInstance")
                 }
-                auth.signIn(client: clientEntity)
             }
         }
+        .padding()
+        .background(Color.purple)
+        .clipShape(.rect(cornerRadius: 10))
+        .overlay(loginOverlay)
     }
 
+    @ViewBuilder private var loginOverlay: some View {
+        if auth.authToken?.accessToken == nil {
+            VStack {
+                Image("MoSoIcon")
+                    .resizable()
+                    .frame(width:200, height:200)
+                    .clipShape(.rect(cornerRadius: 10))
+                Spacer()
+                Button("Sign in/Sign up") {
+                    Task {
+                        guard let client = await auth.registerApp() else {
+                            print("Unable to get ClientEntity")
+                            return
+                        }
+                        auth.signIn(client: client)
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .padding()
+            }
+            .padding()
+            .background(Color.gray)
+            .clipShape(.rect(cornerRadius: 10))
+        }
+    }
+}
 
+class LoginViewModel: ObservableObject {
+    @Published var accountID: String
+
+    init(accountID: String) {
+        self.accountID = accountID
+    }
+}
+
+#Preview {
+    LoginView()
 }

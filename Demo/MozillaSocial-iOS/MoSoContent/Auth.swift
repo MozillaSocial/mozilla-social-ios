@@ -10,10 +10,11 @@ let baseURL = isProd ? "https://mozilla.social" : "https://stage.moztodon.nonpro
 let redirectScheme = "mozillasocial"
 let redirectURI = redirectScheme + "://auth"
 
-class Auth: NSObject, ASWebAuthenticationPresentationContextProviding {
+class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, ObservableObject {
 
-    var authToken: Token?
+    @Published var authToken: Token?
 
+    @MainActor
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return ASPresentationAnchor()
     }
@@ -35,7 +36,7 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding {
     }
 
     func signIn(client: ClientEntity) {
-        var authURL = signInURL(with: client.clientId)
+        let authURL = signInURL(with: client.clientId)
 
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: redirectScheme) { (url, error) in
             guard error == nil else {
@@ -49,7 +50,10 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding {
             }
 
             Task {
-                self.authToken = await self.fetchAuthToken(for: client, with: code)
+                let token = await self.fetchAuthToken(for: client, with: code)
+                await MainActor.run {
+                    self.authToken = token
+                }
             }
         }
 
