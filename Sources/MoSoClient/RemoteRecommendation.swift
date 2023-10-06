@@ -33,7 +33,6 @@ public struct RemoteRecommendation: Decodable {
         self.excerpt = try container.decode(String.self, forKey: .excerpt)
         self.publisher = try container.decode(String.self, forKey: .publisher)
         let imagesContainer = try container.nestedContainer(keyedBy: ImageCodingKeys.self, forKey: .image)
-        print(imagesContainer.allKeys)
         let images = try imagesContainer.decode([RecommendationImage].self, forKey: .sizes)
         // TODO: in this simple implementation, we just extract the first url (if any). we will need to change it if/when we need to use more than one size.
         self.imageUrl = images.first?.url
