@@ -2,11 +2,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import Foundation
 import SwiftUI
 
 struct LoginView: View {
-    @ObservedObject var auth = Auth()
+    @ObservedObject var auth = AuthenticationService()
 
     var body: some View {
         VStack {
@@ -70,13 +69,7 @@ struct LoginView: View {
                     .clipShape(.rect(cornerRadius: 10))
                 Spacer()
                 Button("Sign in/Sign up") {
-                    Task {
-                        guard let client = await auth.registerApp() else {
-                            print("Unable to get ClientEntity")
-                            return
-                        }
-                        auth.signIn(client: client)
-                    }
+                    auth.launchOAUTH()
                 }
                 .buttonStyle(.borderedProminent)
                 .padding()

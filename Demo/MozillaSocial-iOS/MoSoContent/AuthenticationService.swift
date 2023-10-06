@@ -6,7 +6,7 @@ import Foundation
 import AuthenticationServices
 import Combine
 
-class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, ObservableObject {
+class AuthenticationService: NSObject, ASWebAuthenticationPresentationContextProviding, ObservableObject {
 
     @Published var authToken: Token?
     @Published var accountDetails: AccountDetails?
@@ -40,9 +40,18 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, Observabl
         .store(in: &subscribers)
     }
 
-    @MainActor
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return ASPresentationAnchor()
+    }
+
+    func launchOAUTH() {
+        Task {
+            guard let client = await registerApp() else {
+                print("Unable to get ClientEntity")
+                return
+            }
+            signIn(client: client)
+        }
     }
 
     func registerApp() async -> ClientEntity? {
@@ -56,7 +65,7 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, Observabl
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             return try decoder.decode(ClientEntity.self, from: data)
         } catch {
-            print("error: ", error)
+            print("RegisterAppError: ", error)
             return nil
         }
     }
@@ -65,8 +74,8 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, Observabl
         let authURL = signInURL(with: client.clientId)
 
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: URLConstants.redirectScheme) { (url, error) in
-            guard error == nil else {
-                print("ERROR: \(String(describing: error))")
+            if let error = error {
+                print("ASWebAuthenticationSessionError: \(error))")
                 return
             }
 
@@ -99,7 +108,7 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, Observabl
 
             return try decoder.decode(Token.self, from: data)
         } catch {
-            print("error: ", error)
+            print("FetchAuthTokenError: ", error)
         }
 
         return nil
@@ -121,7 +130,7 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, Observabl
 
             return try decoder.decode(AccountDetails.self, from: data)
         } catch {
-            print("error: ", error)
+            print("FetchAccountDetailsError: ", error)
         }
 
         return nil
