@@ -15,9 +15,18 @@ struct LoginView: View {
                     .resizable()
                     .frame(width: 70, height: 70)
                 VStack(alignment: .leading) {
-                    Text("DisplayName")
-                    Text("AccountID")
-                    Text("HomeInstance")
+                    HStack {
+                        Text("DisplayName:")
+                        Text(auth.accountDetails?.displayName ?? "-")
+                    }
+                    HStack {
+                        Text("Username:")
+                        Text(auth.accountDetails?.username ?? "-")
+                    }
+                    HStack {
+                        Text("AccountID:")
+                        Text(auth.accountDetails?.id ?? "-")
+                    }
                 }
             }
         }
@@ -28,7 +37,7 @@ struct LoginView: View {
     }
 
     @ViewBuilder private var loginOverlay: some View {
-        if auth.authToken?.accessToken == nil {
+        if auth.authToken == nil {
             VStack {
                 Image("MoSoIcon")
                     .resizable()
@@ -51,14 +60,6 @@ struct LoginView: View {
             .background(Color.gray)
             .clipShape(.rect(cornerRadius: 10))
         }
-    }
-}
-
-class LoginViewModel: ObservableObject {
-    @Published var accountID: String
-
-    init(accountID: String) {
-        self.accountID = accountID
     }
 }
 

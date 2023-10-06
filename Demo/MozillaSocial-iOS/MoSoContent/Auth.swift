@@ -4,6 +4,7 @@
 
 import Foundation
 import AuthenticationServices
+import Combine
 
 let isProd = false
 let baseURL = isProd ? "https://mozilla.social" : "https://stage.moztodon.nonprod.webservices.mozgcp.net"
@@ -13,6 +14,29 @@ let redirectURI = redirectScheme + "://auth"
 class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, ObservableObject {
 
     @Published var authToken: Token?
+    @Published var accountDetails: AccountDetails?
+
+    private var subscribers: Set<AnyCancellable> = []
+
+    init(authToken: Token? = nil, accountDetails: AccountDetails? = nil) {
+        super.init()
+
+        self.authToken = authToken
+        self.accountDetails = accountDetails
+
+        $authToken.sink { recievedValue in
+            guard let bearerToken = recievedValue?.accessToken else {
+                return
+            }
+            Task {
+                let accountDetails = await self.fetchAccountDetails(for: bearerToken)
+                await MainActor.run {
+                    self.accountDetails = accountDetails
+                }
+            }
+        }
+        .store(in: &subscribers)
+    }
 
     @MainActor
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
@@ -72,6 +96,28 @@ class Auth: NSObject, ASWebAuthenticationPresentationContextProviding, Observabl
             decoder.keyDecodingStrategy = .convertFromSnakeCase
 
             return try decoder.decode(Token.self, from: data)
+        } catch {
+            print("error: ", error)
+        }
+
+        return nil
+    }
+
+    func fetchAccountDetails(for bearerToken: String) async -> AccountDetails? {
+        guard let url = URL(string: baseURL + "/api/v1/accounts/verify_credentials") else {
+            fatalError()
+        }
+
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer \(bearerToken)", forHTTPHeaderField:"Authorization")
+        do{
+            let (data, _) = try await URLSession.shared.data(for: urlRequest)
+
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+
+            return try decoder.decode(AccountDetails.self, from: data)
         } catch {
             print("error: ", error)
         }
@@ -139,4 +185,10 @@ public struct Token: Codable {
     public let accessToken: String
     public let tokenType: String
     public let scope: String
+}
+
+struct AccountDetails: Decodable {
+    var id: String
+    var username: String
+    var displayName: String
 }
