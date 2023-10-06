@@ -23,16 +23,41 @@ struct LoginView: View {
                         Text("Username:")
                         Text(auth.accountDetails?.username ?? "-")
                     }
-                    HStack {
-                        Text("AccountID:")
-                        Text(auth.accountDetails?.id ?? "-")
+                }
+            }
+            .padding()
+            .background(Color.purple)
+            .clipShape(.rect(cornerRadius: 10))
+            VStack {
+                HStack {
+                    Text("Followers:")
+                    if let count = auth.accountDetails?.followersCount {
+                        Text(String(count))
+                    } else {
+                        Text("-")
+                    }
+                }
+                HStack {
+                    Text("Following:")
+                    if let count = auth.accountDetails?.followingCount {
+                        Text(String(count))
+                    } else {
+                        Text("-")
+                    }
+                }
+                HStack {
+                    Text("Toots:")
+                    if let count = auth.accountDetails?.statusesCount {
+                        Text(String(count))
+                    } else {
+                        Text("-")
                     }
                 }
             }
+            .padding()
+            .background(Color.purple)
+            .clipShape(.rect(cornerRadius: 10))
         }
-        .padding()
-        .background(Color.purple)
-        .clipShape(.rect(cornerRadius: 10))
         .overlay(loginOverlay)
     }
 

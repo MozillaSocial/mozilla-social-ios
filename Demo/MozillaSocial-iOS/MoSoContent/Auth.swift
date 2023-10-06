@@ -188,7 +188,9 @@ public struct Token: Codable {
 }
 
 struct AccountDetails: Decodable {
-    var id: String
     var username: String
     var displayName: String
+    var followersCount: Int
+    var followingCount: Int
+    var statusesCount: Int
 }
