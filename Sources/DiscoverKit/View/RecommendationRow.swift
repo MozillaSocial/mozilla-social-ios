@@ -6,6 +6,15 @@ import DesignKit
 import SwiftUI
 
 struct RecommendationRow: View {
+    private enum Constants {
+        static let padding: CGFloat = 16
+        static let spacing: CGFloat = 4
+        static let lineLimit: Int = 5
+        static let imageSize: CGFloat = 24
+        static let thumbnailSize: CGFloat = 80
+        static let cornerRadius: CGFloat = 8.0
+    }
+
     let recommendation: Recommendation
     var body: some View {
         VStack {
@@ -16,19 +25,19 @@ struct RecommendationRow: View {
             }
             makeFooterView()
         }
-        .padding(.top, 16)
-        .padding(.bottom, 16)
+        .padding(.top, Constants.padding)
+        .padding(.bottom, Constants.padding)
     }
 
     func makeTextContentView() -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: Constants.spacing) {
             Text(recommendation.publisher)
                 .font(.footnote)
             Text(recommendation.title)
                 .font(.headline)
             Text(recommendation.excerpt)
                 .font(.body)
-                .lineLimit(5)
+                .lineLimit(Constants.lineLimit)
         }
     }
     // TODO: in our final implementation, we might want to use Kingfisher for images
@@ -37,8 +46,8 @@ struct RecommendationRow: View {
             if let urlString = recommendation.imageUrl, let url = URL(string: urlString) {
                 AsyncImageView(url: url)
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 80.0, height: 80.0, alignment: .center)
-                    .cornerRadius(8.0)
+                    .frame(width: Constants.thumbnailSize, height: Constants.thumbnailSize, alignment: .center)
+                    .cornerRadius(Constants.cornerRadius)
             }
             Spacer()
         }
@@ -49,12 +58,12 @@ struct RecommendationRow: View {
             Spacer()
             Image(.save)
                 .renderingMode(.template)
-                .frame(width: 24, height: 24)
-                .padding(.trailing, 16)
+                .frame(width: Constants.imageSize, height: Constants.imageSize)
+                .padding(.trailing, Constants.padding)
             ShareLink(item: recommendation.url) {
                 Image(.share)
                     .renderingMode(.template)
-                    .frame(width: 24, height: 24)
+                    .frame(width: Constants.imageSize, height: Constants.imageSize)
             }
             .buttonStyle(.plain)
         }

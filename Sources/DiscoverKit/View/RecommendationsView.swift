@@ -11,6 +11,7 @@ struct RecommendationsView: View {
     @Environment(\.horizontalSizeClass)
     var sizeClass
 
+    /// Max readable width comes from our investigation we did in this PR: https://github.com/Pocket/pocket-ios/pull/763
     static let maxReadableWidth: CGFloat = 700
 
     var body: some View {
@@ -51,17 +52,6 @@ struct ListView: View {
         .navigationTitle("Today's Top Picks")
         .refreshable {
             viewModel.load()
-        }
-    }
-}
-
-extension View {
-    @ViewBuilder
-    func `if`<Content: View>(_ condition: Bool, modify: (Self) -> Content) -> some View {
-        if condition {
-            modify(self)
-        } else {
-            self
         }
     }
 }
