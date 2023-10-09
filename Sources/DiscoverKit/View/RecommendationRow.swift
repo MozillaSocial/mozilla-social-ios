@@ -28,6 +28,7 @@ struct RecommendationRow: View {
                 .font(.headline)
             Text(recommendation.excerpt)
                 .font(.body)
+                .lineLimit(5)
         }
     }
     // TODO: in our final implementation, we might want to use Kingfisher for images
