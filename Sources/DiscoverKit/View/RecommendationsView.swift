@@ -8,15 +8,26 @@ struct RecommendationsView: View {
     let recommendations: [Recommendation]
     @EnvironmentObject var viewModel: DiscoverViewModel
 
+    @Environment(\.horizontalSizeClass)
+    var sizeClass
+
+    /// Max readable width comes from our investigation we did in this PR: https://github.com/Pocket/pocket-ios/pull/763
+    static let maxReadableWidth: CGFloat = 700
+
     var body: some View {
         NavigationStack {
             ZStack {
                 Color(.mosoLayerColor1).ignoresSafeArea()
-                ListView(recommendations: recommendations)
-                    .navigationDestination(for: Recommendation.self) {
-                        RecommendationDetailView(recommendation: $0)
-                            .navigationBarTitleDisplayMode(.inline)
-                    }
+                    ListView(recommendations: recommendations)
+                        .navigationDestination(for: Recommendation.self) {
+                            RecommendationDetailView(recommendation: $0)
+                                .navigationBarTitleDisplayMode(.inline)
+                                .toolbarBackground(.visible, for: .navigationBar)
+                                .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)
+                        }
+                        .if(sizeClass == .regular) { view in
+                            view.frame(width: RecommendationsView.maxReadableWidth, alignment: .center)
+                        }
             }
         }
         .searchable(text: $viewModel.term)
