@@ -41,7 +41,9 @@ class AuthenticationService: NSObject, ASWebAuthenticationPresentationContextPro
     }
 
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        return ASPresentationAnchor()
+        DispatchQueue.main.sync {
+            return ASPresentationAnchor()
+        }
     }
 
     func launchOAUTH() {
