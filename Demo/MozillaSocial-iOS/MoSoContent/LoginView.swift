@@ -4,8 +4,8 @@
 
 import SwiftUI
 
-struct LoginView: View {
-    @ObservedObject var auth = AuthenticationService()
+struct LoginView: View {    
+    @StateObject var auth = AuthenticationService()
 
     var body: some View {
         VStack {
