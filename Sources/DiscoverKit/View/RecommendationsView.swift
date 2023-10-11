@@ -14,6 +14,11 @@ struct RecommendationsView: View {
     /// Max readable width comes from our investigation we did in this PR: https://github.com/Pocket/pocket-ios/pull/763
     static let maxReadableWidth: CGFloat = 700
 
+    init(recommendations: [Recommendation]) {
+        self.recommendations = recommendations
+        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -29,8 +34,8 @@ struct RecommendationsView: View {
                             view.frame(width: RecommendationsView.maxReadableWidth, alignment: .center)
                         }
             }
+            .navigationTitle(Text("Today's Top Picks"))
         }
-        .searchable(text: $viewModel.term)
     }
 }
 
@@ -49,7 +54,6 @@ struct ListView: View {
             }.listRowBackground(Color(.mosoLayerColor1))
         }
         .listStyle(.plain)
-        .navigationTitle("Today's Top Picks")
         .refreshable {
             viewModel.load()
         }

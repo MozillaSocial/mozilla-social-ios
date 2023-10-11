@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "C86C64A7-7793-4DDE-BAB5-5BA9FB12D0CC",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:MoSoContent.xcodeproj",
+      "identifier" : "AA7BDC5B2AB2571800ACCACF",
+      "name" : "MoSoContent"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:MoSoContent.xcodeproj",
+        "identifier" : "AA7BDC752AB2571900ACCACF",
+        "name" : "MoSoContentUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

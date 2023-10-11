@@ -10,7 +10,7 @@ struct RecommendationRow: View {
         static let padding: CGFloat = 16
         static let spacing: CGFloat = 4
         static let lineLimit: Int = 5
-        static let imageSize: CGFloat = 24
+        static let buttonSize: CGFloat = 48
         static let thumbnailSize: CGFloat = 80
         static let cornerRadius: CGFloat = 8.0
     }
@@ -18,7 +18,7 @@ struct RecommendationRow: View {
     let recommendation: Recommendation
     var body: some View {
         VStack {
-            HStack {
+            HStack(alignment: .top) {
                 makeTextContentView()
                 Spacer()
                 makeImageView()
@@ -39,7 +39,10 @@ struct RecommendationRow: View {
                 .font(.body)
                 .lineLimit(Constants.lineLimit)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier(AccessibilityIdentifiers.Discover.recommendationContent)
     }
+
     // TODO: in our final implementation, we might want to use Kingfisher for images
     func makeImageView() -> some View {
         VStack {
@@ -48,6 +51,8 @@ struct RecommendationRow: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: Constants.thumbnailSize, height: Constants.thumbnailSize, alignment: .center)
                     .cornerRadius(Constants.cornerRadius)
+                    .accessibilityLabel(AccessibilityLabels.Discover.recommendationImage)
+                    .accessibilityIdentifier(AccessibilityIdentifiers.Discover.recommendationImage)
             }
             Spacer()
         }
@@ -58,18 +63,45 @@ struct RecommendationRow: View {
             Spacer()
             Image(.save)
                 .renderingMode(.template)
-                .frame(width: Constants.imageSize, height: Constants.imageSize)
-                .padding(.trailing, Constants.padding)
+                .frame(width: Constants.buttonSize, height: Constants.buttonSize)
+                .contentShape(Rectangle())
+                .accessibility(addTraits: .isButton)
             ShareLink(item: recommendation.url) {
                 Image(.share)
                     .renderingMode(.template)
-                    .frame(width: Constants.imageSize, height: Constants.imageSize)
             }
+            .frame(width: Constants.buttonSize, height: Constants.buttonSize)
+            .contentShape(Rectangle())
             .buttonStyle(.plain)
+            .accessibility(addTraits: .isButton)
         }
     }
 }
 
 #Preview {
-    RecommendationRow(recommendation: Recommendation(url: "https://getpocket.com/home", title: "Pocket", excerpt: "Read it later", publisher: "Mozilla", imageUrl: nil))
+        RecommendationRow(recommendation: Recommendation(url: "https://getpocket.com/home", title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Suspendisse potenti nullam ac tortor. Massa sapien faucibus et molestie ac. Lacinia quis vel eros donec ac odio tempor orci. Velit dignissim sodales ut eu sem integer vitae justo eget. Quisque egestas diam in arcu cursus. Mi eget mauris pharetra et ultrices neque ornare aenean. Ultricies mi quis hendrerit dolor. Lacus laoreet non curabitur gravida. Nullam vehicula ipsum a arcu cursus.", publisher: "Mozilla", imageUrl: "https://pocket-image-cache.com/648x/filters:format(png):extract_focal()/https%3A%2F%2Fs3.us-east-1.amazonaws.com%2Fpocket-collectionapi-prod-images%2F399ed0f1-fcbb-4193-92fa-03caa86e63c8.png"))
+        .padding()
+        .dynamicTypeSize(.large)
+}
+
+#Preview {
+    RecommendationRow(recommendation: Recommendation(url: "https://getpocket.com/home", title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Suspendisse potenti nullam ac tortor. Massa sapien faucibus et molestie ac. Lacinia quis vel eros donec ac odio tempor orci. Velit dignissim sodales ut eu sem integer vitae justo eget. Quisque egestas diam in arcu cursus. Mi eget mauris pharetra et ultrices neque ornare aenean. Ultricies mi quis hendrerit dolor. Lacus laoreet non curabitur gravida. Nullam vehicula ipsum a arcu cursus.", publisher: "Mozilla", imageUrl: "https://pocket-image-cache.com/648x/filters:format(png):extract_focal()/https%3A%2F%2Fs3.us-east-1.amazonaws.com%2Fpocket-collectionapi-prod-images%2F399ed0f1-fcbb-4193-92fa-03caa86e63c8.png"))
+        .padding()
+            .dynamicTypeSize(.xLarge)
+}
+
+#Preview {
+    ScrollView {
+        RecommendationRow(recommendation: Recommendation(url: "https://getpocket.com/home", title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Suspendisse potenti nullam ac tortor. Massa sapien faucibus et molestie ac. Lacinia quis vel eros donec ac odio tempor orci. Velit dignissim sodales ut eu sem integer vitae justo eget. Quisque egestas diam in arcu cursus. Mi eget mauris pharetra et ultrices neque ornare aenean. Ultricies mi quis hendrerit dolor. Lacus laoreet non curabitur gravida. Nullam vehicula ipsum a arcu cursus.", publisher: "Mozilla", imageUrl: "https://pocket-image-cache.com/648x/filters:format(png):extract_focal()/https%3A%2F%2Fs3.us-east-1.amazonaws.com%2Fpocket-collectionapi-prod-images%2F399ed0f1-fcbb-4193-92fa-03caa86e63c8.png"))
+            .padding()
+            .dynamicTypeSize(.accessibility1)
+    }
+}
+
+#Preview {
+    ScrollView {
+        RecommendationRow(recommendation: Recommendation(url: "https://getpocket.com/home", title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Suspendisse potenti nullam ac tortor. Massa sapien faucibus et molestie ac. Lacinia quis vel eros donec ac odio tempor orci. Velit dignissim sodales ut eu sem integer vitae justo eget. Quisque egestas diam in arcu cursus. Mi eget mauris pharetra et ultrices neque ornare aenean. Ultricies mi quis hendrerit dolor. Lacus laoreet non curabitur gravida. Nullam vehicula ipsum a arcu cursus.", publisher: "Mozilla", imageUrl: "https://pocket-image-cache.com/648x/filters:format(png):extract_focal()/https%3A%2F%2Fs3.us-east-1.amazonaws.com%2Fpocket-collectionapi-prod-images%2F399ed0f1-fcbb-4193-92fa-03caa86e63c8.png"))
+            .padding()
+            .dynamicTypeSize(.accessibility5)
+    }
 }

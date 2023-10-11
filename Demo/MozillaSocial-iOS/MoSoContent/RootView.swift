@@ -18,7 +18,8 @@ struct RootView: View {
                     .tabItem {
                         TabIcon(
                             imageName: selection.discoverImageName,
-                            accessibilityIdentifier: Tab.discover.accessibilityIdentifier
+                            accessibilityIdentifier: AccessibilityIdentifiers.Tab.discover,
+                            accessibilityLabel: AccessibilityLabels.Tab.discover
                         )
                     }
                     .tag(Tab.discover)
@@ -27,7 +28,8 @@ struct RootView: View {
                     .tabItem {
                         TabIcon(
                             imageName: selection.readingListImageName,
-                            accessibilityIdentifier: Tab.readingList.accessibilityIdentifier
+                            accessibilityIdentifier: AccessibilityIdentifiers.Tab.readingList,
+                            accessibilityLabel: AccessibilityLabels.Tab.readingList
                         )
                     }
                     .tag(Tab.readingList)
@@ -47,24 +49,21 @@ struct RootView: View {
 struct TabIcon: View {
     let imageName: ImageCatalog
     let accessibilityIdentifier: String
+    let accessibilityLabel: String
     var body: some View {
         Label(
             title: { Text("") },
             icon: { Image(imageName).renderingMode(.template) }
-        ).accessibilityIdentifier(accessibilityIdentifier)
+        )
+        .accessibilityElement(children: .ignore)
+        .accessibilityIdentifier(accessibilityIdentifier)
+        .accessibilityLabel(accessibilityLabel)
     }
 }
 
 enum Tab {
     case discover
     case readingList
-
-    var accessibilityIdentifier: String {
-        switch self {
-        case .discover: return "discover-tab-bar-button"
-        case .readingList: return "readingList-tab-bar-button"
-        }
-    }
 
     var discoverImageName: ImageCatalog {
         return self == .discover ? .discoverFill : .discover
