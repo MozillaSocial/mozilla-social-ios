@@ -16,18 +16,16 @@ public protocol BaseTracker {
 
 struct GleanBaseTracker: BaseTracker {
     func start() {
-        //TODO: initialize
+        // TODO: initialize
     }
-    
+
     func stop() {
-        //TODO: shutdown
+        // TODO: shutdown
     }
-    
+
     func trackImpression(mastodonID: String, recommendationID: String) {
-
     }
-    
-    func trackEngagement(mastodonID: String, recommendationID: String) {
 
+    func trackEngagement(mastodonID: String, recommendationID: String) {
     }
 }
