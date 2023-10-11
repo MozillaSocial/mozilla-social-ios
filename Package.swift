@@ -13,6 +13,10 @@ let package = Package(
         .library(name: "DiscoverKit", targets: ["DiscoverKit"]),
         .library(name: "ReadingListKit", targets: ["ReadingListKit"]),
         .library(name: "DesignKit", targets: ["DesignKit"]),
+        .library(name: "MoSoAnalytics", targets: ["MoSoAnalytics"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/mozilla/glean-swift", from: "54.0.0"),
     ],
     targets: [
         .target(
@@ -42,5 +46,14 @@ let package = Package(
         .testTarget(
             name: "DesignKitTests",
             dependencies: ["DesignKit"]),
+        .target(
+            name: "MoSoAnalytics",
+            dependencies: [
+                .product(name: "Glean", package: "glean-swift")
+            ]
+        ),
+        .testTarget(
+            name: "MoSoAnalyticsTests",
+            dependencies: ["MoSoAnalytics"]),
     ]
 )

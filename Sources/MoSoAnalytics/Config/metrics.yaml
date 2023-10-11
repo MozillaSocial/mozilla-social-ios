@@ -1,0 +1,171 @@
+$schema: moz://mozilla.org/schemas/glean/metrics/2-0-0
+  
+identifiers:
+  fxa_account_id:
+    type: string
+    description: >
+      The user's FxA account ID, if available.
+    bugs:
+      - TBD
+    data_reviews:
+      - TBD
+    notification_emails:
+      - kdemtchouk@mozilla.com
+    expires: never
+    send_in_pings:
+      - events
+      - baseline
+      
+  mastodon_account_id:
+    type: string
+    description: >
+      The user's numeric account ID from Mastodon.
+    bugs:
+      - TBD
+    data_reviews:
+      - TBD
+    notification_emails:
+      - kdemtchouk@mozilla.com
+    expires: never
+    send_in_pings:
+      - events
+      - baseline
+      
+  mastodon_account_handle:
+    type: string
+    description: >
+      The user's full account handle, with domain.
+      For example, `account_name@mozilla.social`.
+    bugs:
+      - TBD
+    data_reviews:
+      - TBD
+    notification_emails:
+      - kdemtchouk@mozilla.com
+    expires: never
+    send_in_pings:
+      - events
+      - baseline
+      
+  adjust_device_id:
+    type: string
+    description: >
+      The Adjust device ID for this user, if available.
+    bugs:
+      - TBD
+    data_reviews:
+      - TBD
+    notification_emails:
+      - kdemtchouk@mozilla.com
+    expires: never
+    send_in_pings:
+      - events
+      - baseline
+      
+  user_agent:
+    type: string
+    description: >
+      The device user agent string.
+    bugs:
+      - TBD
+    data_reviews:
+      - TBD
+    notification_emails:
+      - kdemtchouk@mozilla.com
+    expires: never
+    send_in_pings:
+      - events
+      - baseline
+ 
+ui:
+  impression:
+    type: event
+    description: >
+      Event triggered when a user views a notable UI element.
+      Triggered once per page load, as soon as any pixel of that UI 
+      element is visible in the foreground for any length of time.
+      UI elements may include: content, pages, CTAs, etc.
+    bugs:
+      - TBD
+    data_reviews:
+      - TBD
+    notification_emails:
+      - kdemtchouk@mozilla.com
+    expires: never
+    extra_keys:
+      ui_identifier: &ui_identifier
+        description: >
+          The string id of the UI element that was seen/interacted
+          with by the user (e.g. `home.rec` or `home.boost`).
+          The identifier is a period-delimited string, ordered in
+          increasing order of specificity (e.g. `[SCREEN].[BUTTON]`).
+          All existing identifier values are being tracked here:
+          https://docs.google.com/spreadsheets/d/1KX6TiyXXg2fE0a1IDKsy5O97ZrHYvjKohmIX_m8ECXY/edit?usp=sharing
+        type: string
+      ui_additional_detail: &ui_additional_detail
+        description: >
+          An optional string to record further informatin about the UI
+          element, such as its starting value if it is a toggle or setting.
+        type: string
+      mastodon_status_id: &mastodon_status_id
+        description: >
+          The Mastodon status ID of the post that was seen/interacted
+          with by the user, if any.
+          The Mastodon API calls statuses "posts", but they are one and the same.
+        type: string
+      mastodon_account_id: &mastodon_account_id
+        description: >
+          The Mastodon account ID of the UI element that was seen/interacted
+          with by the user, if any.
+          For example, the account ID of the user who created a post that was
+          seen/interacted with. Or, the account ID of the user that was followed.
+        type: string
+      mastodon_account_handle: &mastodon_account_handle
+        description: >
+          The Mastodon account handle of the UI element that was seen/interacted
+          with by the user, if any.
+          For example, the account handle of the user who created a post that was
+          seen/interacted with. Or, the account handle of the user that was followed.
+        type: string
+      recommendation_id: &recommendation_id
+        description: >
+          TBD recommendation identifier of the content
+          that was seen/interacted with by the user, if any.
+        type: string
+
+  engagement:
+    type: event
+    description: >
+      Event triggered when a user taps/clicks on a UI element, 
+      triggering a change in app state.
+    bugs:
+      - TBD
+    data_reviews:
+      - TBD
+    notification_emails:
+      - kdemtchouk@mozilla.com
+    expires: never
+    extra_keys:
+      ui_identifier: *ui_identifier
+      ui_additional_detail: *ui_additional_detail
+      mastodon_status_id: *mastodon_status_id
+      mastodon_account_id: *mastodon_account_id
+      mastodon_account_handle: *mastodon_account_handle
+      recommendation_id: *recommendation_id
+      engagement_type:
+        description: >
+          The type of user engagement that triggered this event.
+          One of:
+            * `follow`
+            * `post`
+            * `reply`
+            * `favorite`
+            * `boost`
+            * `bookmark`
+            * `general`
+        type: string
+      engagement_value:
+        description: >
+          If the UI element is a toggle or setting, the value of the
+          toggle/setting after user interaction has taken place.
+        type: string
