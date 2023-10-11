@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct LoginView: View {    
+struct LoginView: View {
     @StateObject var auth = AuthenticationService()
 
     var body: some View {
@@ -65,7 +65,7 @@ struct LoginView: View {
             VStack {
                 Image("MoSoIcon")
                     .resizable()
-                    .frame(width:200, height:200)
+                    .frame(width: 200, height: 200)
                     .clipShape(.rect(cornerRadius: 10))
                 Spacer()
                 Button("Sign in/Sign up") {

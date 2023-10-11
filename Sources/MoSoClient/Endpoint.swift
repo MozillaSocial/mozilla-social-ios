@@ -45,7 +45,7 @@ struct RecommendationsEndpoint: Endpoint {
         static let path = "/content-feed/moso/v1/discover"
         // query items keys
         static let locale = "locale"
-        static let imageSizes = "image_sizes"
+        static let imageSizes = "image_sizes[]"
         // TODO: in this simple implementation, we are requesting one size (the smallest) for all images, used as thumbnails
         // The request can accept multiple sizes and return multiple urls
         static let requestedSizes = "202x"
