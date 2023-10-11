@@ -20,6 +20,8 @@
 		AAE52B662AB2D39900956FBE /* MoSoClient in Frameworks */ = {isa = PBXBuildFile; productRef = AAE52B652AB2D39900956FBE /* MoSoClient */; };
 		AAE52B682AB4CEF400956FBE /* MoSoCore in Frameworks */ = {isa = PBXBuildFile; productRef = AAE52B672AB4CEF400956FBE /* MoSoCore */; };
 		AAE52B6A2AB4CFE300956FBE /* AppConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE52B692AB4CFE300956FBE /* AppConfigurator.swift */; };
+		C8D44DD22ACDC1710087CE3C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D44DD12ACDC1710087CE3C /* LoginView.swift */; };
+		C8D44DD62ACE10220087CE3C /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D44DD52ACE10220087CE3C /* AuthenticationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		AA7BDC8D2AB25C2200ACCACF /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		AA7BDC992AB2C54200ACCACF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AAE52B692AB4CFE300956FBE /* AppConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurator.swift; sourceTree = "<group>"; };
+		C8D44DD12ACDC1710087CE3C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		C8D44DD52ACE10220087CE3C /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 				AA7BDC5F2AB2571800ACCACF /* MoSoContentApp.swift */,
 				AA7BDC8D2AB25C2200ACCACF /* RootView.swift */,
 				AAE52B692AB4CFE300956FBE /* AppConfigurator.swift */,
+				C8D44DD52ACE10220087CE3C /* AuthenticationService.swift */,
+				C8D44DD12ACDC1710087CE3C /* LoginView.swift */,
 				AA7BDC962AB2C33600ACCACF /* Resources */,
 				AA7BDC652AB2571900ACCACF /* Preview Content */,
 			);
@@ -324,8 +330,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8D44DD62ACE10220087CE3C /* AuthenticationService.swift in Sources */,
 				AA7BDC8E2AB25C2200ACCACF /* RootView.swift in Sources */,
 				AA7BDC602AB2571800ACCACF /* MoSoContentApp.swift in Sources */,
+				C8D44DD22ACDC1710087CE3C /* LoginView.swift in Sources */,
 				AAE52B6A2AB4CFE300956FBE /* AppConfigurator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -31,6 +31,11 @@ struct RootView: View {
                         )
                     }
                     .tag(Tab.readingList)
+
+                LoginView()
+                .tabItem {
+                    Image(systemName: "person")
+                }
             }
             .toolbar(.visible, for: .tabBar)
             .toolbarBackground(Color(.mosoLayerColor1), for: .tabBar)
