@@ -172,6 +172,7 @@ ui:
             * `favorite`
             * `boost`
             * `bookmark`
+            * `share`
             * `general`
         type: string
       engagement_value:

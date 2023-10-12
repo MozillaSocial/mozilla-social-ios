@@ -24,7 +24,7 @@ struct MoSoDiscoverTracker: DiscoverTracker {
     }
 
     func trackRecommendationShare(recommendationID: String) {
-        trackRecommendationEngagement(action: .general, recommendationID: recommendationID, uiIdentifier: UIIdentifiers.recommendationShare)
+        trackRecommendationEngagement(action: .share, recommendationID: recommendationID, uiIdentifier: UIIdentifiers.recommendationShare)
     }
 
     func trackRecommendationBookmark(recommendationID: String) {
