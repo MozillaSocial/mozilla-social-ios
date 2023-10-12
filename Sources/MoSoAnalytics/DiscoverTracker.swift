@@ -2,12 +2,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-// TODO: complete method signatures with actual parameters
 /// A protocol for an analytics module to track events in `DiscoverKit`. Consumers can use the
-/// default implementation offered by `AnalyticsProvider`, or implement their own
+/// implementation offered by `AnalyticsProvider`, or implement their own
 public protocol DiscoverTracker {
     func trackRecommendationOpen(recommendationID: String)
     func trackRecommendationShare(recommendationID: String)
+    func trackRecommendationBookmark(recommendationID: String)
+    func trackRecommendationImpression(recommendationID: String)
 }
 
 struct MoSoDiscoverTracker: DiscoverTracker {
@@ -18,31 +19,41 @@ struct MoSoDiscoverTracker: DiscoverTracker {
     }
 
     func trackRecommendationOpen(recommendationID: String) {
-        baseTracker.trackEngagement(
-            action: .general,
-            associatedValue: nil,
-            postID: nil,
-            recommendationID: recommendationID,
-            additionalInfo: nil,
-            uiIdentifier: Identifiers.recommendationOpen
-        )
+        trackRecommendationEngagement(action: .general, recommendationID: recommendationID, eventIdentifier: EventIdentifiers.recommendationOpen)
     }
 
     func trackRecommendationShare(recommendationID: String) {
+        trackRecommendationEngagement(action: .general, recommendationID: recommendationID, eventIdentifier: EventIdentifiers.recommendationShare)
+    }
+
+    func trackRecommendationBookmark(recommendationID: String) {
+        trackRecommendationEngagement(action: .bookmark, recommendationID: recommendationID, eventIdentifier: EventIdentifiers.recommendationBookmark)
+    }
+
+    func trackRecommendationImpression(recommendationID: String) {
+        baseTracker.trackImpression(postID: nil, recommendationID: recommendationID, additionalInfo: nil, uiIdentifier: EventIdentifiers.recommendationImpression)
+    }
+
+    private func trackRecommendationEngagement(action: EngagementAction, recommendationID: String, eventIdentifier: String) {
         baseTracker.trackEngagement(
-            action: .general,
+            action: action,
             associatedValue: nil,
             postID: nil,
             recommendationID: recommendationID,
             additionalInfo: nil,
-            uiIdentifier: Identifiers.recommendationShare
+            uiIdentifier: eventIdentifier
         )
     }
 }
 
+// MARK: Event Identifiers
 private extension MoSoDiscoverTracker {
-    enum Identifiers {
+    enum EventIdentifiers {
+        // Impressions
+        static let recommendationImpression = "discover.recommendation.impression"
+        // Engagements
         static let recommendationOpen = "discover.recommendation.open"
         static let recommendationShare = "discover.recommendation.share"
+        static let recommendationBookmark = "discover.recommendation.bookmark"
     }
 }

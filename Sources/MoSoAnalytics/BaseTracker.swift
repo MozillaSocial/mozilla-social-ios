@@ -11,7 +11,10 @@ import MoSoCore
 public protocol BaseTracker {
     func start()
     func stop()
-    func trackImpression(mastodonID: String, recommendationID: String)
+    func trackImpression(postID: String?,
+                         recommendationID: String?,
+                         additionalInfo: String?,
+                         uiIdentifier: String?)
     func trackEngagement(action: EngagementAction,
                          associatedValue: String?,
                          postID: String?,
@@ -39,7 +42,20 @@ struct GleanBaseTracker: BaseTracker {
         Glean.shared.shutdown()
     }
 
-    func trackImpression(mastodonID: String, recommendationID: String) {
+    func trackImpression(postID: String?,
+                         recommendationID: String?,
+                         additionalInfo: String?,
+                         uiIdentifier: String?) {
+        GleanMetrics.Ui.impression.record(
+            .init(
+                mastodonAccountHandle: session.user?.username,
+                mastodonAccountId: session.user?.identifier,
+                mastodonStatusId: postID,
+                recommendationId: recommendationID,
+                uiAdditionalDetail: additionalInfo,
+                uiIdentifier: uiIdentifier
+            )
+        )
     }
 
     func trackEngagement(action: EngagementAction,
