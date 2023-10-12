@@ -67,6 +67,10 @@ class DiscoverViewModel: LoadableObject {
         tracker.trackRecommendationShare(recommendationID: recommendationID)
     }
 
+    func trackDiscoverScreenImpression() {
+        tracker.trackDiscoverScreenImpression()
+    }
+
     func trackRecommendationImpression(recommendationID: String) {
         tracker.trackRecommendationImpression(recommendationID: recommendationID)
     }

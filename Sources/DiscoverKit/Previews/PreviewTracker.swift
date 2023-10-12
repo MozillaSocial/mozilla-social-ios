@@ -6,6 +6,7 @@ import MoSoAnalytics
 
 /// Placeholder `DiscoverTracker` used in previews
 struct PreviewTracker: DiscoverTracker {
+    func trackDiscoverScreenImpression() {}
     func trackRecommendationOpen(recommendationID: String) {}
     func trackRecommendationShare(recommendationID: String) {}
     func trackRecommendationBookmark(recommendationID: String) {}
