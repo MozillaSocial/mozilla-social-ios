@@ -4,18 +4,18 @@
 
 import MoSoCore
 
-// TODO: add implementations and configurations
 /// Provides access to MoSo analytics services.
 /// Initializing this type will automatically start the service.
 /// The service can be stopped and (re)started using the `stop()` and `start()` methods.
 public final class AnalyticsProvider {
     public let baseTracker: BaseTracker
 
-    public init(session: MoSoSession) {
-        self.baseTracker = GleanBaseTracker(session: session)
-        baseTracker.start()
+    public init(session: MoSoSession, baseTracker: BaseTracker? = nil) {
+        self.baseTracker = baseTracker ?? GleanBaseTracker(session: session)
+        self.baseTracker.start()
     }
 
+    /// Provides a concrete implementation of `DiscoverTracker`
     public func makeDiscoverTracker() -> DiscoverTracker {
         MoSoDiscoverTracker(baseTracker: baseTracker)
     }
