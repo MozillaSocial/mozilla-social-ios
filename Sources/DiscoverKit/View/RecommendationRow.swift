@@ -20,6 +20,9 @@ struct RecommendationRow: View {
         }
         .padding(.top, Constants.padding)
         .padding(.bottom, Constants.padding)
+        .onAppear {
+            viewModel.trackRecommendationImpression(recommendationID: recommendation.recommendationID)
+        }
     }
 
     func makeTextContentView() -> some View {
