@@ -19,36 +19,36 @@ struct MoSoDiscoverTracker: DiscoverTracker {
     }
 
     func trackRecommendationOpen(recommendationID: String) {
-        trackRecommendationEngagement(action: .general, recommendationID: recommendationID, eventIdentifier: EventIdentifiers.recommendationOpen)
+        trackRecommendationEngagement(action: .general, recommendationID: recommendationID, uiIdentifier: UIIdentifiers.recommendationOpen)
     }
 
     func trackRecommendationShare(recommendationID: String) {
-        trackRecommendationEngagement(action: .general, recommendationID: recommendationID, eventIdentifier: EventIdentifiers.recommendationShare)
+        trackRecommendationEngagement(action: .general, recommendationID: recommendationID, uiIdentifier: UIIdentifiers.recommendationShare)
     }
 
     func trackRecommendationBookmark(recommendationID: String) {
-        trackRecommendationEngagement(action: .bookmark, recommendationID: recommendationID, eventIdentifier: EventIdentifiers.recommendationBookmark)
+        trackRecommendationEngagement(action: .bookmark, recommendationID: recommendationID, uiIdentifier: UIIdentifiers.recommendationBookmark)
     }
 
     func trackRecommendationImpression(recommendationID: String) {
-        baseTracker.trackImpression(postID: nil, recommendationID: recommendationID, additionalInfo: nil, uiIdentifier: EventIdentifiers.recommendationImpression)
+        baseTracker.trackImpression(postID: nil, recommendationID: recommendationID, additionalInfo: nil, uiIdentifier: UIIdentifiers.recommendationImpression)
     }
 
-    private func trackRecommendationEngagement(action: EngagementAction, recommendationID: String, eventIdentifier: String) {
+    private func trackRecommendationEngagement(action: EngagementAction, recommendationID: String, uiIdentifier: String) {
         baseTracker.trackEngagement(
             action: action,
             associatedValue: nil,
             postID: nil,
             recommendationID: recommendationID,
             additionalInfo: nil,
-            uiIdentifier: eventIdentifier
+            uiIdentifier: uiIdentifier
         )
     }
 }
 
-// MARK: Event Identifiers
+// MARK: UI Identifiers
 private extension MoSoDiscoverTracker {
-    enum EventIdentifiers {
+    enum UIIdentifiers {
         // Impressions
         static let recommendationImpression = "discover.recommendation.impression"
         // Engagements
