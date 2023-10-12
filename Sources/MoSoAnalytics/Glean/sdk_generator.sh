@@ -54,7 +54,7 @@ ARGS:
 
 OPTIONS:
     -a, --allow-reserved               Allow reserved names.
-    -o, --output  <PATH>               Folder to place generated code in. Default: \$SOURCE_ROOT/\$PROJECT/Generated
+    -o, --output  <PATH>               Folder to place generated code in. Default: ./Generated-Metrics
     -g, --glean-namespace <NAME>       The Glean namespace to use in generated code.
     -m, --markdown <PATH>              Generate markdown documentation in provided directory.
     -b, --build-date <TEXT>            Set a specific build date or disable build date generation with `0`.
@@ -74,7 +74,7 @@ DOCS_DIRECTORY=""
 BUILD_DATE=""
 EXPIRE_VERSION=""
 declare -a YAML_FILES=()
-OUTPUT_DIR="${SOURCE_ROOT}/${PROJECT}/Generated"
+OUTPUT_DIR="./Generated-Metrics"
 
 while (( "$#" )); do
     case "$1" in
@@ -141,19 +141,19 @@ else
     done
 fi
 
-if [ -z "$SOURCE_ROOT" ]; then
-    echo "Error: No \$SOURCE_ROOT defined."
-    echo "Execute this script as a build step in Xcode."
-    exit 2
-fi
+#if [ -z "$SOURCE_ROOT" ]; then
+#    echo "Error: No \$SOURCE_ROOT defined."
+#    echo "Execute this script as a build step in Xcode."
+#    exit 2
+#fi
+#
+#if [ -z "$PROJECT" ]; then
+#    echo "Error: No \$PROJECT defined."
+#    echo "Execute this script as a build step in Xcode."
+#    exit 2
+#fi
 
-if [ -z "$PROJECT" ]; then
-    echo "Error: No \$PROJECT defined."
-    echo "Execute this script as a build step in Xcode."
-    exit 2
-fi
-
-VENVDIR="${SOURCE_ROOT}/.venv"
+VENVDIR="./.venv"
 
 [ -x "${VENVDIR}/bin/python" ] || python3 -m venv "${VENVDIR}"
 # We need at least pip 20.3 for Big Sur support, see https://pip.pypa.io/en/stable/news/#id48

@@ -3,10 +3,13 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 // TODO: add implementations and configurations
+/// Provides access to MoSo analytics services.
+/// Initializing this type will automatically start the service.
+/// The service can be stopped and (re)started using the `stop()` and `start()` methods.
 public final class AnalyticsProvider {
     public let baseTracker: BaseTracker
 
-    init(baseTracker: BaseTracker) {
+    public init() {
         self.baseTracker = GleanBaseTracker()
         baseTracker.start()
     }
@@ -15,12 +18,12 @@ public final class AnalyticsProvider {
         MoSoDiscoverTracker(baseTracker: baseTracker)
     }
 
-    /// Starts the analytics service. Useful if it gets stopped after init
+    /// Start the analytics service. Useful if it gets stopped after init
     public func start() {
         baseTracker.start()
     }
 
-    /// Stops sending events to the analytics service.
+    /// Stop sending events to the analytics service.
     public func stop() {
         baseTracker.stop()
     }
