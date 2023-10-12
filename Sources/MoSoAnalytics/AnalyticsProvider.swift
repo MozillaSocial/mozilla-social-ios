@@ -5,6 +5,7 @@
 import MoSoCore
 
 /// Provides access to MoSo analytics services.
+/// The base service can be substituted with an external implementation.
 /// Initializing this type will automatically start the service.
 /// The service can be stopped and (re)started using the `stop()` and `start()` methods.
 public final class AnalyticsProvider {
