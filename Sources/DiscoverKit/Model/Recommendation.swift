@@ -10,13 +10,15 @@ import MoSoClient
 /// Local Recommendation type
 struct Recommendation: Identifiable, Equatable, Hashable {
     public var id = UUID()
+    public let recommendationID: String
     public let url: String
     public let title: String
     public let excerpt: String
     public let publisher: String
     public let imageUrl: String?
 
-    init(url: String, title: String, excerpt: String, publisher: String, imageUrl: String?) {
+    init(recommendationID: String, url: String, title: String, excerpt: String, publisher: String, imageUrl: String?) {
+        self.recommendationID = recommendationID
         self.url = url
         self.title = title
         self.excerpt = excerpt
@@ -25,6 +27,7 @@ struct Recommendation: Identifiable, Equatable, Hashable {
     }
 
     init(from remoteRecommendation: RemoteRecommendation) {
+        self.recommendationID = remoteRecommendation.recommendationID
         self.url = remoteRecommendation.url
         self.title = remoteRecommendation.title
         self.excerpt = remoteRecommendation.excerpt

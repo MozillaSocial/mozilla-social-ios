@@ -6,10 +6,12 @@ import Combine
 import Foundation
 import MoSoClient
 import MoSoCore
+import MoSoAnalytics
 
 @MainActor
 class DiscoverViewModel: LoadableObject {
     private let store: RecommendationsStore
+    private let tracker: DiscoverTracker
 
     @Published var state: LoadingState<[Recommendation]> = .idle
     @Published var term = String()
@@ -17,8 +19,10 @@ class DiscoverViewModel: LoadableObject {
     private var subscriptions = Set<AnyCancellable>()
     private var isSearching = false
 
-    init(store: RecommendationsStore) {
+    init(store: RecommendationsStore, tracker: DiscoverTracker) {
         self.store = store
+        self.tracker = tracker
+
         store.recommendationsPublisher
             .dropFirst()
             .receive(on: DispatchQueue.main)
@@ -53,5 +57,9 @@ class DiscoverViewModel: LoadableObject {
                 self.state = .failed(error)
             }
         }
+    }
+
+    func trackRecommendationOpen(recommendationID: String) {
+        tracker.trackRecommendationOpen(recommendationID: recommendationID)
     }
 }

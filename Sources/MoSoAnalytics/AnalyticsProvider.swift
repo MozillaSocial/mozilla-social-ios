@@ -2,6 +2,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import MoSoCore
+
 // TODO: add implementations and configurations
 /// Provides access to MoSo analytics services.
 /// Initializing this type will automatically start the service.
@@ -9,8 +11,8 @@
 public final class AnalyticsProvider {
     public let baseTracker: BaseTracker
 
-    public init() {
-        self.baseTracker = GleanBaseTracker()
+    public init(session: MoSoSession) {
+        self.baseTracker = GleanBaseTracker(session: session)
         baseTracker.start()
     }
 
