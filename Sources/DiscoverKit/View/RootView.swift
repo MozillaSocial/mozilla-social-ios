@@ -20,6 +20,6 @@ struct RootView: View {
     }
 }
 
-#Preview {
-    RootView(viewModel: DiscoverViewModel(store: PreviewStore()))
-}
+// #Preview {
+//    RootView(viewModel: DiscoverViewModel(store: PreviewStore()))
+// }

@@ -5,14 +5,17 @@
 import SwiftUI
 import MoSoClient
 import MoSoCore
+import MoSoAnalytics
 
 /// Dependency container
 public final class DiscoverProvider: ObservableObject {
     // TODO: this property can be observed as the session/user logged in status changes
     @Published var session: MoSoSession
+    private let tracker: DiscoverTracker
     // TODO: initializer could be use to inject configurations, actions etc
-    public init(session: MoSoSession) {
+    public init(session: MoSoSession, tracker: DiscoverTracker) {
         self.session = session
+        self.tracker = tracker
     }
 
     @MainActor
@@ -22,7 +25,7 @@ public final class DiscoverProvider: ObservableObject {
 
     @MainActor
     private func makeDiscoverViewModel() -> DiscoverViewModel {
-        DiscoverViewModel(store: makeRecommendationsStore())
+        DiscoverViewModel(store: makeRecommendationsStore(), tracker: tracker)
     }
 
     private func makeRecommendationsStore() -> RecommendationsStore {

@@ -24,11 +24,14 @@ struct RecommendationsView: View {
             ZStack {
                 Color(.mosoLayerColor1).ignoresSafeArea()
                     ListView(recommendations: recommendations)
-                        .navigationDestination(for: Recommendation.self) {
-                            RecommendationDetailView(recommendation: $0)
+                        .navigationDestination(for: Recommendation.self) { recommendation in
+                            RecommendationDetailView(recommendation: recommendation)
                                 .navigationBarTitleDisplayMode(.inline)
                                 .toolbarBackground(.visible, for: .navigationBar)
                                 .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)
+                                .onAppear {
+                                    viewModel.trackRecommendationOpen(recommendationID: recommendation.recommendationID)
+                                }
                         }
                         .if(sizeClass == .regular) { view in
                             view.frame(width: RecommendationsView.maxReadableWidth, alignment: .center)

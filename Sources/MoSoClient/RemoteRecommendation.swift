@@ -8,6 +8,7 @@ import Foundation
 // In practice, we might deal with more complex mapping and persistence, so let's keep it this way for clarity
 /// A type that maps a Recommendation coming from a remote api
 public struct RemoteRecommendation: Decodable {
+    public let recommendationID: String
     public let url: String
     public let title: String
     public let excerpt: String
@@ -15,6 +16,7 @@ public struct RemoteRecommendation: Decodable {
     public let imageUrl: String?
 
     enum CodingKeys: String, CodingKey {
+        case id
         case url
         case title
         case excerpt
@@ -28,6 +30,7 @@ public struct RemoteRecommendation: Decodable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.recommendationID = try container.decode(String.self, forKey: .id)
         self.url = try container.decode(String.self, forKey: .url)
         self.title = try container.decode(String.self, forKey: .title)
         self.excerpt = try container.decode(String.self, forKey: .excerpt)
