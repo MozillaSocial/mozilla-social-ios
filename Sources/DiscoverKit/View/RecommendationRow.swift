@@ -6,16 +6,9 @@ import DesignKit
 import SwiftUI
 
 struct RecommendationRow: View {
-    private enum Constants {
-        static let padding: CGFloat = 16
-        static let spacing: CGFloat = 4
-        static let lineLimit: Int = 5
-        static let buttonSize: CGFloat = 48
-        static let thumbnailSize: CGFloat = 80
-        static let cornerRadius: CGFloat = 8.0
-    }
-
+    @EnvironmentObject var viewModel: DiscoverViewModel
     let recommendation: Recommendation
+
     var body: some View {
         VStack {
             HStack(alignment: .top) {
@@ -70,11 +63,27 @@ struct RecommendationRow: View {
                 Image(.share)
                     .renderingMode(.template)
             }
+            .gesture(
+                TapGesture().onEnded {
+                    viewModel.trackRecommendationShare(recommendationID: recommendation.recommendationID)
+                }
+            )
             .frame(width: Constants.buttonSize, height: Constants.buttonSize)
             .contentShape(Rectangle())
             .buttonStyle(.plain)
             .accessibility(addTraits: .isButton)
         }
+    }
+}
+
+private extension RecommendationRow {
+    enum Constants {
+        static let padding: CGFloat = 16
+        static let spacing: CGFloat = 4
+        static let lineLimit: Int = 5
+        static let buttonSize: CGFloat = 48
+        static let thumbnailSize: CGFloat = 80
+        static let cornerRadius: CGFloat = 8.0
     }
 }
 
