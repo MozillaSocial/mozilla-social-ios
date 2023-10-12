@@ -28,6 +28,7 @@ struct GleanBaseTracker: BaseTracker {
 
     init(session: MoSoSession) {
         self.session = session
+        // TODO: for now we are in debug mode. We log in the console and to https://debug-ping-preview.firebaseapp.com/pings/moso-ios-test
         Glean.shared.setLogPings(true)
         Glean.shared.setDebugViewTag("moso-ios-test")
     }

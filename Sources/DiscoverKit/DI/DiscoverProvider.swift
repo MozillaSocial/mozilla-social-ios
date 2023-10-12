@@ -12,7 +12,7 @@ public final class DiscoverProvider: ObservableObject {
     // TODO: this property can be observed as the session/user logged in status changes
     @Published var session: MoSoSession
     private let tracker: DiscoverTracker
-    // TODO: initializer could be use to inject configurations, actions etc
+
     public init(session: MoSoSession, tracker: DiscoverTracker) {
         self.session = session
         self.tracker = tracker
