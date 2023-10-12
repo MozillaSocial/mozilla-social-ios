@@ -6,16 +6,19 @@
 
 import SwiftUI
 
-public struct AsyncContentView<Source: LoadableObject, Content: View, ErrorContent: View>: View {
+public struct AsyncContentView<Source: LoadableObject, Content: View, ProgressContent: View, ErrorContent: View>: View {
     @ObservedObject var source: Source
     var content: (Source.Output) -> Content
+    var progressContent: () -> ProgressContent
     var errorContent: (Error) -> ErrorContent
 
     public init(source: Source,
                 @ViewBuilder content: @escaping (Source.Output) -> Content,
+                @ViewBuilder progressContent: @escaping () -> ProgressContent,
                 @ViewBuilder errorContent: @escaping (Error) -> ErrorContent) {
         self.source = source
         self.content = content
+        self.progressContent = progressContent
         self.errorContent = errorContent
     }
 
@@ -26,7 +29,7 @@ public struct AsyncContentView<Source: LoadableObject, Content: View, ErrorConte
                 source.load()
             }
         case .loading:
-            ProgressView()
+            progressContent()
         case .failed(let error):
             errorContent(error)
         case .ready(let output):
