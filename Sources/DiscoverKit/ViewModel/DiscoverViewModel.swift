@@ -62,4 +62,8 @@ class DiscoverViewModel: LoadableObject {
     func trackRecommendationOpen(recommendationID: String) {
         tracker.trackRecommendationOpen(recommendationID: recommendationID)
     }
+
+    func trackRecommendationShare(recommendationID: String) {
+        tracker.trackRecommendationShare(recommendationID: recommendationID)
+    }
 }
