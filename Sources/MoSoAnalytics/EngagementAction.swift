@@ -9,6 +9,7 @@ public enum EngagementAction: String {
     case favorite
     case boost
     case bookmark
+    case share
     case general
     case none
 
