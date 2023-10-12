@@ -96,4 +96,3 @@ iOSInjectionProject/
 .netrc
 secrets*.xcconfig
 .venv/
-Generated-Metrics/
