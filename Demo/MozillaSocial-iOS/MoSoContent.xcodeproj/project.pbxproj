@@ -180,6 +180,7 @@
 				AA7BDC592AB2571800ACCACF /* Frameworks */,
 				AA7BDC5A2AB2571800ACCACF /* Resources */,
 				8AA6BA332AC4916F00B93B6C /* Run Swiftlint */,
+				AA9E655F2AD7600000BE5789 /* Glean Generator */,
 			);
 			buildRules = (
 			);
@@ -326,6 +327,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint > /dev/null; then\n  if [ \"$CONFIGURATION\" = 'Debug' ]; then\n    swiftlint --strict\n  else \n    echo \"Skipping swift lint because it is not a local developer build.\"\n  fi  \nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		AA9E655F2AD7600000BE5789 /* Glean Generator */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/../../Sources/MoSoAnalytics/Config/metrics.yaml",
+			);
+			name = "Glean Generator";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/../../Sources/MoSoAnalytics/Generated-Metrics/Metrics.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nbash $PWD/../../Sources/MoSoAnalytics/Config/sdk_generator.sh --output $PWD/../../Sources/MoSoAnalytics/Generated-Metrics\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
