@@ -63,15 +63,15 @@ struct RecommendationRow: View {
                 Image(.share)
                     .renderingMode(.template)
             }
-            .gesture(
-                TapGesture().onEnded {
-                    viewModel.trackRecommendationShare(recommendationID: recommendation.recommendationID)
-                }
-            )
             .frame(width: Constants.buttonSize, height: Constants.buttonSize)
             .contentShape(Rectangle())
             .buttonStyle(.plain)
             .accessibility(addTraits: .isButton)
+            .simultaneousGesture(
+                TapGesture().onEnded {
+                    viewModel.trackRecommendationShare(recommendationID: recommendation.recommendationID)
+                }
+            )
         }
     }
 }
