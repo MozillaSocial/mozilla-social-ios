@@ -8,6 +8,7 @@ public protocol DiscoverTracker {
     func trackRecommendationOpen(recommendationID: String)
     func trackRecommendationShare(recommendationID: String)
     func trackRecommendationBookmark(recommendationID: String)
+    func trackDiscoverScreenImpression()
     func trackRecommendationImpression(recommendationID: String)
 }
 
@@ -30,6 +31,10 @@ struct MoSoDiscoverTracker: DiscoverTracker {
         trackRecommendationEngagement(action: .bookmark, recommendationID: recommendationID, uiIdentifier: UIIdentifiers.recommendationBookmark)
     }
 
+    func trackDiscoverScreenImpression() {
+        baseTracker.trackImpression(postID: nil, recommendationID: nil, additionalInfo: nil, uiIdentifier: UIIdentifiers.discoverScreenImpression)
+    }
+
     func trackRecommendationImpression(recommendationID: String) {
         baseTracker.trackImpression(postID: nil, recommendationID: recommendationID, additionalInfo: nil, uiIdentifier: UIIdentifiers.recommendationImpression)
     }
@@ -50,6 +55,7 @@ struct MoSoDiscoverTracker: DiscoverTracker {
 private extension MoSoDiscoverTracker {
     enum UIIdentifiers {
         // Impressions
+        static let discoverScreenImpression = "discover.screen.impression"
         static let recommendationImpression = "discover.recommendation.impression"
         // Engagements
         static let recommendationOpen = "discover.recommendation.open"

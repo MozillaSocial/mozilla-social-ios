@@ -39,6 +39,9 @@ struct RecommendationsView: View {
             }
             .navigationTitle(Text("Today's Top Picks"))
         }
+        .onAppear {
+            viewModel.trackDiscoverScreenImpression()
+        }
     }
 }
 
