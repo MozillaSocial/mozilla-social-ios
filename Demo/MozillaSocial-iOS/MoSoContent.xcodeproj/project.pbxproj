@@ -18,6 +18,7 @@
 		AA7BDC8E2AB25C2200ACCACF /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7BDC8D2AB25C2200ACCACF /* RootView.swift */; };
 		AA7BDC902AB26EFC00ACCACF /* DiscoverKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA7BDC8F2AB26EFC00ACCACF /* DiscoverKit */; };
 		AA7BDC922AB26EFC00ACCACF /* ReadingListKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA7BDC912AB26EFC00ACCACF /* ReadingListKit */; };
+		AA9E65612AD77D2D00BE5789 /* MoSoAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = AA9E65602AD77D2D00BE5789 /* MoSoAnalytics */; };
 		AAE52B662AB2D39900956FBE /* MoSoClient in Frameworks */ = {isa = PBXBuildFile; productRef = AAE52B652AB2D39900956FBE /* MoSoClient */; };
 		AAE52B682AB4CEF400956FBE /* MoSoCore in Frameworks */ = {isa = PBXBuildFile; productRef = AAE52B672AB4CEF400956FBE /* MoSoCore */; };
 		AAE52B6A2AB4CFE300956FBE /* AppConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE52B692AB4CFE300956FBE /* AppConfigurator.swift */; };
@@ -67,6 +68,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA7BDC902AB26EFC00ACCACF /* DiscoverKit in Frameworks */,
+				AA9E65612AD77D2D00BE5789 /* MoSoAnalytics in Frameworks */,
 				AA7BDC922AB26EFC00ACCACF /* ReadingListKit in Frameworks */,
 				AAE52B662AB2D39900956FBE /* MoSoClient in Frameworks */,
 				AAE52B682AB4CEF400956FBE /* MoSoCore in Frameworks */,
@@ -180,7 +182,6 @@
 				AA7BDC592AB2571800ACCACF /* Frameworks */,
 				AA7BDC5A2AB2571800ACCACF /* Resources */,
 				8AA6BA332AC4916F00B93B6C /* Run Swiftlint */,
-				AA9E655F2AD7600000BE5789 /* Glean Generator */,
 			);
 			buildRules = (
 			);
@@ -193,6 +194,7 @@
 				AAE52B652AB2D39900956FBE /* MoSoClient */,
 				AAE52B672AB4CEF400956FBE /* MoSoCore */,
 				8AA6BA362AC496C800B93B6C /* DesignKit */,
+				AA9E65602AD77D2D00BE5789 /* MoSoAnalytics */,
 			);
 			productName = MoSoContent;
 			productReference = AA7BDC5C2AB2571800ACCACF /* MoSoContent.app */;
@@ -327,26 +329,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint > /dev/null; then\n  if [ \"$CONFIGURATION\" = 'Debug' ]; then\n    swiftlint --strict\n  else \n    echo \"Skipping swift lint because it is not a local developer build.\"\n  fi  \nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		AA9E655F2AD7600000BE5789 /* Glean Generator */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/../../Sources/MoSoAnalytics/Config/metrics.yaml",
-			);
-			name = "Glean Generator";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(SRCROOT)/../../Sources/MoSoAnalytics/Generated-Metrics/Metrics.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nbash $PWD/../../Sources/MoSoAnalytics/Config/sdk_generator.sh --output $PWD/../../Sources/MoSoAnalytics/Generated-Metrics\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -708,6 +690,10 @@
 		AA7BDC912AB26EFC00ACCACF /* ReadingListKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ReadingListKit;
+		};
+		AA9E65602AD77D2D00BE5789 /* MoSoAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoSoAnalytics;
 		};
 		AAE52B652AB2D39900956FBE /* MoSoClient */ = {
 			isa = XCSwiftPackageProductDependency;
