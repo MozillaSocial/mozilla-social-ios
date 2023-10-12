@@ -141,18 +141,6 @@ else
     done
 fi
 
-#if [ -z "$SOURCE_ROOT" ]; then
-#    echo "Error: No \$SOURCE_ROOT defined."
-#    echo "Execute this script as a build step in Xcode."
-#    exit 2
-#fi
-#
-#if [ -z "$PROJECT" ]; then
-#    echo "Error: No \$PROJECT defined."
-#    echo "Execute this script as a build step in Xcode."
-#    exit 2
-#fi
-
 VENVDIR="./.venv"
 
 [ -x "${VENVDIR}/bin/python" ] || python3 -m venv "${VENVDIR}"

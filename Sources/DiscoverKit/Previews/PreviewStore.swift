@@ -5,7 +5,7 @@
 import Combine
 import MoSoClient
 
-// TODO: this is just a placeholder for now
+/// Placeholder `RecommendationsStore` used in previews
 final class PreviewStore: RecommendationsStore {
     func clearSearch() {
     }
