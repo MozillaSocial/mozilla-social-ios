@@ -31,7 +31,7 @@ let package = Package(
             dependencies: ["MoSoClient"]),
         .target(
             name: "DiscoverKit",
-            dependencies: ["MoSoCore", "MoSoClient", "DesignKit"]
+            dependencies: ["MoSoCore", "MoSoClient", "DesignKit", "MoSoAnalytics"]
         ),
         .testTarget(
             name: "DiscoverKitTests",
