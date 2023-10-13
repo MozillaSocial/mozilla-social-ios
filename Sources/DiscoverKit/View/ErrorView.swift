@@ -14,7 +14,7 @@ struct ErrorView: View {
             ZStack {
                 Color(.mosoLayerColor1).ignoresSafeArea()
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Sorry, Something went wrong")
+                    Text("Sorry, something went wrong")
                         .font(.title)
                     Text("We're all about a healthy internet but sometimes things break.")
                         .font(.headline)
