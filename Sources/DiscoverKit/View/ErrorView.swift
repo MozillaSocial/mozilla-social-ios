@@ -16,7 +16,7 @@ struct ErrorView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Sorry, Something went wrong")
                         .font(.title)
-                    Text("We are all about a healthy internet but sometimes things break.")
+                    Text("We're all about a healthy internet but sometimes things break.")
                         .font(.headline)
                     Spacer()
                 }
