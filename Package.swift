@@ -49,11 +49,12 @@ let package = Package(
         .target(
             name: "MoSoAnalytics",
             dependencies: [
+                "MoSoCore",
                 .product(name: "Glean", package: "glean-swift")
             ]
         ),
         .testTarget(
             name: "MoSoAnalyticsTests",
-            dependencies: ["MoSoAnalytics"]),
+            dependencies: ["MoSoAnalytics", .product(name: "Glean", package: "glean-swift")]),
     ]
 )
