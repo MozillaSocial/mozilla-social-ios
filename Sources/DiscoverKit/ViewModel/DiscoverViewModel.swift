@@ -14,7 +14,6 @@ class DiscoverViewModel: LoadableObject {
     private let tracker: DiscoverTracker
 
     @Published var state: LoadingState<[Recommendation]> = .idle
-    @Published var term = String()
 
     private var subscriptions = Set<AnyCancellable>()
     private var isSearching = false
@@ -30,20 +29,6 @@ class DiscoverViewModel: LoadableObject {
                 self?.state = .ready(recommendations)
         }
         .store(in: &subscriptions)
-
-        $term
-            .debounce(for: 1, scheduler: DispatchQueue.global())
-            .sink { [weak self] term in
-                // TODO: this is a rather simplistic implementation, will need to be updated
-                guard let self else { return }
-                self.isSearching = term.count >= 3 ? true : false
-                if isSearching {
-                    self.store.searchRecommendations(by: term)
-                } else if term.isEmpty {
-                    self.store.clearSearch()
-                }
-            }
-            .store(in: &subscriptions)
     }
 
     func load() {

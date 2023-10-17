@@ -5,7 +5,6 @@
 import Foundation
 import MoSoClient
 
-// TODO: in this simple implementation separating the local and remote type might be overengineering
 // In practice, we might deal with more complex mapping and persistence, so let's keep it this way for clarity
 /// Local Recommendation type
 struct Recommendation: Identifiable, Equatable, Hashable {
