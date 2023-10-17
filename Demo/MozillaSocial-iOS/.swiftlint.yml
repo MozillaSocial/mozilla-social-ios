@@ -98,9 +98,12 @@ analyzer_rules: # Rules run by `swiftlint analyze`
   - unused_import
 
 included:
+  - ../../Demo
   - ../../Sources
   - ../../Tests
   - ../../MoSoContent
+excluded:
+  - ../../Sources/MoSoAnalytics/Glean/Generated-Metrics
 
 # reporter: "json" # reporter type (xcode, json, csv, checkstyle)
 reporter: 'xcode' # reporter type (xcode, json, csv, checkstyle)

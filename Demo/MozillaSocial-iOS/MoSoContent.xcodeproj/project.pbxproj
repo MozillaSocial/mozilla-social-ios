@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8AA6BA372AC496C800B93B6C /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8AA6BA362AC496C800B93B6C /* DesignKit */; };
+		8AE6B2082AC5EAA200F5F1E7 /* UITests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 8AE6B2072AC5EAA200F5F1E7 /* UITests.xctestplan */; };
 		AA7BDC602AB2571800ACCACF /* MoSoContentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7BDC5F2AB2571800ACCACF /* MoSoContentApp.swift */; };
 		AA7BDC642AB2571900ACCACF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA7BDC632AB2571900ACCACF /* Assets.xcassets */; };
 		AA7BDC672AB2571900ACCACF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA7BDC662AB2571900ACCACF /* Preview Assets.xcassets */; };
@@ -17,6 +18,7 @@
 		AA7BDC8E2AB25C2200ACCACF /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7BDC8D2AB25C2200ACCACF /* RootView.swift */; };
 		AA7BDC902AB26EFC00ACCACF /* DiscoverKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA7BDC8F2AB26EFC00ACCACF /* DiscoverKit */; };
 		AA7BDC922AB26EFC00ACCACF /* ReadingListKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA7BDC912AB26EFC00ACCACF /* ReadingListKit */; };
+		AA9E65612AD77D2D00BE5789 /* MoSoAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = AA9E65602AD77D2D00BE5789 /* MoSoAnalytics */; };
 		AAE52B662AB2D39900956FBE /* MoSoClient in Frameworks */ = {isa = PBXBuildFile; productRef = AAE52B652AB2D39900956FBE /* MoSoClient */; };
 		AAE52B682AB4CEF400956FBE /* MoSoCore in Frameworks */ = {isa = PBXBuildFile; productRef = AAE52B672AB4CEF400956FBE /* MoSoCore */; };
 		AAE52B6A2AB4CFE300956FBE /* AppConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE52B692AB4CFE300956FBE /* AppConfigurator.swift */; };
@@ -42,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8AE6B2072AC5EAA200F5F1E7 /* UITests.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UITests.xctestplan; sourceTree = "<group>"; };
 		AA7BDC5C2AB2571800ACCACF /* MoSoContent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoSoContent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7BDC5F2AB2571800ACCACF /* MoSoContentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoSoContentApp.swift; sourceTree = "<group>"; };
 		AA7BDC632AB2571900ACCACF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -65,6 +68,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA7BDC902AB26EFC00ACCACF /* DiscoverKit in Frameworks */,
+				AA9E65612AD77D2D00BE5789 /* MoSoAnalytics in Frameworks */,
 				AA7BDC922AB26EFC00ACCACF /* ReadingListKit in Frameworks */,
 				AAE52B662AB2D39900956FBE /* MoSoClient in Frameworks */,
 				AAE52B682AB4CEF400956FBE /* MoSoCore in Frameworks */,
@@ -93,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				AA7BDC892AB2578100ACCACF /* MoSoContentKit */,
+				8AE6B2072AC5EAA200F5F1E7 /* UITests.xctestplan */,
 				AA7BDC5E2AB2571800ACCACF /* MoSoContent */,
 				AA7BDC6F2AB2571900ACCACF /* MoSoContentTests */,
 				AA7BDC792AB2571900ACCACF /* MoSoContentUITests */,
@@ -189,6 +194,7 @@
 				AAE52B652AB2D39900956FBE /* MoSoClient */,
 				AAE52B672AB4CEF400956FBE /* MoSoCore */,
 				8AA6BA362AC496C800B93B6C /* DesignKit */,
+				AA9E65602AD77D2D00BE5789 /* MoSoAnalytics */,
 			);
 			productName = MoSoContent;
 			productReference = AA7BDC5C2AB2571800ACCACF /* MoSoContent.app */;
@@ -242,13 +248,16 @@
 				TargetAttributes = {
 					AA7BDC5B2AB2571800ACCACF = {
 						CreatedOnToolsVersion = 15.0;
+						ProvisioningStyle = Automatic;
 					};
 					AA7BDC6B2AB2571900ACCACF = {
 						CreatedOnToolsVersion = 15.0;
+						ProvisioningStyle = Automatic;
 						TestTargetID = AA7BDC5B2AB2571800ACCACF;
 					};
 					AA7BDC752AB2571900ACCACF = {
 						CreatedOnToolsVersion = 15.0;
+						ProvisioningStyle = Automatic;
 						TestTargetID = AA7BDC5B2AB2571800ACCACF;
 					};
 				};
@@ -280,6 +289,7 @@
 			files = (
 				AA7BDC672AB2571900ACCACF /* Preview Assets.xcassets in Resources */,
 				AA7BDC642AB2571900ACCACF /* Assets.xcassets in Resources */,
+				8AE6B2082AC5EAA200F5F1E7 /* UITests.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,11 +505,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoSoContent/Preview Content\"";
-				DEVELOPMENT_TEAM = 43AQ936H96;
+				DEVELOPMENT_TEAM = EX3VH4YFCH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoSoContent/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = mozilla.social;
+				INFOPLIST_KEY_CFBundleDisplayName = Ebony;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -511,7 +521,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.mozilla.ios.Social;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReadItLater.Ebony;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -527,11 +537,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoSoContent/Preview Content\"";
-				DEVELOPMENT_TEAM = 43AQ936H96;
+				DEVELOPMENT_TEAM = EX3VH4YFCH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MoSoContent/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = mozilla.social;
+				INFOPLIST_KEY_CFBundleDisplayName = Ebony;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -543,7 +553,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.mozilla.ios.Social;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ReadItLater.Ebony;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -680,6 +690,10 @@
 		AA7BDC912AB26EFC00ACCACF /* ReadingListKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ReadingListKit;
+		};
+		AA9E65602AD77D2D00BE5789 /* MoSoAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoSoAnalytics;
 		};
 		AAE52B652AB2D39900956FBE /* MoSoClient */ = {
 			isa = XCSwiftPackageProductDependency;

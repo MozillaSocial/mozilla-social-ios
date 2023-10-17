@@ -7,7 +7,6 @@ import AuthenticationServices
 import Combine
 
 class AuthenticationService: NSObject, ASWebAuthenticationPresentationContextProviding, ObservableObject {
-
     @Published var authToken: Token?
     @Published var accountDetails: AccountDetails?
 
@@ -40,6 +39,12 @@ class AuthenticationService: NSObject, ASWebAuthenticationPresentationContextPro
         .store(in: &subscribers)
     }
 
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        DispatchQueue.main.sync {
+            return ASPresentationAnchor()
+        }
+    }
+
     func launchOAUTH() {
         Task {
             guard let client = await registerApp() else {
@@ -54,7 +59,7 @@ class AuthenticationService: NSObject, ASWebAuthenticationPresentationContextPro
         var urlRequest = URLRequest(url: registerAppURL())
         urlRequest.httpMethod = "POST"
 
-        do{
+        do {
             let (data, _) = try await URLSession.shared.data(for: urlRequest)
 
             let decoder = JSONDecoder()
@@ -96,7 +101,7 @@ class AuthenticationService: NSObject, ASWebAuthenticationPresentationContextPro
     private func fetchAuthToken(for client: ClientEntity, with code: String) async -> Token? {
         var urlRequest = URLRequest(url: authTokenURL(for: client, with: code))
         urlRequest.httpMethod = "POST"
-        do{
+        do {
             let (data, _) = try await URLSession.shared.data(for: urlRequest)
 
             let decoder = JSONDecoder()
@@ -117,8 +122,8 @@ class AuthenticationService: NSObject, ASWebAuthenticationPresentationContextPro
 
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "GET"
-        urlRequest.setValue("Bearer \(bearerToken)", forHTTPHeaderField:"Authorization")
-        do{
+        urlRequest.setValue("Bearer \(bearerToken)", forHTTPHeaderField: "Authorization")
+        do {
             let (data, _) = try await URLSession.shared.data(for: urlRequest)
 
             let decoder = JSONDecoder()
@@ -132,14 +137,6 @@ class AuthenticationService: NSObject, ASWebAuthenticationPresentationContextPro
         return nil
     }
 
-    // MARK: - AuthenticationServices Delegate
-
-    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        DispatchQueue.main.sync {
-            return ASPresentationAnchor()
-        }
-    }
-
     // MARK: - URL Builders
 
     private func authTokenURL(for client: ClientEntity, with code: String) -> URL {
@@ -147,7 +144,7 @@ class AuthenticationService: NSObject, ASWebAuthenticationPresentationContextPro
             fatalError()
         }
 
-        url.append(queryItems:[URLQueryItem(name: "code", value: code),
+        url.append(queryItems: [URLQueryItem(name: "code", value: code),
                                URLQueryItem(name: "grant_type", value: "authorization_code"),
                                URLQueryItem(name: "redirect_uri", value: URLConstants.redirectURI),
                                URLQueryItem(name: "client_secret", value: client.clientSecret),

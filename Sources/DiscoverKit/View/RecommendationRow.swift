@@ -6,38 +6,49 @@ import DesignKit
 import SwiftUI
 
 struct RecommendationRow: View {
+    @EnvironmentObject var viewModel: DiscoverViewModel
     let recommendation: Recommendation
+
     var body: some View {
         VStack {
-            HStack {
+            HStack(alignment: .top) {
                 makeTextContentView()
                 Spacer()
                 makeImageView()
             }
             makeFooterView()
         }
-        .padding(.top, 16)
-        .padding(.bottom, 16)
+        .padding(.top, Constants.padding)
+        .padding(.bottom, Constants.padding)
+        .onAppear {
+            viewModel.trackRecommendationImpression(recommendationID: recommendation.recommendationID)
+        }
     }
 
     func makeTextContentView() -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: Constants.spacing) {
             Text(recommendation.publisher)
                 .font(.footnote)
             Text(recommendation.title)
                 .font(.headline)
             Text(recommendation.excerpt)
                 .font(.body)
+                .lineLimit(Constants.lineLimit)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier(AccessibilityIdentifiers.Discover.recommendationContent)
     }
+
     // TODO: in our final implementation, we might want to use Kingfisher for images
     func makeImageView() -> some View {
         VStack {
             if let urlString = recommendation.imageUrl, let url = URL(string: urlString) {
                 AsyncImageView(url: url)
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 80.0, height: 80.0, alignment: .center)
-                    .cornerRadius(8.0)
+                    .frame(width: Constants.thumbnailSize, height: Constants.thumbnailSize, alignment: .center)
+                    .cornerRadius(Constants.cornerRadius)
+                    .accessibilityLabel(AccessibilityLabels.Discover.recommendationImage)
+                    .accessibilityIdentifier(AccessibilityIdentifiers.Discover.recommendationImage)
             }
             Spacer()
         }
@@ -48,18 +59,61 @@ struct RecommendationRow: View {
             Spacer()
             Image(.save)
                 .renderingMode(.template)
-                .frame(width: 24, height: 24)
-                .padding(.trailing, 16)
+                .frame(width: Constants.buttonSize, height: Constants.buttonSize)
+                .contentShape(Rectangle())
+                .accessibility(addTraits: .isButton)
             ShareLink(item: recommendation.url) {
                 Image(.share)
                     .renderingMode(.template)
-                    .frame(width: 24, height: 24)
             }
+            .frame(width: Constants.buttonSize, height: Constants.buttonSize)
+            .contentShape(Rectangle())
             .buttonStyle(.plain)
+            .accessibility(addTraits: .isButton)
+            .simultaneousGesture(
+                TapGesture().onEnded {
+                    viewModel.trackRecommendationShare(recommendationID: recommendation.recommendationID)
+                }
+            )
         }
     }
 }
 
+private extension RecommendationRow {
+    enum Constants {
+        static let padding: CGFloat = 16
+        static let spacing: CGFloat = 4
+        static let lineLimit: Int = 5
+        static let buttonSize: CGFloat = 48
+        static let thumbnailSize: CGFloat = 80
+        static let cornerRadius: CGFloat = 8.0
+    }
+}
+
 #Preview {
-    RecommendationRow(recommendation: Recommendation(url: "https://getpocket.com/home", title: "Pocket", excerpt: "Read it later", publisher: "Mozilla", imageUrl: nil))
+    RecommendationRow.preview
+        .padding()
+        .dynamicTypeSize(.large)
+}
+
+#Preview {
+    RecommendationRow.preview
+        .padding()
+            .dynamicTypeSize(.xLarge)
+}
+
+#Preview {
+    ScrollView {
+        RecommendationRow.preview
+            .padding()
+            .dynamicTypeSize(.accessibility1)
+    }
+}
+
+#Preview {
+    ScrollView {
+        RecommendationRow.preview
+            .padding()
+            .dynamicTypeSize(.accessibility5)
+    }
 }

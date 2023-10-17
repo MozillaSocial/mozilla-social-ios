@@ -20,7 +20,8 @@ struct RecommendationsEndpoint: Endpoint {
         }
         self.queryItems = [
             URLQueryItem(name: Constants.locale, value: Locale.current.identifier(.bcp47)),
-            URLQueryItem(name: Constants.count, value: "\(actualCount)")
+            URLQueryItem(name: Constants.count, value: "\(actualCount)"),
+            URLQueryItem(name: Constants.imageSizes, value: Constants.requestedSizes)
         ]
     }
 
@@ -44,6 +45,10 @@ struct RecommendationsEndpoint: Endpoint {
         static let path = "/content-feed/moso/v1/discover"
         // query items keys
         static let locale = "locale"
+        static let imageSizes = "image_sizes[]"
+        // TODO: in this simple implementation, we are requesting one size (the smallest) for all images, used as thumbnails
+        // The request can accept multiple sizes and return multiple urls
+        static let requestedSizes = "202x"
         static let count = "count"
     }
 }

@@ -3,12 +3,35 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import DiscoverKit
+import MoSoAnalytics
 import MoSoCore
 import SwiftUI
 
 // TODO: this is a barebone example for now. Session will be received from login and auth services as needed
 struct AppConfigurator {
-    let discoverProvider = DiscoverProvider(session: MoSoSession(isLoggedIn: true))
+    let session: MoSoSession
+    let analyticsProvider: AnalyticsProvider
+    let discoverProvider: DiscoverProvider
+
+    var loggedIn: Bool {
+        session.isLoggedIn
+    }
+
+    init() {
+        session = MoSoSession()
+        analyticsProvider = AnalyticsProvider(session: session)
+        discoverProvider  = DiscoverProvider(session: session, tracker: analyticsProvider.makeDiscoverTracker())
+        // TODO: replace this with actual user coming from login
+        login(user: MoSoUser(username: "test-user@mozilla.com", identifier: "12345678"))
+    }
+
+    func login(user: MoSoUser) {
+        session.loggedIn(user)
+    }
+
+    func logout() {
+        session.loggedOut()
+    }
 
     @MainActor
     func makeDiscoverTab() -> some View {

@@ -12,7 +12,13 @@ struct RootView: View {
     var body: some View {
         AsyncContentView(source: viewModel) { recommendations in
             RecommendationsView(recommendations: recommendations)
-        } errorContent: { error in
+        } progressContent: {
+            ZStack {
+                Color(.mosoLayerColor1).ignoresSafeArea()
+                ProgressView()
+            }
+        }
+    errorContent: { error in
             ErrorView(error: error)
         }
         .background(Color(.mosoLayerColor1))
@@ -21,5 +27,5 @@ struct RootView: View {
 }
 
 #Preview {
-    RootView(viewModel: DiscoverViewModel(store: PreviewStore()))
+    RootView(viewModel: DiscoverViewModel(store: PreviewStore(), tracker: PreviewTracker()))
 }

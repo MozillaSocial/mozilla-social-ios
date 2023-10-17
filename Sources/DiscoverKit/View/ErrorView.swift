@@ -9,12 +9,23 @@ struct ErrorView: View {
     let error: Error
 
     var body: some View {
-        // TODO: add implementation
         // TODO: add proper error logging
-        Text("There was an error \(error.localizedDescription)")
-            .refreshable {
-                viewModel.load()
+        ScrollView {
+            ZStack {
+                Color(.mosoLayerColor1).ignoresSafeArea()
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Sorry, something went wrong")
+                        .font(.title)
+                    Text("We're all about a healthy internet but sometimes things break.")
+                        .font(.headline)
+                    Spacer()
+                }
+                .padding()
             }
+        }
+        .refreshable {
+            viewModel.load()
+        }
     }
 }
 

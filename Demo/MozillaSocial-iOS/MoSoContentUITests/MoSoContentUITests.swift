@@ -15,19 +15,41 @@ final class MoSoContentUITests: XCTestCase {
         // required for your tests before they run. The setUp method is a good place to do this.
     }
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             // This measures how long it takes to launch your application.
             measure(metrics: [XCTApplicationLaunchMetric()]) {
                 XCUIApplication().launch()
+            }
+        }
+    }
+
+    func testAccessibilityAudits_withDarkMode() throws {
+        if #available(iOS 17, *) {
+            let app = XCUIApplication()
+            XCUIDevice.shared.appearance = .dark
+            app.launch()
+            try app.performAccessibilityAudit { issue in
+                guard issue.auditType == .textClipped || issue.auditType == .contrast else {
+                    return false
+                }
+
+                return true
+            }
+        }
+    }
+
+    func testAccessibilityAudits_withLightMode() throws {
+        if #available(iOS 17, *) {
+            let app = XCUIApplication()
+            XCUIDevice.shared.appearance = .light
+            app.launch()
+            try app.performAccessibilityAudit { issue in
+                guard issue.auditType == .textClipped else {
+                    return false
+                }
+
+                return true
             }
         }
     }
