@@ -38,7 +38,7 @@ final class GleanBaseTrackerTests: XCTestCase {
         XCTAssertEqual(event.extra!["ui_additional_detail"], "Some additional info")
     }
 
-    func trackMultipleImpressions() {
+    func testTrackMultipleImpressions() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
         let tracker = GleanBaseTracker(session: MoSoSession(user: user))
@@ -101,7 +101,7 @@ final class GleanBaseTrackerTests: XCTestCase {
         XCTAssertEqual(event.extra!["ui_additional_detail"], "Some additional info")
     }
 
-    func trackMultipleEngagements() {
+    func testTrackMultipleEngagements() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
         let tracker = GleanBaseTracker(session: MoSoSession(user: user))
@@ -135,6 +135,6 @@ final class GleanBaseTrackerTests: XCTestCase {
         // Then
         let events = GleanMetrics.Ui.engagement.testGetValue()!
 
-        XCTAssertEqual(2, events.count)
+        XCTAssertEqual(3, events.count)
     }
 }
