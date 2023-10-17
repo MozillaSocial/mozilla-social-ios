@@ -66,8 +66,10 @@ final class GleanBaseTrackerTests: XCTestCase {
 
         // Then
         let events = GleanMetrics.Ui.impression.testGetValue()!
-
         XCTAssertEqual(3, events.count)
+        XCTAssertEqual(events[0].extra!["mastodon_status_id"], "Post001")
+        XCTAssertEqual(events[1].extra!["mastodon_status_id"], "Post002")
+        XCTAssertEqual(events[2].extra!["mastodon_status_id"], "Post003")
     }
 
     func testEngagement() {
@@ -127,14 +129,16 @@ final class GleanBaseTrackerTests: XCTestCase {
         tracker.trackEngagement(
             action: .share,
             associatedValue: "someValue",
-            postID: "Post001",
-            recommendationID: "Rec001",
+            postID: "Post003",
+            recommendationID: "Rec003",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression"
         )
         // Then
         let events = GleanMetrics.Ui.engagement.testGetValue()!
-
         XCTAssertEqual(3, events.count)
+        XCTAssertEqual(events[0].extra!["mastodon_status_id"], "Post001")
+        XCTAssertEqual(events[1].extra!["mastodon_status_id"], "Post002")
+        XCTAssertEqual(events[2].extra!["mastodon_status_id"], "Post003")
     }
 }
