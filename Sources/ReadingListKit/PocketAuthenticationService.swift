@@ -53,7 +53,7 @@ class PocketAuthenticationService: NSObject, ASWebAuthenticationPresentationCont
         }
 
         let requestRedirect = "pocket"
-        let consumerKey: String? = nil //TODO: Store consumerKey somewhere off Github. Fetch when needed.
+        let consumerKey: String? = nil // TODO: Store consumerKey somewhere off Github. Fetch when needed.
 
         components.path = path
         components.queryItems = [
