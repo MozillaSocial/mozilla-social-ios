@@ -9,9 +9,11 @@ final class MoSoContentUITestsLaunchTests: XCTestCase {
         true
     }
 
+    // swiftlint:disable overridden_super_call
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
+    // swiftlint:enable overridden_super_call
 
     func testLaunch() throws {
         let app = XCUIApplication()
