@@ -17,5 +17,7 @@
 	</array>
 	<key>DiscoverApiConsumerKey</key>
 	<string>$(DISCOVER_API_CONSUMER_KEY)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
