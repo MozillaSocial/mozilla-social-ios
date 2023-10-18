@@ -23,5 +23,9 @@
 	<string>$(BRAZE_API_KEY)</string>
 	<key>GroupID</key>
 	<string>$(GROUP_ID)</string>
+	<key>DiscoverApiConsumerKey</key>
+	<string>$(DISCOVER_API_CONSUMER_KEY)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
