@@ -1,0 +1,81 @@
+---
+format_version: '13'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: ios
+workflows:
+  archive_and_export_app:
+    summary: Run your Xcode tests and create an IPA file to install your app on a
+      device or share it with your team.
+    description: The workflow will first clone your Git repository, cache and install
+      your project's dependencies if any, run your Xcode tests, export an IPA file
+      from the project and save it.
+    steps:
+    - activate-ssh-key@4: {}
+    - git-clone@8: {}
+    - xcode-test@5:
+        inputs:
+        - project_path: "$BITRISE_PROJECT_PATH"
+        - scheme: "$BITRISE_SCHEME"
+        - test_repetition_mode: retry_on_failure
+        - cache_level: none
+    - xcode-archive@5:
+        inputs:
+        - project_path: "$BITRISE_PROJECT_PATH"
+        - scheme: "$BITRISE_SCHEME"
+        - distribution_method: "$BITRISE_DISTRIBUTION_METHOD"
+        - automatic_code_signing: api-key
+        - cache_level: none
+    - deploy-to-bitrise-io@2: {}
+  nightly_build:
+    summary: Builds from develop and distributes it to TestFlight for internal testing
+    description: The workflow will first clone your Git repository, then install profiles
+      and certificates for code signing, then pass it to Fastlane to build and distribute
+      the app to TestFlight.
+    steps:
+    - activate-ssh-key@4: {}
+    - git-clone@8: {}
+    - certificate-and-profile-installer@1: {}
+    - fastlane@3:
+        inputs:
+        - work_dir: "$BITRISE_DEMO_APP_DIR"
+        - verbose_log: 'yes'
+        - connection: apple_id
+        - lane: beta
+    - deploy-to-bitrise-io@2: {}
+  run_tests:
+    summary: Run your Xcode tests and get the test report.
+    description: The workflow will first clone your Git repository, cache and install
+      your project's dependencies if any, run your Xcode tests and save the test results.
+    steps:
+    - activate-ssh-key@4: {}
+    - git-clone@8: {}
+    - restore-spm-cache@1: {}
+    - xcode-test@5:
+        inputs:
+        - project_path: "$BITRISE_PROJECT_PATH"
+        - scheme: "$BITRISE_SCHEME"
+        - test_repetition_mode: retry_on_failure
+        - cache_level: none
+    - save-spm-cache@1: {}
+    - deploy-to-bitrise-io@2: {}
+meta:
+  bitrise.io:
+    stack: osx-xcode-15.0.x
+    machine_type_id: g2-m1.8core
+app:
+  envs:
+  - opts:
+      is_expand: false
+    BITRISE_PROJECT_PATH: Demo/MozillaSocial-iOS/MoSoContent.xcodeproj
+  - opts:
+      is_expand: false
+    BITRISE_SCHEME: MoSoContent
+  - opts:
+      is_expand: false
+    BITRISE_DISTRIBUTION_METHOD: app-store
+  - opts:
+      is_expand: false
+    BITRISE_DEMO_APP_DIR: Demo/MozillaSocial-iOS
+trigger_map:
+- pull_request_source_branch: "*"
+  workflow: nightly_build
