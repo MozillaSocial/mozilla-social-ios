@@ -2,6 +2,30 @@
 format_version: '13'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: ios
+trigger_map:
+- pull_request_source_branch: "*"
+  workflow: build-test-pipeline
+pipelines:
+  build-test-pipeline:
+    stages:
+    - test-build: {}
+    - run-test-groups: {}
+    - deploy-test-results: {}
+    - release-build: {}
+stages:
+  test-build:
+    workflows:
+    - test-build: {}
+  release-build:
+    workflows:
+    - release-build: {}
+  run-test-groups:
+    workflows:
+    - run-tests-unit: {}
+  deploy-test-results:
+    should_always_run: true
+    workflows:
+    - deploy-test-results: {}
 workflows:
   archive_and_export_app:
     summary: Run your Xcode tests and create an IPA file to install your app on a
@@ -76,6 +100,3 @@ app:
   - opts:
       is_expand: false
     BITRISE_DEMO_APP_DIR: Demo/MozillaSocial-iOS
-trigger_map:
-- pull_request_source_branch: "*"
-  workflow: nightly_build
