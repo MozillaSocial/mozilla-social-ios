@@ -17,11 +17,17 @@
   },
   "testTargets" : [
     {
-      "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:MoSoContent.xcodeproj",
-        "identifier" : "AA7BDC752AB2571900ACCACF",
-        "name" : "MoSoContentUITests"
+        "containerPath" : "container:..\/..",
+        "identifier" : "MoSoAnalyticsTests",
+        "name" : "MoSoAnalyticsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..",
+        "identifier" : "DiscoverKitTests",
+        "name" : "DiscoverKitTests"
       }
     }
   ],
