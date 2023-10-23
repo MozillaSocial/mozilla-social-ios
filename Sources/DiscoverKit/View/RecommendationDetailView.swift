@@ -10,7 +10,9 @@ struct RecommendationDetailView: UIViewRepresentable {
     let recommendation: Recommendation
 
     func makeUIView(context: Context) -> WKWebView {
-        return WKWebView()
+        let webview = WKWebView()
+        webview.backgroundColor = UIColor(.mosoLayerColor1)
+        return webview
     }
 
     func updateUIView(_ webView: WKWebView, context: Context) {
