@@ -8,11 +8,9 @@ import XCTest
 @testable import MoSoAnalytics
 
 final class GleanBaseTrackerTests: XCTestCase {
-    // swiftlint:disable overridden_super_call
     override func setUp() {
         Glean.shared.resetGlean(clearStores: true)
     }
-    // swiftlint:enable overridden_super_call
 
     func testImpression() {
         // Given
