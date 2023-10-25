@@ -158,3 +158,12 @@ struct MyView: View {
 ## Contributing
 At this moment, only members of the Mozilla Social organization can contribute to this repo, open contribution will be available soon.
 
+## Setup Secrets File
+
+The MozillaSocial-iOS demo app requires a secrets.xcconfig file to run. If you are a Mozillan, you can obtain the actual secret keys from the team. Once obtained the keys, you can run the following command from the root directory:
+
+```
+cp Demo/MozillaSocial-iOS/MoSoContent/Config/secrets.xcconfig.example Demo/MozillaSocial-iOS/MoSoContent/Config/secrets.xcconfig
+```
+
+Replace values in `Config/secrets.xcconfig` with the values you have received.
