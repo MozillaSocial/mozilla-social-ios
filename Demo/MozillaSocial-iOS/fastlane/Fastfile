@@ -40,7 +40,7 @@ lane :debug_build do
     )
 end
 
-lane :build_beta do
+lane :beta_build do
   update_code_signing_settings(
       use_automatic_signing: false,
       path: "MoSoContent.xcodeproj",
@@ -64,7 +64,7 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     fetch_and_increment_build_number
-    build_beta
+    beta_build
     upload_to_testflight
   end
 end
