@@ -24,7 +24,7 @@ lane :debug_build do
   update_code_signing_settings(
       use_automatic_signing: false,
       path: "MoSoContent.xcodeproj",
-      code_sign_identity: "iPhone Development",
+      code_sign_identity: "Apple Development",
       sdk: "iphoneos*",
       profile_name: "EbonyDevelopmentProfile",
     )
