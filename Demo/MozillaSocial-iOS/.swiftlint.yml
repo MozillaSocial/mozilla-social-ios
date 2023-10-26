@@ -104,6 +104,7 @@ included:
   - ../../MoSoContent
 excluded:
   - ../../Sources/MoSoAnalytics/Glean/Generated-Metrics
+  - .build
 
 # reporter: "json" # reporter type (xcode, json, csv, checkstyle)
 reporter: 'xcode' # reporter type (xcode, json, csv, checkstyle)
