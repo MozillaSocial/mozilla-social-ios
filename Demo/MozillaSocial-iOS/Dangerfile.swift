@@ -29,7 +29,7 @@ func coverage() {
         fail("Could not get the BITRISE_XCRESULT_PATH to generage code coverage")
         return
     }
-    message("Building Coverage")
+
     Coverage.xcodeBuildCoverage(
         .xcresultBundle(xcresult),
         minimumCoverage: 50
