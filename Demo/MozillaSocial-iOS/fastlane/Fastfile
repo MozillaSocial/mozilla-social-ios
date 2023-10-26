@@ -20,11 +20,28 @@ lane :fetch_and_increment_build_number do
  )
 end
 
-platform :ios do
-  desc "Push a new beta build to TestFlight"
-  lane :beta do
-    fetch_and_increment_build_number
-    update_code_signing_settings(
+lane :debug_build do
+  update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "MoSoContent.xcodeproj",
+      code_sign_identity: "Apple Development",
+      sdk: "iphoneos*",
+      profile_name: "EbonyDevelopmentProfile",
+    )
+    build_app(
+      scheme: "MoSoContent",
+      export_method: "development",
+      configuration: "Debug",
+      export_options: {
+        provisioningProfiles: {
+          "com.ReadItLater.Ebony" => "EbonyDevelopmentProfile"
+        }
+      }
+    )
+end
+
+lane :beta_build do
+  update_code_signing_settings(
       use_automatic_signing: false,
       path: "MoSoContent.xcodeproj",
       code_sign_identity: "iPhone Distribution",
@@ -41,6 +58,13 @@ platform :ios do
         }
       }
     )
+end
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    fetch_and_increment_build_number
+    beta_build
     upload_to_testflight
   end
 end
