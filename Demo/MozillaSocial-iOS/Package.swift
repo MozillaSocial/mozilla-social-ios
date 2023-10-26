@@ -15,14 +15,14 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/danger/swift.git", exact: "3.16.0"), // dev
-        // .package(url: "https://github.com/f-meloni/danger-swift-coverage", exact: "1.2.1") // dev
+        .package(url: "https://github.com/f-meloni/danger-swift-coverage", exact: "1.2.1") // dev
     ],
     targets: [
         .target(
             name: "DangerDependencies",
             dependencies: [
                 .product(name: "Danger", package: "swift"),
-                // .product(name: "DangerSwiftCoverage", package: "danger-swift-coverage")
+                .product(name: "DangerSwiftCoverage", package: "danger-swift-coverage")
             ]
         ) // dev
     ]
