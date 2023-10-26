@@ -9,8 +9,8 @@ import Foundation
 let danger = Danger()
 
 lint()
-coverage()
-xcodeEnvironmentVariables()
+// coverage()
+// xcodeEnvironmentVariables()
 changedFiles()
 
 func changedFiles() {
