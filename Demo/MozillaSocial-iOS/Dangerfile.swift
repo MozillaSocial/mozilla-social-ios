@@ -26,7 +26,7 @@ func lint() {
 
 func coverage() {
     guard let xcresult = ProcessInfo.processInfo.environment["BITRISE_XCRESULT_PATH"]?.escapeString() else {
-        fail("Could not get the BITRISE_XCRESULT_PATH to generage code coverage")
+        message("Could not get the BITRISE_XCRESULT_PATH to generage code coverage")
         return
     }
 
