@@ -9,8 +9,7 @@ import Foundation
 let danger = Danger()
 
 lint()
-// coverage()
-// xcodeEnvironmentVariables()
+coverage()
 changedFiles()
 
 func changedFiles() {
@@ -35,21 +34,6 @@ func coverage() {
         .xcresultBundle(xcresult),
         minimumCoverage: 50
     )
-}
-
-func xcodeEnvironmentVariables() {
-    message("Checking XCode Environment Variables")
-
-    let snowplowPostPath = #"""
-            key = "SNOWPLOW_POST_PATH"
-            value = "com.snowplowanalytics.snowplow/tp2"
-            isEnabled = "YES">
-"""#
-
-    let modifiedXcodeSchemes = danger.git.modifiedFiles.filter { $0.contains(".xcscheme") }
-    for scheme in modifiedXcodeSchemes where danger.utils.readFile(scheme).contains(snowplowPostPath) {
-        fail("SNOWPLOW_POST_PATH must be disabled")
-    }
 }
 
 extension String {
