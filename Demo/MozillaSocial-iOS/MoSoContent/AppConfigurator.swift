@@ -12,6 +12,11 @@ struct AppConfigurator {
     let session: MoSoSession
     let analyticsProvider: AnalyticsProvider
     let discoverProvider: DiscoverProvider
+    let braze = MoSoBraze(
+        apiKey: Keys.shared.brazeAPIKey,
+        endpoint: Keys.shared.brazeAPIEndpoint,
+        groupId: Keys.shared.groupID
+    )
 
     var loggedIn: Bool {
         session.isLoggedIn
