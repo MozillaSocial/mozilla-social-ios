@@ -15,7 +15,17 @@
 			</array>
 		</dict>
 	</array>
+	<key>PocketAPIConsumerKey</key>
+	<string>$(POCKET_API_CONSUMER_KEY)</string>
+	<key>BrazeAPIEndpoint</key>
+	<string>$(BRAZE_API_ENDPOINT)</string>
+	<key>BrazeAPIKey</key>
+	<string>$(BRAZE_API_KEY)</string>
+	<key>GroupID</key>
+	<string>$(GROUP_ID)</string>
 	<key>DiscoverApiConsumerKey</key>
 	<string>$(DISCOVER_API_CONSUMER_KEY)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

@@ -50,7 +50,6 @@ struct RecommendationRow: View {
                     .accessibilityLabel(AccessibilityLabels.Discover.recommendationImage)
                     .accessibilityIdentifier(AccessibilityIdentifiers.Discover.recommendationImage)
             }
-            Spacer()
         }
     }
 
@@ -81,7 +80,7 @@ struct RecommendationRow: View {
 
 private extension RecommendationRow {
     enum Constants {
-        static let padding: CGFloat = 16
+        static let padding: CGFloat = 8
         static let spacing: CGFloat = 4
         static let lineLimit: Int = 5
         static let buttonSize: CGFloat = 48

@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A735C702AEAB829002F961C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A735C6F2AEAB829002F961C /* Keys.swift */; };
+		8A735C642AE9AD58002F961C /* BrazeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8A735C632AE9AD58002F961C /* BrazeKit */; };
+		8A735C672AE9B1B1002F961C /* MoSoBraze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A735C652AE9B1B1002F961C /* MoSoBraze.swift */; };
+		8A735C6A2AE9B1FD002F961C /* BrazeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8A735C692AE9B1FD002F961C /* BrazeUI */; };
 		8AA6BA372AC496C800B93B6C /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8AA6BA362AC496C800B93B6C /* DesignKit */; };
-		8AE6B2082AC5EAA200F5F1E7 /* UITests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 8AE6B2072AC5EAA200F5F1E7 /* UITests.xctestplan */; };
+		8AE6B2082AC5EAA200F5F1E7 /* UnitTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 8AE6B2072AC5EAA200F5F1E7 /* UnitTests.xctestplan */; };
 		AA7BDC602AB2571800ACCACF /* MoSoContentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7BDC5F2AB2571800ACCACF /* MoSoContentApp.swift */; };
 		AA7BDC642AB2571900ACCACF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA7BDC632AB2571900ACCACF /* Assets.xcassets */; };
 		AA7BDC672AB2571900ACCACF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA7BDC662AB2571900ACCACF /* Preview Assets.xcassets */; };
@@ -44,7 +48,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8A735C6F2AEAB829002F961C /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		8A735C722AEABD49002F961C /* secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = secrets.xcconfig; sourceTree = "<group>"; };
+		8A735C732AEABD49002F961C /* secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text; path = secrets.xcconfig.example; sourceTree = "<group>"; };
+		8A735C652AE9B1B1002F961C /* MoSoBraze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoSoBraze.swift; sourceTree = "<group>"; };
 		8AE6B2072AC5EAA200F5F1E7 /* UITests.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UITests.xctestplan; sourceTree = "<group>"; };
+		8AE6B2072AC5EAA200F5F1E7 /* UnitTests.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UnitTests.xctestplan; sourceTree = "<group>"; };
+		AA528BCF2AEAD5AD004DD8D4 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		AA528BD22AEAD5FD004DD8D4 /* Sources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sources; sourceTree = "<group>"; };
+		AA58DB102AEADCA70080432C /* Dangerfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dangerfile.swift; sourceTree = "<group>"; };
 		AA7BDC5C2AB2571800ACCACF /* MoSoContent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoSoContent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7BDC5F2AB2571800ACCACF /* MoSoContentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoSoContentApp.swift; sourceTree = "<group>"; };
 		AA7BDC632AB2571900ACCACF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,7 +80,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA7BDC902AB26EFC00ACCACF /* DiscoverKit in Frameworks */,
+				8A735C6A2AE9B1FD002F961C /* BrazeUI in Frameworks */,
 				AA9E65612AD77D2D00BE5789 /* MoSoAnalytics in Frameworks */,
+				8A735C642AE9AD58002F961C /* BrazeKit in Frameworks */,
 				AA7BDC922AB26EFC00ACCACF /* ReadingListKit in Frameworks */,
 				AAE52B662AB2D39900956FBE /* MoSoClient in Frameworks */,
 				AAE52B682AB4CEF400956FBE /* MoSoCore in Frameworks */,
@@ -93,12 +107,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A735C712AEABD49002F961C /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				8A735C6F2AEAB829002F961C /* Keys.swift */,
+				8A735C722AEABD49002F961C /* secrets.xcconfig */,
+				8A735C732AEABD49002F961C /* secrets.xcconfig.example */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		AA7BDC532AB2571800ACCACF = {
 			isa = PBXGroup;
 			children = (
 				AA7BDC892AB2578100ACCACF /* MoSoContentKit */,
-				8AE6B2072AC5EAA200F5F1E7 /* UITests.xctestplan */,
+				8AE6B2072AC5EAA200F5F1E7 /* UnitTests.xctestplan */,
 				AA7BDC5E2AB2571800ACCACF /* MoSoContent */,
+				AA58DB102AEADCA70080432C /* Dangerfile.swift */,
+				AA528BCF2AEAD5AD004DD8D4 /* Package.swift */,
+				AA528BD22AEAD5FD004DD8D4 /* Sources */,
 				AA7BDC6F2AB2571900ACCACF /* MoSoContentTests */,
 				AA7BDC792AB2571900ACCACF /* MoSoContentUITests */,
 				AA7BDC5D2AB2571800ACCACF /* Products */,
@@ -119,8 +146,11 @@
 		AA7BDC5E2AB2571800ACCACF /* MoSoContent */ = {
 			isa = PBXGroup;
 			children = (
+				8A735C712AEABD49002F961C /* Config */,
 				AA7BDC992AB2C54200ACCACF /* Info.plist */,
 				AA7BDC5F2AB2571800ACCACF /* MoSoContentApp.swift */,
+				8A735C662AE9B1B1002F961C /* Keys.swift */,
+				8A735C652AE9B1B1002F961C /* MoSoBraze.swift */,
 				AA7BDC8D2AB25C2200ACCACF /* RootView.swift */,
 				AAE52B692AB4CFE300956FBE /* AppConfigurator.swift */,
 				C8D44DD52ACE10220087CE3C /* AuthenticationService.swift */,
@@ -195,6 +225,8 @@
 				AAE52B672AB4CEF400956FBE /* MoSoCore */,
 				8AA6BA362AC496C800B93B6C /* DesignKit */,
 				AA9E65602AD77D2D00BE5789 /* MoSoAnalytics */,
+				8A735C632AE9AD58002F961C /* BrazeKit */,
+				8A735C692AE9B1FD002F961C /* BrazeUI */,
 			);
 			productName = MoSoContent;
 			productReference = AA7BDC5C2AB2571800ACCACF /* MoSoContent.app */;
@@ -271,6 +303,9 @@
 				Base,
 			);
 			mainGroup = AA7BDC532AB2571800ACCACF;
+			packageReferences = (
+				8A735C622AE9AD58002F961C /* XCRemoteSwiftPackageReference "braze-swift-sdk" */,
+			);
 			productRefGroup = AA7BDC5D2AB2571800ACCACF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -289,7 +324,7 @@
 			files = (
 				AA7BDC672AB2571900ACCACF /* Preview Assets.xcassets in Resources */,
 				AA7BDC642AB2571900ACCACF /* Assets.xcassets in Resources */,
-				8AE6B2082AC5EAA200F5F1E7 /* UITests.xctestplan in Resources */,
+				8AE6B2082AC5EAA200F5F1E7 /* UnitTests.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,9 +373,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8D44DD62ACE10220087CE3C /* AuthenticationService.swift in Sources */,
+				8A735C702AEAB829002F961C /* Keys.swift in Sources */,
 				AA7BDC8E2AB25C2200ACCACF /* RootView.swift in Sources */,
 				AA7BDC602AB2571800ACCACF /* MoSoContentApp.swift in Sources */,
 				C8D44DD22ACDC1710087CE3C /* LoginView.swift in Sources */,
+				8A735C682AE9B1B1002F961C /* Keys.swift in Sources */,
+				8A735C672AE9B1B1002F961C /* MoSoBraze.swift in Sources */,
 				AAE52B6A2AB4CFE300956FBE /* AppConfigurator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -380,6 +418,7 @@
 /* Begin XCBuildConfiguration section */
 		AA7BDC7E2AB2571900ACCACF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A735C722AEABD49002F961C /* secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -443,6 +482,7 @@
 		};
 		AA7BDC7F2AB2571900ACCACF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A735C722AEABD49002F961C /* secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -678,7 +718,28 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		8A735C622AE9AD58002F961C /* XCRemoteSwiftPackageReference "braze-swift-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/braze-inc/braze-swift-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 7.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		8A735C632AE9AD58002F961C /* BrazeKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8A735C622AE9AD58002F961C /* XCRemoteSwiftPackageReference "braze-swift-sdk" */;
+			productName = BrazeKit;
+		};
+		8A735C692AE9B1FD002F961C /* BrazeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8A735C622AE9AD58002F961C /* XCRemoteSwiftPackageReference "braze-swift-sdk" */;
+			productName = BrazeUI;
+		};
 		8AA6BA362AC496C800B93B6C /* DesignKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DesignKit;

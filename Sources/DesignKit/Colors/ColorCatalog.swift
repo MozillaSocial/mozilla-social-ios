@@ -10,6 +10,16 @@ public extension Color {
     }
 }
 
+public extension UIColor {
+    convenience init?(_ asset: ColorCatalog) {
+        self.init(
+            named: asset.rawValue,
+            in: .module,
+            compatibleWith: nil
+        )
+    }
+}
+
 public enum ColorCatalog: String {
     case mosoLayerColor1 = "moso-layer-color-1"
     case mosoIconColorAccent = "moso-icon-color-accent"

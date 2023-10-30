@@ -31,11 +31,11 @@
                BlueprintIdentifier = "MoSoCore"
                BuildableName = "MoSoCore"
                BlueprintName = "MoSoCore"
-               ReferencedContainer = "container:../MoSoContentKit">
+               ReferencedContainer = "container:../..">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
-            buildForTesting = "NO"
+            buildForTesting = "YES"
             buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
@@ -45,11 +45,39 @@
                BlueprintIdentifier = "MoSoClient"
                BuildableName = "MoSoClient"
                BlueprintName = "MoSoClient"
-               ReferencedContainer = "container:../MoSoContentKit">
+               ReferencedContainer = "container:../..">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
-            buildForTesting = "NO"
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MoSoAnalytics"
+               BuildableName = "MoSoAnalytics"
+               BlueprintName = "MoSoAnalytics"
+               ReferencedContainer = "container:../..">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DesignKit"
+               BuildableName = "DesignKit"
+               BlueprintName = "DesignKit"
+               ReferencedContainer = "container:../..">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
             buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
@@ -59,11 +87,11 @@
                BlueprintIdentifier = "DiscoverKit"
                BuildableName = "DiscoverKit"
                BlueprintName = "DiscoverKit"
-               ReferencedContainer = "container:../MoSoContentKit">
+               ReferencedContainer = "container:../..">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
-            buildForTesting = "NO"
+            buildForTesting = "YES"
             buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
@@ -73,7 +101,91 @@
                BlueprintIdentifier = "ReadingListKit"
                BuildableName = "ReadingListKit"
                BlueprintName = "ReadingListKit"
-               ReferencedContainer = "container:../MoSoContentKit">
+               ReferencedContainer = "container:../..">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MoSoCoreTests"
+               BuildableName = "MoSoCoreTests"
+               BlueprintName = "MoSoCoreTests"
+               ReferencedContainer = "container:../..">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MoSoClientTests"
+               BuildableName = "MoSoClientTests"
+               BlueprintName = "MoSoClientTests"
+               ReferencedContainer = "container:../..">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MoSoAnalyticsTests"
+               BuildableName = "MoSoAnalyticsTests"
+               BlueprintName = "MoSoAnalyticsTests"
+               ReferencedContainer = "container:../..">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DesignKitTests"
+               BuildableName = "DesignKitTests"
+               BlueprintName = "DesignKitTests"
+               ReferencedContainer = "container:../..">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DiscoverKitTests"
+               BuildableName = "DiscoverKitTests"
+               BlueprintName = "DiscoverKitTests"
+               ReferencedContainer = "container:../..">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ReadingListKitTests"
+               BuildableName = "ReadingListKitTests"
+               BlueprintName = "ReadingListKitTests"
+               ReferencedContainer = "container:../..">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -85,7 +197,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:UITests.xctestplan"
+            reference = "container:UnitTests.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
