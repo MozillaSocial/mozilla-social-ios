@@ -35,4 +35,10 @@ public class MoSoBraze: NSObject, BrazeInAppMessageUIDelegate {
         inAppMessageUI.delegate = self
         braze.inAppMessagePresenter = inAppMessageUI
     }
+
+    func changeUser(userId: String, email: String) {
+        braze.changeUser(userId: userId)
+        let brazeUser = braze.user
+        brazeUser.set(email: email)
+    }
 }

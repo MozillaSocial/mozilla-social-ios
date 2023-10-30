@@ -12,11 +12,7 @@ struct AppConfigurator {
     let session: MoSoSession
     let analyticsProvider: AnalyticsProvider
     let discoverProvider: DiscoverProvider
-    let braze = MoSoBraze(
-        apiKey: Keys.shared.brazeAPIKey,
-        endpoint: Keys.shared.brazeAPIEndpoint,
-        groupId: Keys.shared.groupID
-    )
+    let braze: MoSoBraze
 
     var loggedIn: Bool {
         session.isLoggedIn
@@ -26,12 +22,18 @@ struct AppConfigurator {
         session = MoSoSession()
         analyticsProvider = AnalyticsProvider(session: session)
         discoverProvider  = DiscoverProvider(session: session, tracker: analyticsProvider.makeDiscoverTracker())
+        braze = MoSoBraze(
+            apiKey: Keys.shared.brazeAPIKey,
+            endpoint: Keys.shared.brazeAPIEndpoint,
+            groupId: Keys.shared.groupID
+        )
         // TODO: replace this with actual user coming from login
         login(user: MoSoUser(username: "test-user@mozilla.com", identifier: "12345678"))
     }
 
     func login(user: MoSoUser) {
         session.loggedIn(user)
+        braze.changeUser(userId: user.identifier, email: user.username)
     }
 
     func logout() {
