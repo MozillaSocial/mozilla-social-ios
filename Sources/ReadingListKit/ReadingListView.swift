@@ -6,19 +6,12 @@ import SwiftUI
 
 public struct ReadingListView: View {
     public init() {}
-    private let pocketAuth = PocketAuthenticationService()
+    private let model = ReadingListModel()
 
     public var body: some View {
         Text("Coming Soon")
         Button("Log in to Pocket") {
-            Task {
-                do {
-                    let response = try await pocketAuth.logIn()
-                    print(response)
-                } catch {
-                    print("Auth Error!")
-                }
-            }
+            model.beginLoginFlow()
         }
     }
 }

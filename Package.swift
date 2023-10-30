@@ -37,7 +37,9 @@ let package = Package(
             name: "DiscoverKitTests",
             dependencies: ["DiscoverKit"]),
         .target(
-            name: "ReadingListKit"),
+            name: "ReadingListKit",
+            dependencies: ["MoSoCore", "DesignKit"]
+        ),
         .testTarget(
             name: "ReadingListKitTests",
             dependencies: ["ReadingListKit"]),

@@ -22,6 +22,11 @@ enum PocketAuthenticationError: Error {
 
 class PocketAuthenticationService: NSObject, ASWebAuthenticationPresentationContextProviding {
     private var isAuthenticating = false
+    private let consumerKey: String
+
+    init(consumerKey: String) {
+        self.consumerKey = consumerKey
+    }
 
     @MainActor
     func logIn() async throws -> Response {
@@ -53,7 +58,6 @@ class PocketAuthenticationService: NSObject, ASWebAuthenticationPresentationCont
         }
 
         let requestRedirect = "pocket"
-        let consumerKey: String? = nil // TODO: Store consumerKey somewhere off Github. Fetch when needed.
 
         components.path = path
         components.queryItems = [
