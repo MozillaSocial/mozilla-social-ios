@@ -5,6 +5,7 @@
 import DiscoverKit
 import MoSoAnalytics
 import MoSoCore
+import ReadingListKit
 import SwiftUI
 
 // TODO: this is a barebone example for now. Session will be received from login and auth services as needed
@@ -43,5 +44,9 @@ struct AppConfigurator {
     @MainActor
     func makeDiscoverTab() -> some View {
         discoverProvider.makeDiscoverRootView()
+    }
+
+    func makeReadingListTab() -> some View {
+        ReadingListView(model: ReadingListModel(authTokenProvider: session.pocketAuthToken, consumerKey: Keys.shared.pocketAPIConsumerKey))
     }
 }

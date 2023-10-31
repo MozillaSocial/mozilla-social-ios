@@ -5,4 +5,11 @@
 import Foundation
 
 class PocketAccessLayer {
+    let authTokenProvider: () -> String
+    let consumerKey: String
+
+    init(_ authTokenProvider: @escaping () -> String, _ consumerKey: String) {
+        self.authTokenProvider = authTokenProvider
+        self.consumerKey = consumerKey
+    }
 }

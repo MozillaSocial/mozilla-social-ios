@@ -5,17 +5,17 @@
 import SwiftUI
 
 public struct ReadingListView: View {
-    public init() {}
-    private let model = ReadingListModel()
+    public init(model: ReadingListModel) {
+        self.model = model
+    }
+    private let model: ReadingListModel
 
     public var body: some View {
         Text("Coming Soon")
-        Button("Log in to Pocket") {
-            model.beginLoginFlow()
-        }
     }
 }
 
 #Preview {
-    ReadingListView()
+    func auth() -> String { "AUTH" }
+    return ReadingListView(model: ReadingListModel(authTokenProvider: auth, consumerKey: "KEY"))
 }

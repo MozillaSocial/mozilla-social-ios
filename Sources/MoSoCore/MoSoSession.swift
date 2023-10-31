@@ -20,4 +20,13 @@ public class MoSoSession {
     public func loggedOut() {
         user = nil
     }
+
+    public func authToken() -> String {
+        "ACCESS_KEYCHAIN_HERE"
+    }
+
+    // Should be removed once the Mastodon Token supports Pocket API access
+    public func pocketAuthToken() -> String {
+        "ACCESS_KEYCHAIN_HERE"
+    }
 }

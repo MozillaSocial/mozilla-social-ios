@@ -24,7 +24,7 @@ struct RootView: View {
                     }
                     .tag(Tab.discover)
 
-                ReadingListView()
+                configurator.makeReadingListTab()
                     .tabItem {
                         TabIcon(
                             imageName: selection.readingListImageName,

@@ -4,9 +4,10 @@
 
 import Foundation
 
-class ReadingListModel {
-    func beginLoginFlow() {
-    }
-    func getReadingList() {
+public class ReadingListModel {
+    let pocketAccessLayer: PocketAccessLayer
+
+    public init(authTokenProvider: @escaping () -> String, consumerKey: String) {
+        pocketAccessLayer = PocketAccessLayer(authTokenProvider, consumerKey)
     }
 }
