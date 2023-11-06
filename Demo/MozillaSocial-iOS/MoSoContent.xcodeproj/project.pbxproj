@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8A735C702AEAB829002F961C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A735C6F2AEAB829002F961C /* Keys.swift */; };
 		8A735C642AE9AD58002F961C /* BrazeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8A735C632AE9AD58002F961C /* BrazeKit */; };
 		8A735C672AE9B1B1002F961C /* MoSoBraze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A735C652AE9B1B1002F961C /* MoSoBraze.swift */; };
 		8A735C6A2AE9B1FD002F961C /* BrazeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8A735C692AE9B1FD002F961C /* BrazeUI */; };
+		8A735C702AEAB829002F961C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A735C6F2AEAB829002F961C /* Keys.swift */; };
 		8AA6BA372AC496C800B93B6C /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8AA6BA362AC496C800B93B6C /* DesignKit */; };
+		8AC0DFA82AF94B34008CD6C2 /* Sources in Sources */ = {isa = PBXBuildFile; fileRef = AA528BD22AEAD5FD004DD8D4 /* Sources */; };
 		8AE6B2082AC5EAA200F5F1E7 /* UnitTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 8AE6B2072AC5EAA200F5F1E7 /* UnitTests.xctestplan */; };
 		AA7BDC602AB2571800ACCACF /* MoSoContentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7BDC5F2AB2571800ACCACF /* MoSoContentApp.swift */; };
 		AA7BDC642AB2571900ACCACF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA7BDC632AB2571900ACCACF /* Assets.xcassets */; };
@@ -48,11 +49,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8A735C652AE9B1B1002F961C /* MoSoBraze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoSoBraze.swift; sourceTree = "<group>"; };
 		8A735C6F2AEAB829002F961C /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		8A735C722AEABD49002F961C /* secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = secrets.xcconfig; sourceTree = "<group>"; };
 		8A735C732AEABD49002F961C /* secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text; path = secrets.xcconfig.example; sourceTree = "<group>"; };
-		8A735C652AE9B1B1002F961C /* MoSoBraze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoSoBraze.swift; sourceTree = "<group>"; };
-		8AE6B2072AC5EAA200F5F1E7 /* UITests.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UITests.xctestplan; sourceTree = "<group>"; };
 		8AE6B2072AC5EAA200F5F1E7 /* UnitTests.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UnitTests.xctestplan; sourceTree = "<group>"; };
 		AA528BCF2AEAD5AD004DD8D4 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		AA528BD22AEAD5FD004DD8D4 /* Sources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sources; sourceTree = "<group>"; };
@@ -149,7 +149,6 @@
 				8A735C712AEABD49002F961C /* Config */,
 				AA7BDC992AB2C54200ACCACF /* Info.plist */,
 				AA7BDC5F2AB2571800ACCACF /* MoSoContentApp.swift */,
-				8A735C662AE9B1B1002F961C /* Keys.swift */,
 				8A735C652AE9B1B1002F961C /* MoSoBraze.swift */,
 				AA7BDC8D2AB25C2200ACCACF /* RootView.swift */,
 				AAE52B692AB4CFE300956FBE /* AppConfigurator.swift */,
@@ -212,6 +211,7 @@
 				AA7BDC592AB2571800ACCACF /* Frameworks */,
 				AA7BDC5A2AB2571800ACCACF /* Resources */,
 				8AA6BA332AC4916F00B93B6C /* Run Swiftlint */,
+				8AC0DFA72AF948FD008CD6C2 /* Run Glean */,
 			);
 			buildRules = (
 			);
@@ -365,6 +365,26 @@
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint > /dev/null; then\n  if [ \"$CONFIGURATION\" = 'Debug' ]; then\n    swiftlint --strict\n  else \n    echo \"Skipping swift lint because it is not a local developer build.\"\n  fi  \nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
+		8AC0DFA72AF948FD008CD6C2 /* Run Glean */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"",
+			);
+			name = "Run Glean";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd $PWD/../../Sources/MoSoAnalytics/Glean/\nbash sdk_generator.sh \"metrics.yaml\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -372,12 +392,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AC0DFA82AF94B34008CD6C2 /* Sources in Sources */,
 				C8D44DD62ACE10220087CE3C /* AuthenticationService.swift in Sources */,
 				8A735C702AEAB829002F961C /* Keys.swift in Sources */,
 				AA7BDC8E2AB25C2200ACCACF /* RootView.swift in Sources */,
 				AA7BDC602AB2571800ACCACF /* MoSoContentApp.swift in Sources */,
 				C8D44DD22ACDC1710087CE3C /* LoginView.swift in Sources */,
-				8A735C682AE9B1B1002F961C /* Keys.swift in Sources */,
 				8A735C672AE9B1B1002F961C /* MoSoBraze.swift in Sources */,
 				AAE52B6A2AB4CFE300956FBE /* AppConfigurator.swift in Sources */,
 			);
