@@ -383,7 +383,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd $PWD/../../Sources/MoSoAnalytics/Glean/\nbash sdk_generator.sh \"metrics.yaml\"\n";
+			shellScript = "cd $PWD/../../Sources/MoSoAnalytics/Glean/\nbash sdk_generator.sh \"metrics.yaml\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
