@@ -3,10 +3,10 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   class DeleteItemMutation: GraphQLMutation {
-    public static let operationName: String = "DeleteItem"
-    public static let operationDocument: ApolloAPI.OperationDocument = .init(
+    static let operationName: String = "DeleteItem"
+    static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
         #"mutation DeleteItem($givenUrl: Url!, $timestamp: ISOString!) { savedItemDelete(givenUrl: $givenUrl, timestamp: $timestamp) }"#
       ))
@@ -27,12 +27,12 @@ public extension PocketGraph {
       "timestamp": timestamp
     ] }
 
-    public struct Data: PocketGraph.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+    struct Data: PocketGraph.SelectionSet {
+      let __data: DataDict
+      init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.Mutation }
-      public static var __selections: [ApolloAPI.Selection] { [
+      static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.Mutation }
+      static var __selections: [ApolloAPI.Selection] { [
         .field("savedItemDelete", PocketGraph.Url?.self, arguments: [
           "givenUrl": .variable("givenUrl"),
           "timestamp": .variable("timestamp")
@@ -40,7 +40,7 @@ public extension PocketGraph {
       ] }
 
       /// 'Soft-delete' a SavedItem (identified by URL)
-      public var savedItemDelete: PocketGraph.Url? { __data["savedItemDelete"] }
+      var savedItemDelete: PocketGraph.Url? { __data["savedItemDelete"] }
     }
   }
 

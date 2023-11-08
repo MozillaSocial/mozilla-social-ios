@@ -3,16 +3,16 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   /// Input field for adding Tag Associations to a SavedItem, by givenUrl
   struct SavedItemTagInput: InputObject {
-    public private(set) var __data: InputDict
+    private(set) var __data: InputDict
 
-    public init(_ data: InputDict) {
+    init(_ data: InputDict) {
       __data = data
     }
 
-    public init(
+    init(
       givenUrl: Url,
       tagNames: [String]
     ) {
@@ -22,12 +22,12 @@ public extension PocketGraph {
       ])
     }
 
-    public var givenUrl: Url {
+    var givenUrl: Url {
       get { __data["givenUrl"] }
       set { __data["givenUrl"] = newValue }
     }
 
-    public var tagNames: [String] {
+    var tagNames: [String] {
       get { __data["tagNames"] }
       set { __data["tagNames"] = newValue }
     }

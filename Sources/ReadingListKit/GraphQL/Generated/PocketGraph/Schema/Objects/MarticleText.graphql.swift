@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// A section of the article's text content, in markdown.
   /// A subset of gfm is supported. See README.md for more information.
   static let MarticleText = Object(

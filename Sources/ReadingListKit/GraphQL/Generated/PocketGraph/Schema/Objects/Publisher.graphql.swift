@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// The publisher that the curation team set for the syndicated article
   static let Publisher = Object(
     typename: "Publisher",

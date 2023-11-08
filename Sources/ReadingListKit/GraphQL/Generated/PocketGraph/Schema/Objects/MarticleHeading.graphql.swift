@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// A heading in an article, with markdown formatting.
   static let MarticleHeading = Object(
     typename: "MarticleHeading",

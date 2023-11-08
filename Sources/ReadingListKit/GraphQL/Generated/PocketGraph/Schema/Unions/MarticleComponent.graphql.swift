@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Unions {
+extension PocketGraph.Unions {
   static let MarticleComponent = Union(
     name: "MarticleComponent",
     possibleTypes: [

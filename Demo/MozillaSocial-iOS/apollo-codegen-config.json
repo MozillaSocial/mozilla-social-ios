@@ -25,7 +25,7 @@
             "moduleType": {
                         "embeddedInTarget": {
                             "name": "ReadingListKit",
-                            "accessModifier": "public"
+                            "accessModifier": "internal"
                         }
                     }
         },

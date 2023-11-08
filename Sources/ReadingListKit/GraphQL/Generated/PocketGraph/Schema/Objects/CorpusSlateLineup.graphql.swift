@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// A collection of slates.
   static let CorpusSlateLineup = Object(
     typename: "CorpusSlateLineup",

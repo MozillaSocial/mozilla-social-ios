@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   /// Valid statuses a client may use to filter
   enum SearchItemsStatusFilter: String, EnumType {
     case unread = "UNREAD"

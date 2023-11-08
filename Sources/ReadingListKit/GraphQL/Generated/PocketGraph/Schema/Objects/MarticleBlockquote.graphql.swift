@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Content of a blockquote
   static let MarticleBlockquote = Object(
     typename: "MarticleBlockquote",

@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   enum Imageness: String, EnumType {
     /// No images (v3 value is 0)
     case noImages = "NO_IMAGES"

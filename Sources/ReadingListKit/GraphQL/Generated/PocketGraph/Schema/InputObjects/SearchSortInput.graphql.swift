@@ -3,15 +3,15 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   struct SearchSortInput: InputObject {
-    public private(set) var __data: InputDict
+    private(set) var __data: InputDict
 
-    public init(_ data: InputDict) {
+    init(_ data: InputDict) {
       __data = data
     }
 
-    public init(
+    init(
       sortBy: GraphQLEnum<SearchItemsSortBy>,
       sortOrder: GraphQLNullable<GraphQLEnum<SearchItemsSortOrder>> = nil
     ) {
@@ -22,13 +22,13 @@ public extension PocketGraph {
     }
 
     /// The field by which to sort user items
-    public var sortBy: GraphQLEnum<SearchItemsSortBy> {
+    var sortBy: GraphQLEnum<SearchItemsSortBy> {
       get { __data["sortBy"] }
       set { __data["sortBy"] = newValue }
     }
 
     /// The order in which to sort user items
-    public var sortOrder: GraphQLNullable<GraphQLEnum<SearchItemsSortOrder>> {
+    var sortOrder: GraphQLNullable<GraphQLEnum<SearchItemsSortOrder>> {
       get { __data["sortOrder"] }
       set { __data["sortOrder"] = newValue }
     }

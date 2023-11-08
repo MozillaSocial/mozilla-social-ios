@@ -7,7 +7,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   /// ISOString custom scalar type
   typealias ISOString = String
 

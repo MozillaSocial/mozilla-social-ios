@@ -3,25 +3,25 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   struct MarticleDividerParts: PocketGraph.SelectionSet, Fragment {
-    public static var fragmentDefinition: StaticString {
+    static var fragmentDefinition: StaticString {
       #"fragment MarticleDividerParts on MarticleDivider { __typename content }"#
     }
 
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    let __data: DataDict
+    init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.MarticleDivider }
-    public static var __selections: [ApolloAPI.Selection] { [
+    static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.MarticleDivider }
+    static var __selections: [ApolloAPI.Selection] { [
       .field("__typename", String.self),
       .field("content", PocketGraph.Markdown.self),
     ] }
 
     /// Always '---'; provided for convenience if building a markdown string
-    public var content: PocketGraph.Markdown { __data["content"] }
+    var content: PocketGraph.Markdown { __data["content"] }
 
-    public init(
+    init(
       content: PocketGraph.Markdown
     ) {
       self.init(_dataDict: DataDict(

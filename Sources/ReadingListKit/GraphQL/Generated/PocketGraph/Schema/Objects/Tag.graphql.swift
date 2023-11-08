@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Represents a Tag that a User has created for their list
   static let Tag = Object(
     typename: "Tag",

@@ -3,25 +3,25 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   struct MarticleTableParts: PocketGraph.SelectionSet, Fragment {
-    public static var fragmentDefinition: StaticString {
+    static var fragmentDefinition: StaticString {
       #"fragment MarticleTableParts on MarticleTable { __typename html }"#
     }
 
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    let __data: DataDict
+    init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.MarticleTable }
-    public static var __selections: [ApolloAPI.Selection] { [
+    static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.MarticleTable }
+    static var __selections: [ApolloAPI.Selection] { [
       .field("__typename", String.self),
       .field("html", String.self),
     ] }
 
     /// Raw HTML representation of the table.
-    public var html: String { __data["html"] }
+    var html: String { __data["html"] }
 
-    public init(
+    init(
       html: String
     ) {
       self.init(_dataDict: DataDict(

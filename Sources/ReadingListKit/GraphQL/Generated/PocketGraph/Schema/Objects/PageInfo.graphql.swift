@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Information about pagination in a connection.
   static let PageInfo = Object(
     typename: "PageInfo",

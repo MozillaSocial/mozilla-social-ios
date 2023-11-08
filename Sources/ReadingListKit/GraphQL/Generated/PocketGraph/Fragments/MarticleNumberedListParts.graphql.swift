@@ -3,24 +3,24 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   struct MarticleNumberedListParts: PocketGraph.SelectionSet, Fragment {
-    public static var fragmentDefinition: StaticString {
+    static var fragmentDefinition: StaticString {
       #"fragment MarticleNumberedListParts on MarticleNumberedList { __typename rows { __typename content level index } }"#
     }
 
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    let __data: DataDict
+    init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.MarticleNumberedList }
-    public static var __selections: [ApolloAPI.Selection] { [
+    static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.MarticleNumberedList }
+    static var __selections: [ApolloAPI.Selection] { [
       .field("__typename", String.self),
       .field("rows", [Row].self),
     ] }
 
-    public var rows: [Row] { __data["rows"] }
+    var rows: [Row] { __data["rows"] }
 
-    public init(
+    init(
       rows: [Row]
     ) {
       self.init(_dataDict: DataDict(
@@ -37,12 +37,12 @@ public extension PocketGraph {
     /// Row
     ///
     /// Parent Type: `NumberedListElement`
-    public struct Row: PocketGraph.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+    struct Row: PocketGraph.SelectionSet {
+      let __data: DataDict
+      init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.NumberedListElement }
-      public static var __selections: [ApolloAPI.Selection] { [
+      static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.NumberedListElement }
+      static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("content", PocketGraph.Markdown.self),
         .field("level", Int.self),
@@ -50,13 +50,13 @@ public extension PocketGraph {
       ] }
 
       /// Row in a list
-      public var content: PocketGraph.Markdown { __data["content"] }
+      var content: PocketGraph.Markdown { __data["content"] }
       /// Zero-indexed level, for handling nested lists.
-      public var level: Int { __data["level"] }
+      var level: Int { __data["level"] }
       /// Numeric index. If a nested item, the index is zero-indexed from the first child.
-      public var index: Int { __data["index"] }
+      var index: Int { __data["index"] }
 
-      public init(
+      init(
         content: PocketGraph.Markdown,
         level: Int,
         index: Int

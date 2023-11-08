@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// An edge in a connection.
   static let SavedItemSearchResultEdge = Object(
     typename: "SavedItemSearchResultEdge",

@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   static let NumberedListElement = Object(
     typename: "NumberedListElement",
     implementedInterfaces: [PocketGraph.Interfaces.ListElement.self]

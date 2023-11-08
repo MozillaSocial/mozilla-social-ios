@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Information about an Author of an article or some content
   static let Author = Object(
     typename: "Author",

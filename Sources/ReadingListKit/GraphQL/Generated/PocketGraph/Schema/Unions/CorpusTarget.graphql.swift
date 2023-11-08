@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Unions {
+extension PocketGraph.Unions {
   /// TODO: Make this type implement PocketResource when available.
   /// https://getpocket.atlassian.net/wiki/spaces/PE/pages/2771714049/The+Future+of+Item
   static let CorpusTarget = Union(

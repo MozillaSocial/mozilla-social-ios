@@ -3,10 +3,10 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   class TagsQuery: GraphQLQuery {
-    public static let operationName: String = "Tags"
-    public static let operationDocument: ApolloAPI.OperationDocument = .init(
+    static let operationName: String = "Tags"
+    static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
         #"query Tags($pagination: PaginationInput) { user { __typename tags(pagination: $pagination) { __typename edges { __typename node { __typename ...TagParts } cursor } pageInfo { __typename endCursor hasNextPage hasPreviousPage startCursor } totalCount } } }"#,
         fragments: [TagParts.self]
@@ -20,43 +20,43 @@ public extension PocketGraph {
 
     public var __variables: Variables? { ["pagination": pagination] }
 
-    public struct Data: PocketGraph.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+    struct Data: PocketGraph.SelectionSet {
+      let __data: DataDict
+      init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.Query }
-      public static var __selections: [ApolloAPI.Selection] { [
+      static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.Query }
+      static var __selections: [ApolloAPI.Selection] { [
         .field("user", User?.self),
       ] }
 
       /// Get a user entity for an authenticated client
-      public var user: User? { __data["user"] }
+      var user: User? { __data["user"] }
 
       /// User
       ///
       /// Parent Type: `User`
-      public struct User: PocketGraph.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+      struct User: PocketGraph.SelectionSet {
+        let __data: DataDict
+        init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.User }
-        public static var __selections: [ApolloAPI.Selection] { [
+        static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.User }
+        static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("tags", Tags?.self, arguments: ["pagination": .variable("pagination")]),
         ] }
 
         /// Get a paginated listing of all a user's Tags
-        public var tags: Tags? { __data["tags"] }
+        var tags: Tags? { __data["tags"] }
 
         /// User.Tags
         ///
         /// Parent Type: `TagConnection`
-        public struct Tags: PocketGraph.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+        struct Tags: PocketGraph.SelectionSet {
+          let __data: DataDict
+          init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.TagConnection }
-          public static var __selections: [ApolloAPI.Selection] { [
+          static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.TagConnection }
+          static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("edges", [Edge?]?.self),
             .field("pageInfo", PageInfo.self),
@@ -64,54 +64,54 @@ public extension PocketGraph {
           ] }
 
           /// A list of edges.
-          public var edges: [Edge?]? { __data["edges"] }
+          var edges: [Edge?]? { __data["edges"] }
           /// Information to aid in pagination.
-          public var pageInfo: PageInfo { __data["pageInfo"] }
+          var pageInfo: PageInfo { __data["pageInfo"] }
           /// Identifies the total count of Tags in the connection.
-          public var totalCount: Int { __data["totalCount"] }
+          var totalCount: Int { __data["totalCount"] }
 
           /// User.Tags.Edge
           ///
           /// Parent Type: `TagEdge`
-          public struct Edge: PocketGraph.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+          struct Edge: PocketGraph.SelectionSet {
+            let __data: DataDict
+            init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.TagEdge }
-            public static var __selections: [ApolloAPI.Selection] { [
+            static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.TagEdge }
+            static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("node", Node?.self),
               .field("cursor", String.self),
             ] }
 
             /// The Tag at the end of the edge.
-            public var node: Node? { __data["node"] }
+            var node: Node? { __data["node"] }
             /// A cursor for use in pagination.
-            public var cursor: String { __data["cursor"] }
+            var cursor: String { __data["cursor"] }
 
             /// User.Tags.Edge.Node
             ///
             /// Parent Type: `Tag`
-            public struct Node: PocketGraph.SelectionSet {
-              public let __data: DataDict
-              public init(_dataDict: DataDict) { __data = _dataDict }
+            struct Node: PocketGraph.SelectionSet {
+              let __data: DataDict
+              init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.Tag }
-              public static var __selections: [ApolloAPI.Selection] { [
+              static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.Tag }
+              static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .fragment(TagParts.self),
               ] }
 
               /// The actual tag string the user created for their list
-              public var name: String { __data["name"] }
+              var name: String { __data["name"] }
               /// Surrogate primary key. This is usually generated by clients, but will be generated by the server if not passed through creation
-              public var id: PocketGraph.ID { __data["id"] }
+              var id: PocketGraph.ID { __data["id"] }
 
-              public struct Fragments: FragmentContainer {
-                public let __data: DataDict
-                public init(_dataDict: DataDict) { __data = _dataDict }
+              struct Fragments: FragmentContainer {
+                let __data: DataDict
+                init(_dataDict: DataDict) { __data = _dataDict }
 
-                public var tagParts: TagParts { _toFragment() }
+                var tagParts: TagParts { _toFragment() }
               }
             }
           }
@@ -119,12 +119,12 @@ public extension PocketGraph {
           /// User.Tags.PageInfo
           ///
           /// Parent Type: `PageInfo`
-          public struct PageInfo: PocketGraph.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+          struct PageInfo: PocketGraph.SelectionSet {
+            let __data: DataDict
+            init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.PageInfo }
-            public static var __selections: [ApolloAPI.Selection] { [
+            static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.PageInfo }
+            static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("endCursor", String?.self),
               .field("hasNextPage", Bool.self),
@@ -133,13 +133,13 @@ public extension PocketGraph {
             ] }
 
             /// When paginating forwards, the cursor to continue.
-            public var endCursor: String? { __data["endCursor"] }
+            var endCursor: String? { __data["endCursor"] }
             /// When paginating forwards, are there more items?
-            public var hasNextPage: Bool { __data["hasNextPage"] }
+            var hasNextPage: Bool { __data["hasNextPage"] }
             /// When paginating backwards, are there more items?
-            public var hasPreviousPage: Bool { __data["hasPreviousPage"] }
+            var hasPreviousPage: Bool { __data["hasPreviousPage"] }
             /// When paginating backwards, the cursor to continue.
-            public var startCursor: String? { __data["startCursor"] }
+            var startCursor: String? { __data["startCursor"] }
           }
         }
       }

@@ -7,7 +7,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   /// A string formatted with CommonMark markdown,
   /// plus the strikethrough extension from GFM.
   /// This Scalar is for documentation purposes; otherwise

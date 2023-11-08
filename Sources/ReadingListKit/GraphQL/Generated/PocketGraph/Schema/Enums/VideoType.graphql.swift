@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   enum VideoType: String, EnumType {
     /// Youtube (v3 value is 1)
     case youtube = "YOUTUBE"

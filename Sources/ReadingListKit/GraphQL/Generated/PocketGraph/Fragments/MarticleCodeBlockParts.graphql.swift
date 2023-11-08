@@ -3,28 +3,28 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   struct MarticleCodeBlockParts: PocketGraph.SelectionSet, Fragment {
-    public static var fragmentDefinition: StaticString {
+    static var fragmentDefinition: StaticString {
       #"fragment MarticleCodeBlockParts on MarticleCodeBlock { __typename text language }"#
     }
 
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    let __data: DataDict
+    init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.MarticleCodeBlock }
-    public static var __selections: [ApolloAPI.Selection] { [
+    static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.MarticleCodeBlock }
+    static var __selections: [ApolloAPI.Selection] { [
       .field("__typename", String.self),
       .field("text", String.self),
       .field("language", Int?.self),
     ] }
 
     /// Content of a pre tag
-    public var text: String { __data["text"] }
+    var text: String { __data["text"] }
     /// Assuming the codeblock was a programming language, this field is used to identify it.
-    public var language: Int? { __data["language"] }
+    var language: Int? { __data["language"] }
 
-    public init(
+    init(
       text: String,
       language: Int? = nil
     ) {

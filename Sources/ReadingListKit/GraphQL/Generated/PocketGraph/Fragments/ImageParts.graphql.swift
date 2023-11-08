@@ -3,17 +3,17 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   struct ImageParts: PocketGraph.SelectionSet, Fragment {
-    public static var fragmentDefinition: StaticString {
+    static var fragmentDefinition: StaticString {
       #"fragment ImageParts on Image { __typename caption credit imageID: imageId src height width }"#
     }
 
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    let __data: DataDict
+    init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.Image }
-    public static var __selections: [ApolloAPI.Selection] { [
+    static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.Image }
+    static var __selections: [ApolloAPI.Selection] { [
       .field("__typename", String.self),
       .field("caption", String?.self),
       .field("credit", String?.self),
@@ -24,20 +24,20 @@ public extension PocketGraph {
     ] }
 
     /// A caption or description of the image
-    public var caption: String? { __data["caption"] }
+    var caption: String? { __data["caption"] }
     /// A credit for the image, typically who the image belongs to / created by
-    public var credit: String? { __data["credit"] }
+    var credit: String? { __data["credit"] }
     /// The id for placing within an Article View. Item.article will have placeholders of <div id='RIL_IMG_X' /> where X is this id. Apps can download those images as needed and populate them in their article view.
-    public var imageID: Int { __data["imageID"] }
+    var imageID: Int { __data["imageID"] }
     /// Absolute url to the image
     @available(*, deprecated, message: "use url property moving forward")
-    public var src: String { __data["src"] }
+    var src: String { __data["src"] }
     /// The determined height of the image at the url
-    public var height: Int? { __data["height"] }
+    var height: Int? { __data["height"] }
     /// The determined width of the image at the url
-    public var width: Int? { __data["width"] }
+    var width: Int? { __data["width"] }
 
-    public init(
+    init(
       caption: String? = nil,
       credit: String? = nil,
       imageID: Int,

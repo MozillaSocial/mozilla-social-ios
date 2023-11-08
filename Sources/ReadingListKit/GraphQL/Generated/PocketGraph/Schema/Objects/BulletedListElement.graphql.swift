@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Row in a bulleted (unordered list)
   static let BulletedListElement = Object(
     typename: "BulletedListElement",

@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   enum Videoness: String, EnumType {
     /// No videos (v3 value is 0)
     case noVideos = "NO_VIDEOS"

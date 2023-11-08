@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// An image that is keyed on URL
   static let Image = Object(
     typename: "Image",

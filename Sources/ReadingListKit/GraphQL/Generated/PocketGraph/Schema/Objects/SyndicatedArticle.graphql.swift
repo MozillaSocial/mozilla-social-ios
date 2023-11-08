@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// An article that Pocket has syndicated and we also host on our own site
   static let SyndicatedArticle = Object(
     typename: "SyndicatedArticle",

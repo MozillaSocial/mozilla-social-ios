@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Unions {
+extension PocketGraph.Unions {
   /// Union type for items that may or may not be processed
   static let ItemResult = Union(
     name: "ItemResult",

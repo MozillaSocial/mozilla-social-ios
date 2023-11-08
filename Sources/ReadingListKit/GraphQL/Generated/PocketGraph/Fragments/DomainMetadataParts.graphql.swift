@@ -3,28 +3,28 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   struct DomainMetadataParts: PocketGraph.SelectionSet, Fragment {
-    public static var fragmentDefinition: StaticString {
+    static var fragmentDefinition: StaticString {
       #"fragment DomainMetadataParts on DomainMetadata { __typename name logo }"#
     }
 
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    let __data: DataDict
+    init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.DomainMetadata }
-    public static var __selections: [ApolloAPI.Selection] { [
+    static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.DomainMetadata }
+    static var __selections: [ApolloAPI.Selection] { [
       .field("__typename", String.self),
       .field("name", String?.self),
       .field("logo", PocketGraph.Url?.self),
     ] }
 
     /// The name of the domain (e.g., The New York Times)
-    public var name: String? { __data["name"] }
+    var name: String? { __data["name"] }
     /// Url for the logo image
-    public var logo: PocketGraph.Url? { __data["logo"] }
+    var logo: PocketGraph.Url? { __data["logo"] }
 
-    public init(
+    init(
       name: String? = nil,
       logo: PocketGraph.Url? = nil
     ) {

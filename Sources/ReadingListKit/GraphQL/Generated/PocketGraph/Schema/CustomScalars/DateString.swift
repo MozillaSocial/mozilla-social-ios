@@ -7,7 +7,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   /// A String representing a date in the format of `yyyy-MM-dd HH:mm:ss`
   typealias DateString = String
 

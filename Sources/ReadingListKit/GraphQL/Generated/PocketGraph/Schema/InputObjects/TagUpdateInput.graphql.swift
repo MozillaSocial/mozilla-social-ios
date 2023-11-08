@@ -3,16 +3,16 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   /// Input field for updating a Tag
   struct TagUpdateInput: InputObject {
-    public private(set) var __data: InputDict
+    private(set) var __data: InputDict
 
-    public init(_ data: InputDict) {
+    init(_ data: InputDict) {
       __data = data
     }
 
-    public init(
+    init(
       id: ID,
       name: String
     ) {
@@ -23,13 +23,13 @@ public extension PocketGraph {
     }
 
     /// Tag ID
-    public var id: ID {
+    var id: ID {
       get { __data["id"] }
       set { __data["id"] = newValue }
     }
 
     /// The updated tag string
-    public var name: String {
+    var name: String {
       get { __data["name"] }
       set { __data["name"] = newValue }
     }

@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   /// Enum to specify the sort order of SavedItems fetched
   enum SavedItemsSortOrder: String, EnumType {
     case asc = "ASC"

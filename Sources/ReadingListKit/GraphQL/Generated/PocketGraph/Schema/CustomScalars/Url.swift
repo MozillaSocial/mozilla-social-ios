@@ -7,7 +7,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   /// A String in the format of a url.
   typealias Url = String
 

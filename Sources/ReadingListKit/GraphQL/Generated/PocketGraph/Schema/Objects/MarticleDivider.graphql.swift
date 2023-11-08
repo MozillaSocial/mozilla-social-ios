@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   static let MarticleDivider = Object(
     typename: "MarticleDivider",
     implementedInterfaces: []

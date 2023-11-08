@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Resolve by reference the User entity in this graph to provide user data with public lists.
   static let User = Object(
     typename: "User",

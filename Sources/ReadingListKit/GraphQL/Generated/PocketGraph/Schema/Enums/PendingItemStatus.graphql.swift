@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   enum PendingItemStatus: String, EnumType {
     case resolved = "RESOLVED"
     case unresolved = "UNRESOLVED"

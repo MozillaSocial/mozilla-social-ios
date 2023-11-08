@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Content in a table.
   static let MarticleTable = Object(
     typename: "MarticleTable",

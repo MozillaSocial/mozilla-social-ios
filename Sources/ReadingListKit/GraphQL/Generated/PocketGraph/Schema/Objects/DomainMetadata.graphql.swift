@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Metadata from a domain, originally populated from ClearBit
   static let DomainMetadata = Object(
     typename: "DomainMetadata",

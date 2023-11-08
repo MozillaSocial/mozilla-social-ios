@@ -3,17 +3,17 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   struct PendingItemParts: PocketGraph.SelectionSet, Fragment {
-    public static var fragmentDefinition: StaticString {
+    static var fragmentDefinition: StaticString {
       #"fragment PendingItemParts on PendingItem { __typename remoteID: itemId givenUrl: url status }"#
     }
 
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    let __data: DataDict
+    init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.PendingItem }
-    public static var __selections: [ApolloAPI.Selection] { [
+    static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.PendingItem }
+    static var __selections: [ApolloAPI.Selection] { [
       .field("__typename", String.self),
       .field("itemId", alias: "remoteID", String.self),
       .field("url", alias: "givenUrl", PocketGraph.Url.self),
@@ -22,11 +22,11 @@ public extension PocketGraph {
 
     /// URL of the item that the user gave for the SavedItem
     /// that is pending processing by parser
-    public var remoteID: String { __data["remoteID"] }
-    public var givenUrl: PocketGraph.Url { __data["givenUrl"] }
-    public var status: GraphQLEnum<PocketGraph.PendingItemStatus>? { __data["status"] }
+    var remoteID: String { __data["remoteID"] }
+    var givenUrl: PocketGraph.Url { __data["givenUrl"] }
+    var status: GraphQLEnum<PocketGraph.PendingItemStatus>? { __data["status"] }
 
-    public init(
+    init(
       remoteID: String,
       givenUrl: PocketGraph.Url,
       status: GraphQLEnum<PocketGraph.PendingItemStatus>? = nil

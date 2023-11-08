@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   /// A SavedItem can be one of these content types
   enum SearchItemsContentType: String, EnumType {
     case video = "VIDEO"

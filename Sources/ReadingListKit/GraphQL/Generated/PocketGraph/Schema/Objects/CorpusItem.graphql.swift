@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Represents an item that is in the Corpus and its associated manually edited metadata.
   /// TODO: CorpusItem to implement PocketResource when it becomes available.
   static let CorpusItem = Object(

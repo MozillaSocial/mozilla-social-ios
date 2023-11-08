@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Interfaces {
+extension PocketGraph.Interfaces {
   /// Interface that all state based entities must implement
   static let RemoteEntity = Interface(name: "RemoteEntity")
 }

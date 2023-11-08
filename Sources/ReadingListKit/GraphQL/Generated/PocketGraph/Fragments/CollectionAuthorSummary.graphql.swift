@@ -3,24 +3,24 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   struct CollectionAuthorSummary: PocketGraph.SelectionSet, Fragment {
-    public static var fragmentDefinition: StaticString {
+    static var fragmentDefinition: StaticString {
       #"fragment CollectionAuthorSummary on CollectionAuthor { __typename name }"#
     }
 
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    let __data: DataDict
+    init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.CollectionAuthor }
-    public static var __selections: [ApolloAPI.Selection] { [
+    static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.CollectionAuthor }
+    static var __selections: [ApolloAPI.Selection] { [
       .field("__typename", String.self),
       .field("name", String.self),
     ] }
 
-    public var name: String { __data["name"] }
+    var name: String { __data["name"] }
 
-    public init(
+    init(
       name: String
     ) {
       self.init(_dataDict: DataDict(

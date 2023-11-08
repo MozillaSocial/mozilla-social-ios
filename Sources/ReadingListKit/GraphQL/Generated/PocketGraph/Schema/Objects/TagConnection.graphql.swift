@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// The connection type for Tag.
   static let TagConnection = Object(
     typename: "TagConnection",

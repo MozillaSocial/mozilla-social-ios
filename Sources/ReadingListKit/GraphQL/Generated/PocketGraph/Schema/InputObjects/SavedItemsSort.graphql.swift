@@ -3,16 +3,16 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   /// Input to sort fetched SavedItems. If unspecified, defaults to CREATED_AT, ASC.
   struct SavedItemsSort: InputObject {
-    public private(set) var __data: InputDict
+    private(set) var __data: InputDict
 
-    public init(_ data: InputDict) {
+    init(_ data: InputDict) {
       __data = data
     }
 
-    public init(
+    init(
       sortBy: GraphQLEnum<SavedItemsSortBy>,
       sortOrder: GraphQLEnum<SavedItemsSortOrder>
     ) {
@@ -23,13 +23,13 @@ public extension PocketGraph {
     }
 
     /// The field by which to sort SavedItems
-    public var sortBy: GraphQLEnum<SavedItemsSortBy> {
+    var sortBy: GraphQLEnum<SavedItemsSortBy> {
       get { __data["sortBy"] }
       set { __data["sortBy"] = newValue }
     }
 
     /// The order in which to sort SavedItems
-    public var sortOrder: GraphQLEnum<SavedItemsSortOrder> {
+    var sortOrder: GraphQLEnum<SavedItemsSortOrder> {
       get { __data["sortOrder"] }
       set { __data["sortOrder"] = newValue }
     }

@@ -3,28 +3,28 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   struct MarticleHeadingParts: PocketGraph.SelectionSet, Fragment {
-    public static var fragmentDefinition: StaticString {
+    static var fragmentDefinition: StaticString {
       #"fragment MarticleHeadingParts on MarticleHeading { __typename content level }"#
     }
 
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    let __data: DataDict
+    init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.MarticleHeading }
-    public static var __selections: [ApolloAPI.Selection] { [
+    static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.MarticleHeading }
+    static var __selections: [ApolloAPI.Selection] { [
       .field("__typename", String.self),
       .field("content", PocketGraph.Markdown.self),
       .field("level", Int.self),
     ] }
 
     /// Heading text, in markdown.
-    public var content: PocketGraph.Markdown { __data["content"] }
+    var content: PocketGraph.Markdown { __data["content"] }
     /// Heading level. Restricted to values 1-6.
-    public var level: Int { __data["level"] }
+    var level: Int { __data["level"] }
 
-    public init(
+    init(
       content: PocketGraph.Markdown,
       level: Int
     ) {

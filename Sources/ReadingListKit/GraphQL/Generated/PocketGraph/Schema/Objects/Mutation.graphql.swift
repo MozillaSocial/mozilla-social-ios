@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Default Mutation Type
   static let Mutation = Object(
     typename: "Mutation",

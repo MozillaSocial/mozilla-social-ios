@@ -3,6 +3,6 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Interfaces {
+extension PocketGraph.Interfaces {
   static let ListElement = Interface(name: "ListElement")
 }

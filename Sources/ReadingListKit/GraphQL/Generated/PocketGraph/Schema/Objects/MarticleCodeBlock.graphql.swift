@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// A pre formatted text in the HTML content.
   static let MarticleCodeBlock = Object(
     typename: "MarticleCodeBlock",

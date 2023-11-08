@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   /// Enum to specify the sort by field (these are the current options, we could add more in the future)
   enum SavedItemsSortBy: String, EnumType {
     case createdAt = "CREATED_AT"

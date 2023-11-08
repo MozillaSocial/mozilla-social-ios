@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// A Video, typically within an Article View of an Item or if the Item is a video itself.
   static let Video = Object(
     typename: "Video",

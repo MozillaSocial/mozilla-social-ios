@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// The connection type for SavedItem.
   static let SavedItemSearchResultConnection = Object(
     typename: "SavedItemSearchResultConnection",

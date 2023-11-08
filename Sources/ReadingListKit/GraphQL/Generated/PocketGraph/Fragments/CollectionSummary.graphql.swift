@@ -3,26 +3,26 @@
 
 @_exported import ApolloAPI
 
-public extension PocketGraph {
+extension PocketGraph {
   struct CollectionSummary: PocketGraph.SelectionSet, Fragment {
-    public static var fragmentDefinition: StaticString {
+    static var fragmentDefinition: StaticString {
       #"fragment CollectionSummary on Collection { __typename slug authors { __typename ...CollectionAuthorSummary } }"#
     }
 
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    let __data: DataDict
+    init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.Collection }
-    public static var __selections: [ApolloAPI.Selection] { [
+    static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.Collection }
+    static var __selections: [ApolloAPI.Selection] { [
       .field("__typename", String.self),
       .field("slug", String.self),
       .field("authors", [Author].self),
     ] }
 
-    public var slug: String { __data["slug"] }
-    public var authors: [Author] { __data["authors"] }
+    var slug: String { __data["slug"] }
+    var authors: [Author] { __data["authors"] }
 
-    public init(
+    init(
       slug: String,
       authors: [Author]
     ) {
@@ -41,26 +41,26 @@ public extension PocketGraph {
     /// Author
     ///
     /// Parent Type: `CollectionAuthor`
-    public struct Author: PocketGraph.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+    struct Author: PocketGraph.SelectionSet {
+      let __data: DataDict
+      init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.CollectionAuthor }
-      public static var __selections: [ApolloAPI.Selection] { [
+      static var __parentType: ApolloAPI.ParentType { PocketGraph.Objects.CollectionAuthor }
+      static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .fragment(CollectionAuthorSummary.self),
       ] }
 
-      public var name: String { __data["name"] }
+      var name: String { __data["name"] }
 
-      public struct Fragments: FragmentContainer {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+      struct Fragments: FragmentContainer {
+        let __data: DataDict
+        init(_dataDict: DataDict) { __data = _dataDict }
 
-        public var collectionAuthorSummary: CollectionAuthorSummary { _toFragment() }
+        var collectionAuthorSummary: CollectionAuthorSummary { _toFragment() }
       }
 
-      public init(
+      init(
         name: String
       ) {
         self.init(_dataDict: DataDict(

@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Content in a bulleted (unordered) list.
   static let MarticleBulletedList = Object(
     typename: "MarticleBulletedList",

@@ -3,19 +3,19 @@
 
 import ApolloAPI
 
-public protocol PocketGraph_SelectionSet: ApolloAPI.SelectionSet & ApolloAPI.RootSelectionSet
+protocol PocketGraph_SelectionSet: ApolloAPI.SelectionSet & ApolloAPI.RootSelectionSet
 where Schema == PocketGraph.SchemaMetadata {}
 
-public protocol PocketGraph_InlineFragment: ApolloAPI.SelectionSet & ApolloAPI.InlineFragment
+protocol PocketGraph_InlineFragment: ApolloAPI.SelectionSet & ApolloAPI.InlineFragment
 where Schema == PocketGraph.SchemaMetadata {}
 
-public protocol PocketGraph_MutableSelectionSet: ApolloAPI.MutableRootSelectionSet
+protocol PocketGraph_MutableSelectionSet: ApolloAPI.MutableRootSelectionSet
 where Schema == PocketGraph.SchemaMetadata {}
 
-public protocol PocketGraph_MutableInlineFragment: ApolloAPI.MutableSelectionSet & ApolloAPI.InlineFragment
+protocol PocketGraph_MutableInlineFragment: ApolloAPI.MutableSelectionSet & ApolloAPI.InlineFragment
 where Schema == PocketGraph.SchemaMetadata {}
 
-public extension PocketGraph {
+extension PocketGraph {
   typealias ID = String
 
   typealias SelectionSet = PocketGraph_SelectionSet
@@ -27,9 +27,9 @@ public extension PocketGraph {
   typealias MutableInlineFragment = PocketGraph_MutableInlineFragment
 
   enum SchemaMetadata: ApolloAPI.SchemaMetadata {
-    public static let configuration: ApolloAPI.SchemaConfiguration.Type = SchemaConfiguration.self
+    static let configuration: ApolloAPI.SchemaConfiguration.Type = SchemaConfiguration.self
 
-    public static func objectType(forTypename typename: String) -> Object? {
+    static func objectType(forTypename typename: String) -> Object? {
       switch typename {
       case "Query": return PocketGraph.Objects.Query
       case "User": return PocketGraph.Objects.User

@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public extension PocketGraph.Objects {
+extension PocketGraph.Objects {
   /// Represents content that could not be parsed into a valid Marticle* component.
   static let UnMarseable = Object(
     typename: "UnMarseable",
