@@ -17,6 +17,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/mozilla/glean-swift", from: "54.0.0"),
+        .package(url: "https://github.com/apollographql/apollo-ios.git", exact: "1.7.0"),
     ],
     targets: [
         .target(
@@ -38,7 +39,7 @@ let package = Package(
             dependencies: ["DiscoverKit"]),
         .target(
             name: "ReadingListKit",
-            dependencies: ["MoSoCore", "DesignKit"]
+            dependencies: ["MoSoCore", "DesignKit", .product(name: "Apollo", package: "apollo-ios")]
         ),
         .testTarget(
             name: "ReadingListKitTests",

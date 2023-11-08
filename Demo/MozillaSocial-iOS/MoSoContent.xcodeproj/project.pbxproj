@@ -26,7 +26,6 @@
 		AAE52B662AB2D39900956FBE /* MoSoClient in Frameworks */ = {isa = PBXBuildFile; productRef = AAE52B652AB2D39900956FBE /* MoSoClient */; };
 		AAE52B682AB4CEF400956FBE /* MoSoCore in Frameworks */ = {isa = PBXBuildFile; productRef = AAE52B672AB4CEF400956FBE /* MoSoCore */; };
 		AAE52B6A2AB4CFE300956FBE /* AppConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE52B692AB4CFE300956FBE /* AppConfigurator.swift */; };
-		C8A73F8E2AF2B2A5006F53E5 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = C8A73F8D2AF2B2A5006F53E5 /* Apollo */; };
 		C8D44DD22ACDC1710087CE3C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D44DD12ACDC1710087CE3C /* LoginView.swift */; };
 		C8D44DD62ACE10220087CE3C /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D44DD52ACE10220087CE3C /* AuthenticationService.swift */; };
 /* End PBXBuildFile section */
@@ -83,7 +82,6 @@
 				8A735C6A2AE9B1FD002F961C /* BrazeUI in Frameworks */,
 				AA9E65612AD77D2D00BE5789 /* MoSoAnalytics in Frameworks */,
 				8A735C642AE9AD58002F961C /* BrazeKit in Frameworks */,
-				C8A73F8E2AF2B2A5006F53E5 /* Apollo in Frameworks */,
 				AA7BDC922AB26EFC00ACCACF /* ReadingListKit in Frameworks */,
 				AAE52B662AB2D39900956FBE /* MoSoClient in Frameworks */,
 				AAE52B682AB4CEF400956FBE /* MoSoCore in Frameworks */,
@@ -227,7 +225,6 @@
 				AA9E65602AD77D2D00BE5789 /* MoSoAnalytics */,
 				8A735C632AE9AD58002F961C /* BrazeKit */,
 				8A735C692AE9B1FD002F961C /* BrazeUI */,
-				C8A73F8D2AF2B2A5006F53E5 /* Apollo */,
 			);
 			productName = MoSoContent;
 			productReference = AA7BDC5C2AB2571800ACCACF /* MoSoContent.app */;
@@ -306,7 +303,6 @@
 			mainGroup = AA7BDC532AB2571800ACCACF;
 			packageReferences = (
 				8A735C622AE9AD58002F961C /* XCRemoteSwiftPackageReference "braze-swift-sdk" */,
-				C8A73F8C2AF2B2A5006F53E5 /* XCRemoteSwiftPackageReference "apollo-ios" */,
 			);
 			productRefGroup = AA7BDC5D2AB2571800ACCACF /* Products */;
 			projectDirPath = "";
@@ -728,14 +724,6 @@
 				version = 7.1.0;
 			};
 		};
-		C8A73F8C2AF2B2A5006F53E5 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.6.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -772,11 +760,6 @@
 		AAE52B672AB4CEF400956FBE /* MoSoCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MoSoCore;
-		};
-		C8A73F8D2AF2B2A5006F53E5 /* Apollo */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C8A73F8C2AF2B2A5006F53E5 /* XCRemoteSwiftPackageReference "apollo-ios" */;
-			productName = Apollo;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

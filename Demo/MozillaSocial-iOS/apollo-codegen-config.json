@@ -18,13 +18,16 @@
     },
     "output": {
         "testMocks": {
-            "absolute": { "path": "../../Sources/ReadingListKit/GraphQL/PocketGraphTestMocks/" }
+            "none": {}
         },
         "schemaTypes": {
-            "path": "../../Sources/ReadingListKit/GraphQL/PocketGraph/",
+            "path": "../../Sources/ReadingListKit/GraphQL/Generated/PocketGraph/",
             "moduleType": {
-                "other": {}
-            }
+                        "embeddedInTarget": {
+                            "name": "ReadingListKit",
+                            "accessModifier": "public"
+                        }
+                    }
         },
         "operations": {
             "inSchemaModule": {}
