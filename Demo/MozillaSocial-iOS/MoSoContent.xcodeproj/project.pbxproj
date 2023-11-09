@@ -212,6 +212,7 @@
 				AA7BDC592AB2571800ACCACF /* Frameworks */,
 				AA7BDC5A2AB2571800ACCACF /* Resources */,
 				8AA6BA332AC4916F00B93B6C /* Run Swiftlint */,
+				8AC0DFA92AF959FB008CD6C2 /* Run Glean */,
 			);
 			buildRules = (
 			);
@@ -364,6 +365,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint > /dev/null; then\n  if [ \"$CONFIGURATION\" = 'Debug' ]; then\n    swiftlint --strict\n  else \n    echo \"Skipping swift lint because it is not a local developer build.\"\n  fi  \nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		8AC0DFA92AF959FB008CD6C2 /* Run Glean */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Glean";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $PWD/../../Sources/MoSoAnalytics/Glean/\nbash sdk_generator.sh \"metrics.yaml\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
