@@ -10,10 +10,10 @@ import MoSoAnalytics
 /// Dependency container
 public final class DiscoverProvider: ObservableObject {
     // TODO: this property can be observed as the session/user logged in status changes
-    @Published var session: MoSoSession
+    @Published var session: MoSoSessionManager
     private let tracker: DiscoverTracker
 
-    public init(session: MoSoSession, tracker: DiscoverTracker) {
+    public init(session: MoSoSessionManager, tracker: DiscoverTracker) {
         self.session = session
         self.tracker = tracker
     }

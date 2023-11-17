@@ -24,9 +24,9 @@ public protocol BaseTracker {
 }
 
 struct GleanBaseTracker: BaseTracker {
-    private let session: MoSoSession
+    private let session: MoSoSessionManager
 
-    init(session: MoSoSession) {
+    init(session: MoSoSessionManager) {
         self.session = session
         // TODO: for now we are in debug mode.
         Glean.shared.setLogPings(true)

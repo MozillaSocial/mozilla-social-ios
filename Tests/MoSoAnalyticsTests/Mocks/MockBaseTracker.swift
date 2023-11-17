@@ -22,7 +22,7 @@ class MockBaseTracker: BaseTracker {
     var additionalInfo: String?
     var uiIdentifier: String?
 
-    init(session: MoSoSession) {
+    init(session: MoSoSessionManager) {
         self.mastodonAccountID = session.user!.identifier
         self.mastodonAccountHandle = session.user!.username
     }

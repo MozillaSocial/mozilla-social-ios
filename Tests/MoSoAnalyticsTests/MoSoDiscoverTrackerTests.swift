@@ -10,7 +10,7 @@ class MoSoDiscoverTrackerTests: XCTestCase {
     func testTrackRecommendationOpen() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let baseTracker = MockBaseTracker(session: MoSoSession(user: user))
+        let baseTracker = MockBaseTracker(session: MoSoSessionManager(user: user))
         let discoverTracker = MoSoDiscoverTracker(baseTracker: baseTracker)
         baseTracker.engagementExpectation = expectation(description: "open recommendation")
         // When
@@ -30,7 +30,7 @@ class MoSoDiscoverTrackerTests: XCTestCase {
     func testTrackRecommendationShare() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let baseTracker = MockBaseTracker(session: MoSoSession(user: user))
+        let baseTracker = MockBaseTracker(session: MoSoSessionManager(user: user))
         let discoverTracker = MoSoDiscoverTracker(baseTracker: baseTracker)
         baseTracker.engagementExpectation = expectation(description: "share recommendation")
         // When
@@ -50,7 +50,7 @@ class MoSoDiscoverTrackerTests: XCTestCase {
     func testTrackRecommendationBookmark() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let baseTracker = MockBaseTracker(session: MoSoSession(user: user))
+        let baseTracker = MockBaseTracker(session: MoSoSessionManager(user: user))
         let discoverTracker = MoSoDiscoverTracker(baseTracker: baseTracker)
         baseTracker.engagementExpectation = expectation(description: "bookmark recommendation")
         // When
@@ -70,7 +70,7 @@ class MoSoDiscoverTrackerTests: XCTestCase {
     func testTrackDiscoverScreenImpression() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let baseTracker = MockBaseTracker(session: MoSoSession(user: user))
+        let baseTracker = MockBaseTracker(session: MoSoSessionManager(user: user))
         let discoverTracker = MoSoDiscoverTracker(baseTracker: baseTracker)
         baseTracker.impressionExpectation = expectation(description: "discover screen impression")
         // When
@@ -89,7 +89,7 @@ class MoSoDiscoverTrackerTests: XCTestCase {
     func testTrackRecommendationImpression() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let baseTracker = MockBaseTracker(session: MoSoSession(user: user))
+        let baseTracker = MockBaseTracker(session: MoSoSessionManager(user: user))
         let discoverTracker = MoSoDiscoverTracker(baseTracker: baseTracker)
         baseTracker.impressionExpectation = expectation(description: "recommendation impression")
         // When

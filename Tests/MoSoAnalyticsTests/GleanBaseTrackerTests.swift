@@ -15,7 +15,7 @@ final class GleanBaseTrackerTests: XCTestCase {
     func testImpression() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let tracker = GleanBaseTracker(session: MoSoSession(user: user))
+        let tracker = GleanBaseTracker(session: MoSoSessionManager(user: user))
         // When
         tracker.trackImpression(
             postID: "Post001",
@@ -41,7 +41,7 @@ final class GleanBaseTrackerTests: XCTestCase {
     func testTrackMultipleImpressions() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let tracker = GleanBaseTracker(session: MoSoSession(user: user))
+        let tracker = GleanBaseTracker(session: MoSoSessionManager(user: user))
         // When
         tracker.trackImpression(
             postID: "Post001",
@@ -75,7 +75,7 @@ final class GleanBaseTrackerTests: XCTestCase {
     func testEngagement() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let tracker = GleanBaseTracker(session: MoSoSession(user: user))
+        let tracker = GleanBaseTracker(session: MoSoSessionManager(user: user))
         let action: EngagementAction = .general
         // When
         tracker.trackEngagement(
@@ -106,7 +106,7 @@ final class GleanBaseTrackerTests: XCTestCase {
     func testTrackMultipleEngagements() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let tracker = GleanBaseTracker(session: MoSoSession(user: user))
+        let tracker = GleanBaseTracker(session: MoSoSessionManager(user: user))
         // When
         tracker.trackEngagement(
             action: .general,

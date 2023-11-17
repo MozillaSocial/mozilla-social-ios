@@ -14,8 +14,3 @@ public struct ReadingListView: View {
         Text("Coming Soon")
     }
 }
-
-#Preview {
-    func auth() -> String { "AUTH" }
-    return ReadingListView(model: ReadingListModel(authTokenProvider: auth, consumerKey: "KEY"))
-}

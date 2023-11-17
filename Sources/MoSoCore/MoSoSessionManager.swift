@@ -3,7 +3,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 // TODO: this very simple implementation will change
-public class MoSoSession {
+public class MoSoSessionManager {
     public private(set) var user: MoSoUser?
     public var isLoggedIn: Bool {
         user != nil
@@ -21,12 +21,17 @@ public class MoSoSession {
         user = nil
     }
 
-    public func authToken() -> String {
-        "ACCESS_KEYCHAIN_HERE"
+    public func activeSession() -> MoSoSession {
+        MoSoSession(token: "SOME_TOKEN", guid: "SOME_GUID")
     }
 
     // Should be removed once the Mastodon Token supports Pocket API access
-    public func pocketAuthToken() -> String {
-        "ACCESS_KEYCHAIN_HERE"
+    public func pocketAuthToken() -> MoSoSession {
+        MoSoSession(token: "SOME_TOKEN", guid: "SOME_GUID")
     }
+}
+
+public struct MoSoSession {
+    public let token: String
+    public let guid: String
 }

@@ -10,7 +10,7 @@ import SwiftUI
 
 // TODO: this is a barebone example for now. Session will be received from login and auth services as needed
 struct AppConfigurator {
-    let session: MoSoSession
+    let session: MoSoSessionManager
     let analyticsProvider: AnalyticsProvider
     let discoverProvider: DiscoverProvider
     let braze: MoSoBraze
@@ -20,7 +20,7 @@ struct AppConfigurator {
     }
 
     init() {
-        session = MoSoSession()
+        session = MoSoSessionManager()
         analyticsProvider = AnalyticsProvider(session: session)
         discoverProvider  = DiscoverProvider(session: session, tracker: analyticsProvider.makeDiscoverTracker())
         braze = MoSoBraze(
@@ -47,6 +47,6 @@ struct AppConfigurator {
     }
 
     func makeReadingListTab() -> some View {
-        ReadingListView(model: ReadingListModel(authTokenProvider: session.pocketAuthToken, consumerKey: Keys.shared.pocketAPIConsumerKey))
+        ReadingListView(model: ReadingListModel(sessionProvider: session.pocketAuthToken, groupID: Keys.shared.groupID, consumerKey: Keys.shared.pocketAPIConsumerKey))
     }
 }

@@ -11,7 +11,7 @@ import MoSoCore
 public final class AnalyticsProvider {
     public let baseTracker: BaseTracker
 
-    public init(session: MoSoSession, baseTracker: BaseTracker? = nil) {
+    public init(session: MoSoSessionManager, baseTracker: BaseTracker? = nil) {
         self.baseTracker = baseTracker ?? GleanBaseTracker(session: session)
         self.baseTracker.start()
     }

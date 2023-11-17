@@ -3,11 +3,14 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import Foundation
+import MoSoCore
 
 public class ReadingListModel {
     let pocketAccessLayer: PocketAccessLayer
 
-    public init(authTokenProvider: @escaping () -> String, consumerKey: String) {
-        pocketAccessLayer = PocketAccessLayer(authTokenProvider, consumerKey)
+    public init(sessionProvider: @escaping () -> MoSoSession, groupID: String, consumerKey: String) {
+        pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey)
+        pocketAccessLayer.initApolloClient()
+        pocketAccessLayer.getSaves()
     }
 }

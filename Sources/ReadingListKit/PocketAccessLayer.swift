@@ -4,152 +4,31 @@
 
 import Foundation
 import Apollo
+import MoSoCore
 
 class PocketAccessLayer {
-    let authTokenProvider: () -> String
+    var sessionProvider: () -> MoSoSession
     let consumerKey: String
+    var apolloClient: ApolloClient?
 
-    let apolloClient: ApolloClient? = nil
-
-    init(_ authTokenProvider: @escaping () -> String, _ consumerKey: String) {
-        self.authTokenProvider = authTokenProvider
+    init(_ authTokenProvider: @escaping () -> MoSoSession, _ consumerKey: String) {
+        self.sessionProvider = authTokenProvider
         self.consumerKey = consumerKey
-        // self.apolloClient = ApolloClient.createDefault(sessionProvider: <#T##<<error type>>#>, consumerKey: consumerKey)
     }
-}
 
-extension ApolloClient {
-    static func createDefault(
-        sessionProvider: SessionProvider,
-        consumerKey: String
-    ) -> ApolloClient {
-        let urlStringFromEnvironment = "http://localhost:4000/graphql" // ProcessInfo.processInfo.environment["POCKET_CLIENT_API_URL"]
-        let urlStringFromBundle = Bundle.main.infoDictionary?["PocketAPIBaseURL"] as? String
-        let urlString = urlStringFromEnvironment ?? urlStringFromBundle ?? "https://api.getpocket.com/graphql"
-        let url = URL(string: urlString)!
+    func initApolloClient() {
+        self.apolloClient = ApolloClient.createDefault(sessionProvider: sessionProvider, consumerKey: consumerKey)
+    }
 
-        let authParams = AuthParamsInterceptor(
-            sessionProvider: sessionProvider,
-            consumerKey: consumerKey
-        )
-        let store = ApolloStore()
-        let interceptorProvider = PrependingUnauthorizedInterceptorProvider(
-            prepend: authParams,
-            base: DefaultInterceptorProvider(store: store)
-        )
-        let networkTransport = RequestChainNetworkTransport(
-            interceptorProvider: interceptorProvider,
-            endpointURL: url
+    func getSaves() {
+        let pagination = PocketGraph.PaginationInput(after: "0", first: 20)
+        let query = PocketGraph.FetchSavesQuery(
+            pagination: .some(pagination),
+            savedItemsFilter: .some(PocketGraph.SavedItemsFilter(status: .init(.unread)))
         )
 
-        return ApolloClient(networkTransport: networkTransport, store: store)
-    }
-}
-
-public protocol Session {
-    var guid: String { get }
-    var accessToken: String { get }
-}
-
-public protocol SessionProvider {
-    var session: Session? { get }
-}
-
-public protocol AccessTokenProvider {
-    var accessToken: String? { get }
-}
-
-private class AuthParamsInterceptor: ApolloInterceptor {
-    var id: String
-
-    private let sessionProvider: SessionProvider
-    private let consumerKey: String
-
-    init(
-        sessionProvider: SessionProvider,
-        consumerKey: String
-    ) {
-        self.sessionProvider = sessionProvider
-        self.consumerKey = consumerKey
-        self.id = "Test"
-    }
-
-    func interceptAsync<Operation>(
-        chain: RequestChain,
-        request: HTTPRequest<Operation>,
-        response: HTTPResponse<Operation>?,
-        completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) -> Void
-    ) where Operation: GraphQLOperation {
-        request.graphQLEndpoint = appendAuthorizationQueryParameters(to: request.graphQLEndpoint)
-        chain.proceedAsync(request: request, response: response, completion: completion)
-    }
-
-    private func appendAuthorizationQueryParameters(to url: URL) -> URL {
-        guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-//            Log.capture(message: "Error - could not break Apollo url into components")
-            return url
+        apolloClient?.fetch(query: query) { result in
+            print(result)
         }
-
-        var items = components.queryItems ?? []
-        items.append(contentsOf: [
-            URLQueryItem(name: "consumer_key", value: consumerKey),
-        ])
-
-        if let session = sessionProvider.session {
-            items.append(URLQueryItem(name: "guid", value: session.guid))
-            items.append(URLQueryItem(name: "access_token", value: session.accessToken))
-        } else {
-//            Log.capture(message: "Error - making PocketGraph request without auth")
-        }
-
-        components.queryItems = items
-
-        return components.url ?? url
-    }
-}
-
-private class PrependingUnauthorizedInterceptorProvider: InterceptorProvider {
-    private let prepend: ApolloInterceptor
-    private let base: InterceptorProvider
-
-    init(
-        prepend: ApolloInterceptor,
-        base: InterceptorProvider
-    ) {
-        self.prepend = prepend
-        self.base = base
-    }
-
-    func interceptors<Operation>(for operation: Operation) -> [ApolloInterceptor] where Operation: GraphQLOperation {
-        let base = base.interceptors(for: operation)
-        return [prepend] + base
-    }
-
-    func additionalErrorInterceptor<Operation>(for operation: Operation) -> ApolloErrorInterceptor? where Operation: GraphQLOperation {
-        // Utilize a custom interceptor to catch any status code errors, focusing on 401.
-        return UnauthorizedErrorInterceptor()
-    }
-}
-
-private class UnauthorizedErrorInterceptor: ApolloErrorInterceptor {
-    func handleErrorAsync<Operation>(
-        error: Error,
-        chain: Apollo.RequestChain,
-        request: Apollo.HTTPRequest<Operation>,
-        response: Apollo.HTTPResponse<Operation>?,
-        completion: @escaping (Result<Apollo.GraphQLResult<Operation.Data>, Error>) -> Void
-    ) where Operation: ApolloAPI.GraphQLOperation {
-        // This case will be sent from a ResponseCodeInterceptor, which is a part of the base DefaultInterceptorProvider
-        // that is used by our PrependingUnauthorizedInterceptorProvider. A 401 (Unauthorized) or 403 (Forbidden)  status code
-        // will cause this error to be handled. We can capture it, and post a notification  to then log a user out.
-        let invalidResponseCodes = [401, 403]
-        if case ResponseCodeInterceptor.ResponseCodeError.invalidResponseCode(response: let errorResponse, rawData: _) = error,
-           let statusCode = errorResponse?.statusCode,
-           invalidResponseCodes.contains(statusCode) {
-//            NotificationCenter.default.post(name: .unauthorizedResponse, object: nil)
-        }
-
-        // No matter the error, we want to bubble up the failure of the request.
-        completion(.failure(error))
     }
 }
