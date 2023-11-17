@@ -4,29 +4,15 @@
 
 import Foundation
 import Apollo
-import MoSoCore
-
-protocol Session {
-    var guid: String { get }
-    var accessToken: () -> String { get }
-}
-
-protocol SessionProvider {
-    var session: Session? { get }
-}
-
-public protocol AccessTokenProvider {
-    var accessToken: String? { get }
-}
 
 class AuthParamsInterceptor: ApolloInterceptor {
     var id: String
 
-    private let sessionProvider: () -> MoSoSession
+    private let sessionProvider: ReadingListSessionProvider
     private let consumerKey: String
 
     init(
-        sessionProvider: @escaping () -> MoSoSession,
+        sessionProvider: @escaping ReadingListSessionProvider,
         consumerKey: String
     ) {
         self.sessionProvider = sessionProvider
@@ -55,9 +41,13 @@ class AuthParamsInterceptor: ApolloInterceptor {
             URLQueryItem(name: "consumer_key", value: consumerKey),
         ])
 
-        let session = sessionProvider()
-        items.append(URLQueryItem(name: "guid", value: session.guid))
-        items.append(URLQueryItem(name: "access_token", value: session.token))
+        do {
+            let session = try sessionProvider()
+            items.append(URLQueryItem(name: "guid", value: session.guid))
+            items.append(URLQueryItem(name: "access_token", value: session.token))
+        } catch {
+            print("Error: \(error)")
+        }
 
         components.queryItems = items
 

@@ -4,11 +4,10 @@
 
 import Foundation
 import Apollo
-import MoSoCore
 
 extension ApolloClient {
     static func createDefault(
-        sessionProvider: @escaping () -> MoSoSession,
+        sessionProvider: @escaping ReadingListSessionProvider,
         consumerKey: String
     ) -> ApolloClient {
         let urlStringFromEnvironment = ProcessInfo.processInfo.environment["POCKET_CLIENT_API_URL"]

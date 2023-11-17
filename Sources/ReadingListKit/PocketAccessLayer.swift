@@ -4,14 +4,20 @@
 
 import Foundation
 import Apollo
-import MoSoCore
+
+public protocol ReadingListSession {
+    var token: String { get }
+    var guid: String { get }
+}
+
+public typealias ReadingListSessionProvider = () throws -> ReadingListSession
 
 class PocketAccessLayer {
-    var sessionProvider: () -> MoSoSession
+    var sessionProvider: ReadingListSessionProvider
     let consumerKey: String
     var apolloClient: ApolloClient?
 
-    init(_ authTokenProvider: @escaping () -> MoSoSession, _ consumerKey: String) {
+    init(_ authTokenProvider: @escaping ReadingListSessionProvider, _ consumerKey: String) {
         self.sessionProvider = authTokenProvider
         self.consumerKey = consumerKey
     }

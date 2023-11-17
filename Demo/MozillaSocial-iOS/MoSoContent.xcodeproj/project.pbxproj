@@ -26,6 +26,7 @@
 		AAE52B662AB2D39900956FBE /* MoSoClient in Frameworks */ = {isa = PBXBuildFile; productRef = AAE52B652AB2D39900956FBE /* MoSoClient */; };
 		AAE52B682AB4CEF400956FBE /* MoSoCore in Frameworks */ = {isa = PBXBuildFile; productRef = AAE52B672AB4CEF400956FBE /* MoSoCore */; };
 		AAE52B6A2AB4CFE300956FBE /* AppConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE52B692AB4CFE300956FBE /* AppConfigurator.swift */; };
+		C850123D2B07F93200001414 /* ReadingList Shims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850123C2B07F93200001414 /* ReadingList Shims.swift */; };
 		C8D44DD22ACDC1710087CE3C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D44DD12ACDC1710087CE3C /* LoginView.swift */; };
 		C8D44DD62ACE10220087CE3C /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D44DD52ACE10220087CE3C /* AuthenticationService.swift */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,7 @@
 		AA7BDC8D2AB25C2200ACCACF /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		AA7BDC992AB2C54200ACCACF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AAE52B692AB4CFE300956FBE /* AppConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurator.swift; sourceTree = "<group>"; };
+		C850123C2B07F93200001414 /* ReadingList Shims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReadingList Shims.swift"; sourceTree = "<group>"; };
 		C8D44DD12ACDC1710087CE3C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C8D44DD52ACE10220087CE3C /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,6 +149,7 @@
 			children = (
 				8A735C712AEABD49002F961C /* Config */,
 				AA7BDC992AB2C54200ACCACF /* Info.plist */,
+				C850123C2B07F93200001414 /* ReadingList Shims.swift */,
 				AA7BDC5F2AB2571800ACCACF /* MoSoContentApp.swift */,
 				8A735C652AE9B1B1002F961C /* MoSoBraze.swift */,
 				AA7BDC8D2AB25C2200ACCACF /* RootView.swift */,
@@ -370,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C850123D2B07F93200001414 /* ReadingList Shims.swift in Sources */,
 				C8D44DD62ACE10220087CE3C /* AuthenticationService.swift in Sources */,
 				8A735C702AEAB829002F961C /* Keys.swift in Sources */,
 				AA7BDC8E2AB25C2200ACCACF /* RootView.swift in Sources */,

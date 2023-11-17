@@ -47,6 +47,6 @@ struct AppConfigurator {
     }
 
     func makeReadingListTab() -> some View {
-        ReadingListView(model: ReadingListModel(sessionProvider: session.pocketAuthToken, groupID: Keys.shared.groupID, consumerKey: Keys.shared.pocketAPIConsumerKey))
+        ReadingListView(model: ReadingListModel(sessionProvider: session.pocketSession, groupID: Keys.shared.groupID, consumerKey: Keys.shared.pocketAPIConsumerKey))
     }
 }

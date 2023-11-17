@@ -26,9 +26,20 @@ public class MoSoSessionManager {
     }
 
     // Should be removed once the Mastodon Token supports Pocket API access
-    public func pocketAuthToken() -> MoSoSession {
-        MoSoSession(token: "SOME_TOKEN", guid: "SOME_GUID")
+    public func pocketSession() throws -> MoSoSession {
+        guard let user = user else {
+            throw MoSoSessionError.UserNotLoggedIn
+        }
+        guard let session = user.session else {
+            throw MoSoSessionError.UserSessionInvalid
+        }
+        return session
     }
+}
+
+public enum MoSoSessionError: Error {
+    case UserNotLoggedIn
+    case UserSessionInvalid
 }
 
 public struct MoSoSession {

@@ -6,9 +6,11 @@
 public class MoSoUser {
     public let username: String
     public let identifier: String
+    public var session: MoSoSession?
 
-    public init(username: String, identifier: String) {
+    public init(username: String, identifier: String, session: MoSoSession? = nil) {
         self.username = username
         self.identifier = identifier
+        self.session = session
     }
 }
