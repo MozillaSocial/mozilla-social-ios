@@ -27,14 +27,23 @@ class PocketAccessLayer {
     }
 
     func getSaves() {
-        let pagination = PocketGraph.PaginationInput(after: "0", first: 20)
+        let pagination = PocketGraph.PaginationInput(after: .none, first: 20)
         let query = PocketGraph.FetchSavesQuery(
             pagination: .some(pagination),
             savedItemsFilter: .some(PocketGraph.SavedItemsFilter(status: .init(.unread)))
         )
 
         apolloClient?.fetch(query: query) { result in
-            print(result)
+            switch result {
+            case .success(let data):
+                if let errors = data.errors {
+                    errors.forEach { error in
+                        print(error)
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 }
