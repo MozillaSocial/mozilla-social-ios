@@ -4,12 +4,26 @@
 
 import Foundation
 
-public class ReadingListModel {
+protocol ReadingListModelDelegate: AnyObject {
+    func readingListDidLoad(urlStrings: [String])
+}
+
+public class ReadingListModel: ReadingListModelDelegate {
     let pocketAccessLayer: PocketAccessLayer
 
     public init(sessionProvider: @escaping ReadingListSessionProvider, groupID: String, consumerKey: String) {
         pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey)
+        pocketAccessLayer.delegate = self
         pocketAccessLayer.initApolloClient()
+
+        loadReadingList()
+    }
+
+    func loadReadingList() {
         pocketAccessLayer.getSaves()
+    }
+
+    func readingListDidLoad(urlStrings: [String]) {
+        print(urlStrings)
     }
 }

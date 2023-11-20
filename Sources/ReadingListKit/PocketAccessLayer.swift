@@ -16,6 +16,7 @@ class PocketAccessLayer {
     var sessionProvider: ReadingListSessionProvider
     let consumerKey: String
     var apolloClient: ApolloClient?
+    weak var delegate: ReadingListModelDelegate?
 
     init(_ authTokenProvider: @escaping ReadingListSessionProvider, _ consumerKey: String) {
         self.sessionProvider = authTokenProvider
@@ -51,7 +52,11 @@ class PocketAccessLayer {
                 }
 
                 print("GraphQL Fetch Success \(String(describing: data.data?.user?.savedItems?.totalCount))")
-                let urlStrings = self?.renderURLsFromResponse(from: savedItems)
+
+                if let self = self {
+                    let urlStrings = self.renderURLsFromResponse(from: savedItems)
+                    self.delegate?.readingListDidLoad(urlStrings: urlStrings)
+                }
 
             case .failure(let error):
                 print("GraphQL Failed with Error: \(error)")
