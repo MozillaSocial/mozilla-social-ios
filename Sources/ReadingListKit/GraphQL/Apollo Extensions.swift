@@ -5,11 +5,16 @@
 import Foundation
 import Apollo
 
+enum ReadingListEndpointError: Error {
+    case couldNotLoadValidEndpointURL
+}
+
 extension ApolloClient {
     static func createDefault(
         sessionProvider: @escaping ReadingListSessionProvider,
         consumerKey: String
     ) -> ApolloClient {
+        // guard let url = URL(string: ApolloClient.endpointURLString()) else { fatalError() }
         let url = URL(string: "https://api.getpocket.com/graphql")!
 
         let authParams = AuthParamsInterceptor(
@@ -29,7 +34,7 @@ extension ApolloClient {
         return ApolloClient(networkTransport: networkTransport, store: store)
     }
 
-    private func endpointURLString() -> String {
+    static private func endpointURLString() -> String {
         let environmentURLString = ProcessInfo.processInfo.environment["POCKET_CLIENT_API_URL"]
         let bundleURLString = Bundle.main.infoDictionary?["PocketAPIBaseURL"] as? String
 
