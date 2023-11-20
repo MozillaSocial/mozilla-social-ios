@@ -10,9 +10,6 @@ extension ApolloClient {
         sessionProvider: @escaping ReadingListSessionProvider,
         consumerKey: String
     ) -> ApolloClient {
-        let urlStringFromEnvironment = ProcessInfo.processInfo.environment["POCKET_CLIENT_API_URL"]
-        let urlStringFromBundle = Bundle.main.infoDictionary?["PocketAPIBaseURL"] as? String
-        let urlString = urlStringFromEnvironment ?? urlStringFromBundle ?? "https://api.getpocket.com/graphql"
         let url = URL(string: "https://api.getpocket.com/graphql")!
 
         let authParams = AuthParamsInterceptor(
@@ -30,5 +27,12 @@ extension ApolloClient {
         )
 
         return ApolloClient(networkTransport: networkTransport, store: store)
+    }
+
+    private func endpointURLString() -> String {
+        let environmentURLString = ProcessInfo.processInfo.environment["POCKET_CLIENT_API_URL"]
+        let bundleURLString = Bundle.main.infoDictionary?["PocketAPIBaseURL"] as? String
+
+        return environmentURLString ?? bundleURLString ?? "https://api.getpocket.com/graphql"
     }
 }
