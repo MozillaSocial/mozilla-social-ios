@@ -4,9 +4,11 @@
 
 import Foundation
 
-struct ReadingListCellViewModel: Observable {
+struct ReadingListCellViewModel: Observable, Identifiable {
+    var id = UUID() // TODO: Make this the URL?
+
     let title: String
     let subtitle: String
     let thumbnailURL: URL?
-    let contentURL: URL
+    let contentURL: String
 }

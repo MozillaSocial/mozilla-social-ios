@@ -64,6 +64,10 @@ class PocketAccessLayer {
         }
     }
 
+    func getItemForURL(_ urlString: String) {
+        print(urlString)
+    }
+
     private func renderURLsFromResponse(from savedItems: PocketGraph.FetchSavesQuery.Data.User.SavedItems) -> [String] {
         guard let edges = savedItems.edges else {
             return []

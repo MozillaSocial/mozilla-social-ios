@@ -3,13 +3,15 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import Foundation
+import Combine
 
 protocol ReadingListModelDelegate: AnyObject {
     func readingListDidLoad(urlStrings: [String])
 }
 
-public class ReadingListModel: ReadingListModelDelegate {
+public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     let pocketAccessLayer: PocketAccessLayer
+    @Published var readingListURLs: [ReadingListCellViewModel] = []
 
     public init(sessionProvider: @escaping ReadingListSessionProvider, groupID: String, consumerKey: String) {
         pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey)
@@ -24,6 +26,11 @@ public class ReadingListModel: ReadingListModelDelegate {
     }
 
     func readingListDidLoad(urlStrings: [String]) {
+        let itemsToAdd: [ReadingListCellViewModel] = urlStrings.map {
+            ReadingListCellViewModel(title: $0, subtitle: "Testing!", thumbnailURL: nil, contentURL: $0)
+        }
+
+        readingListURLs.append(contentsOf: itemsToAdd)
         print(urlStrings)
     }
 }

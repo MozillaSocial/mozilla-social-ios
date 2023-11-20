@@ -8,9 +8,14 @@ public struct ReadingListView: View {
     public init(model: ReadingListModel) {
         self.model = model
     }
-    private let model: ReadingListModel
+    @ObservedObject var model: ReadingListModel
 
     public var body: some View {
-        Text("Coming Soon")
+        Text("ReadingList!")
+        List {
+            ForEach(model.readingListURLs, id: \.id) {
+                ReadingListCell(model: $0)
+            }
+        }
     }
 }
