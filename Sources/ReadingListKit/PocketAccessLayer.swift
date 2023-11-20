@@ -33,17 +33,37 @@ class PocketAccessLayer {
             savedItemsFilter: .some(PocketGraph.SavedItemsFilter(status: .init(.unread)))
         )
 
-        apolloClient?.fetch(query: query) { result in
+        apolloClient?.fetch(query: query) { [weak self] result in
             switch result {
             case .success(let data):
-                if let errors = data.errors {
+                if let errors = data.errors, errors.isEmpty == false {
+                    print("GraphQL 'succeeded' with errors:")
                     errors.forEach { error in
                         print(error)
                     }
+
+                    return
                 }
+
+                guard let savedItems = data.data?.user?.savedItems else {
+                    print("Unable to parse savedItems from data")
+                    return
+                }
+
+                print("GraphQL Fetch Success \(String(describing: data.data?.user?.savedItems?.totalCount))")
+                let urlStrings = self?.renderURLsFromResponse(from: savedItems)
+
             case .failure(let error):
-                print(error)
+                print("GraphQL Failed with Error: \(error)")
             }
         }
+    }
+
+    private func renderURLsFromResponse(from savedItems: PocketGraph.FetchSavesQuery.Data.User.SavedItems) -> [String] {
+        guard let edges = savedItems.edges else {
+            return []
+        }
+
+        return edges.compactMap { $0?.node?.url }
     }
 }
