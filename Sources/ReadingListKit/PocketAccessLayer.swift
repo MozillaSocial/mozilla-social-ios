@@ -12,6 +12,10 @@ public protocol ReadingListSession {
 
 public typealias ReadingListSessionProvider = () throws -> ReadingListSession
 
+enum PALError: Error {
+    case failedToFetchItem(_ itemURLString: String)
+}
+
 class PocketAccessLayer {
     var sessionProvider: ReadingListSessionProvider
     let consumerKey: String
@@ -64,8 +68,13 @@ class PocketAccessLayer {
         }
     }
 
-    func getItemForURL(_ urlString: String) {
-        print(urlString)
+    func getItemForURL(_ urlString: String) async throws -> PocketGraph.ItemByURLQuery.Data.ItemByUrl {
+        let query = PocketGraph.ItemByURLQuery(url: urlString)
+
+        let data = try await apolloClient?.fetch(query: query)
+        guard let item = data?.data?.itemByUrl else { throw PALError.failedToFetchItem(urlString) }
+
+        return item
     }
 
     private func renderURLsFromResponse(from savedItems: PocketGraph.FetchSavesQuery.Data.User.SavedItems) -> [String] {

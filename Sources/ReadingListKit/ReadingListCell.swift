@@ -73,5 +73,5 @@ public struct ReadingListCell: View {
 }
 
 #Preview {
-    ReadingListCell(model: ReadingListCellViewModel(title: "A Very very very very long Test Title", subtitle: "Test Subtitle", thumbnailURL: URL(string: "https://helios-i.mashable.com/imagery/articles/05fACELrEVc4kAfNQbhhcVh/hero-image.fill.size_1248x702.v1667556469.png")!, contentURL: "www.getpocket.com"))
+    ReadingListCell(model: ReadingListCellViewModel(id: "uniqueID", title: "A Very very very very long Test Title", subtitle: "Test Subtitle", contentURL: "www.getpocket.com", thumbnailURL: "https://helios-i.mashable.com/imagery/articles/05fACELrEVc4kAfNQbhhcVh/hero-image.fill.size_1248x702.v1667556469.png"))
 }

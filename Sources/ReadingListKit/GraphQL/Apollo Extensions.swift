@@ -40,4 +40,23 @@ extension ApolloClient {
 
         return environmentURLString ?? bundleURLString ?? "https://api.getpocket.com/graphql"
     }
+
+    func fetch<Query: GraphQLQuery>(query: Query, queue: DispatchQueue = .global(qos: .utility)) async throws -> GraphQLResult<Query.Data> {
+        return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<GraphQLResult<Query.Data>, Error>) in
+            _ = fetch(query: query, queue: queue) { result in
+                switch result {
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                case .success(let data):
+                    guard let errors = data.errors,
+                            !errors.isEmpty else {
+                        continuation.resume(returning: data)
+                        return
+                    }
+                    // Even though we had errors, let's continue forward for now, it should be up to the individual query executor to use what data we could since GraphQL can return partial responses
+                    continuation.resume(returning: data)
+                }
+            }
+        }
+    }
 }

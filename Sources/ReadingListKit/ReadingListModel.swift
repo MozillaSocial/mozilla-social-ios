@@ -26,11 +26,17 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     }
 
     func readingListDidLoad(urlStrings: [String]) {
-        let itemsToAdd: [ReadingListCellViewModel] = urlStrings.map {
-            ReadingListCellViewModel(title: $0, subtitle: "Testing!", thumbnailURL: nil, contentURL: $0)
+        urlStrings.forEach { urlString in
+            Task {
+                guard let item = try? await pocketAccessLayer.getItemForURL(urlString) else { return }
+                await MainActor.run {
+                    readingListURLs.append(ReadingListCellViewModel(item, imageURLString: image(for: item)))
+                }
+            }
         }
+    }
 
-        readingListURLs.append(contentsOf: itemsToAdd)
-        print(urlStrings)
+    func image(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String? {
+        item.syndicatedArticle?.mainImage ?? item.topImageUrl
     }
 }
