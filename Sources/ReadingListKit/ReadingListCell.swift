@@ -41,10 +41,12 @@ public struct ReadingListCell: View {
             }
             HStack {
                 Spacer()
-                Button("Fav") {
-                    print("Favourite")
-                }
+                Image(.archive)
+                    .renderingMode(.template)
+                    .contentShape(Rectangle())
+                    .accessibility(addTraits: .isButton)
                 .buttonStyle(.bordered)
+
                 ShareLink(item: model.contentURL) {
                     Image(.share)
                         .renderingMode(.template)
@@ -57,10 +59,6 @@ public struct ReadingListCell: View {
                         print("Share")
                     }
                 )
-                Button("Mo") {
-                    print("More")
-                }
-                .buttonStyle(.bordered)
             }
         }
         .padding()
