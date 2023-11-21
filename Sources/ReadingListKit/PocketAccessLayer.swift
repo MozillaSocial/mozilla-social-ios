@@ -17,14 +17,18 @@ enum PALError: Error {
 }
 
 class PocketAccessLayer {
-    var sessionProvider: ReadingListSessionProvider
     let consumerKey: String
+    let pageSize: GraphQLNullable<Int> = GraphQLNullable<Int>(integerLiteral: 20)
     var apolloClient: ApolloClient?
+    var pagination: PocketGraph.PaginationInput
+    var sessionProvider: ReadingListSessionProvider
+
     weak var delegate: ReadingListModelDelegate?
 
     init(_ authTokenProvider: @escaping ReadingListSessionProvider, _ consumerKey: String) {
         self.sessionProvider = authTokenProvider
         self.consumerKey = consumerKey
+        self.pagination = PocketGraph.PaginationInput(after: .none, first: pageSize)
     }
 
     func initApolloClient() {
@@ -32,7 +36,6 @@ class PocketAccessLayer {
     }
 
     func getSaves() {
-        let pagination = PocketGraph.PaginationInput(after: .none, first: 20)
         let query = PocketGraph.FetchSavesQuery(
             pagination: .some(pagination),
             savedItemsFilter: .some(PocketGraph.SavedItemsFilter(status: .init(.unread)))

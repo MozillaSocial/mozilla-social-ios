@@ -11,7 +11,7 @@ protocol ReadingListModelDelegate: AnyObject {
 
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     let pocketAccessLayer: PocketAccessLayer
-    @Published var readingListURLs: [ReadingListCellViewModel] = []
+    @Published var readingListItems: [ReadingListCellViewModel] = []
 
     public init(sessionProvider: @escaping ReadingListSessionProvider, groupID: String, consumerKey: String) {
         pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey)
@@ -30,7 +30,7 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
             Task {
                 guard let item = try? await pocketAccessLayer.getItemForURL(urlString) else { return }
                 await MainActor.run {
-                    readingListURLs.append(ReadingListCellViewModel(item, imageURLString: image(for: item)))
+                    readingListItems.append(ReadingListCellViewModel(item, imageURLString: image(for: item)))
                 }
             }
         }

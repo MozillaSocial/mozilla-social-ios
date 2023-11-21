@@ -13,7 +13,7 @@ public struct ReadingListView: View {
     public var body: some View {
         Text("ReadingList!")
         List {
-            ForEach(model.readingListURLs, id: \.id) {
+            ForEach(model.readingListItems, id: \.id) {
                 ReadingListCell(model: $0)
             }
         }

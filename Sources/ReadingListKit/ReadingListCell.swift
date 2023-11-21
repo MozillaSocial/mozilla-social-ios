@@ -44,6 +44,7 @@ public struct ReadingListCell: View {
                 Button("Fav") {
                     print("Favourite")
                 }
+                .buttonStyle(.bordered)
                 ShareLink(item: model.contentURL) {
                     Image(.share)
                         .renderingMode(.template)
@@ -59,9 +60,14 @@ public struct ReadingListCell: View {
                 Button("Mo") {
                     print("More")
                 }
+                .buttonStyle(.bordered)
             }
         }
         .padding()
+        .contentShape(Rectangle())
+        .onTapGesture {
+            print("Tappp")
+        }
     }
 
     // MARK: - Constants
