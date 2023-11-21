@@ -2,10 +2,10 @@
     "schemaName": "PocketGraph",
     "input": {
         "operationSearchPaths": [
-            "../../Sources/ReadingListKit/GraphQL/*.graphql"
+            "../../Sources/ReadingListKit/GraphQL/Declarations/*.graphql"
         ],
         "schemaSearchPaths": [
-            "../../Sources/ReadingListKit/GraphQL/schema.graphqls"
+            "../../Sources/ReadingListKit/GraphQL/Declarations/schema.graphqls"
         ]
     },
     "options": {
@@ -46,6 +46,6 @@
         },
         "downloadTimeout": 60,
         "headers": [],
-        "outputPath": "../../Sources/ReadingListKit/GraphQL/schema.graphqls"
+        "outputPath": "../../Sources/ReadingListKit/GraphQL/Declarations/schema.graphqls"
     }
 }
