@@ -17,7 +17,9 @@ public struct ReadingListCell: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text(model.title)
+                        .font(.headline)
                     Text(model.subtitle)
+                        .font(.footnote)
                 }
                 Spacer()
                 AsyncImage(url: URL(string: model.thumbnailURL)!) { phase in

@@ -30,10 +30,27 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
             Task {
                 guard let item = try? await pocketAccessLayer.getItemForURL(urlString) else { return }
                 await MainActor.run {
-                    readingListItems.append(ReadingListCellViewModel(item, imageURLString: image(for: item)))
+                    readingListItems.append(readingListItem(from: item))
                 }
             }
         }
+    }
+
+    func readingListItem(from item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> ReadingListCellViewModel {
+        let defaultImageURLString = "https://helios-i.mashable.com/imagery/articles/05fACELrEVc4kAfNQbhhcVh/hero-image.fill.size_1248x702.v1667556469.png"
+
+        let id = item.remoteID
+        let title = item.title ?? item.givenUrl
+        let subtitle = item.domainMetadata?.name ?? host(from: item.givenUrl) ?? ""
+        let contentURL = item.resolvedUrl ?? item.givenUrl
+        let thumbnailURL = image(for: item) ?? defaultImageURLString
+
+        return ReadingListCellViewModel(id: id, title: title, subtitle: subtitle, contentURL: contentURL, thumbnailURL: thumbnailURL)
+    }
+
+    func host(from url: String) -> String? {
+        guard let url = URL(string: url) else { return nil }
+        return url.host
     }
 
     func image(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String? {
