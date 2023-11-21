@@ -45,13 +45,18 @@ public struct ReadingListCell: View {
                     .renderingMode(.template)
                     .contentShape(Rectangle())
                     .accessibility(addTraits: .isButton)
-                .buttonStyle(.bordered)
+                    .frame(width: Constants.buttonSize.width, height: Constants.buttonSize.height)
+                    .buttonStyle(.bordered)
+                    .onTapGesture {
+                        print("Archive")
+                    }
 
                 ShareLink(item: model.contentURL) {
                     Image(.share)
                         .renderingMode(.template)
                 }
                 .contentShape(Rectangle())
+                .frame(width: Constants.buttonSize.width, height: Constants.buttonSize.height)
                 .buttonStyle(.plain)
                 .accessibility(addTraits: .isButton)
                 .simultaneousGesture(
@@ -73,6 +78,7 @@ public struct ReadingListCell: View {
     private enum Constants {
         static let width: CGFloat = 90
         static let height: CGFloat = 60
+        static let buttonSize: CGSize = CGSize(width: 48, height: 48)
     }
 }
 
