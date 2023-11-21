@@ -5,7 +5,6 @@
 import Foundation
 
 struct ReadingListCellViewModel: Observable, Identifiable {
-
     let defaultImageURLString = "https://helios-i.mashable.com/imagery/articles/05fACELrEVc4kAfNQbhhcVh/hero-image.fill.size_1248x702.v1667556469.png"
 
     var id: String

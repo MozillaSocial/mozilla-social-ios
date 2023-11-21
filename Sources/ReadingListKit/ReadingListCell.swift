@@ -20,7 +20,7 @@ public struct ReadingListCell: View {
                     Text(model.subtitle)
                 }
                 Spacer()
-                AsyncImage(url: model.thumbnailURL) { phase in
+                AsyncImage(url: URL(string: model.thumbnailURL)!) { phase in
                     switch phase {
                     case .empty:
                         Image(systemName: "photo")
