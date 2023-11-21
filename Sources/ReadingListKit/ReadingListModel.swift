@@ -37,6 +37,6 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     }
 
     func image(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String? {
-        item.syndicatedArticle?.mainImage ?? item.topImageUrl
+        item.syndicatedArticle?.mainImage ?? item.topImageUrl ?? item.domainMetadata?.logo
     }
 }
