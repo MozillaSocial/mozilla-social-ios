@@ -29,8 +29,9 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         urlStrings.forEach { urlString in
             Task {
                 guard let item = try? await pocketAccessLayer.getItemForURL(urlString) else { return }
+                let readingListItem = readingListItem(from: item)
                 await MainActor.run {
-                    readingListItems.append(readingListItem(from: item))
+                    readingListItems.append(readingListItem)
                 }
             }
         }
