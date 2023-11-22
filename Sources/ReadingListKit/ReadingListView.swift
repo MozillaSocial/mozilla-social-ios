@@ -26,6 +26,9 @@ public struct ReadingListView: View {
                                 model.didDisplay(item: viewModel)
                             }
                     }
+                    if model.allItemsAreDownloaded() == false {
+                        ProgressView()
+                    }
                 }
                 .if(sizeClass == .regular) { view in
                     view.frame(width: 700, alignment: .center)

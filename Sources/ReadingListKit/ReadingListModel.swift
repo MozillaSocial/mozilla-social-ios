@@ -39,7 +39,7 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         pocketAccessLayer.fetchSaves()
     }
 
-    private func allItemsAreDownloaded() -> Bool {
+    func allItemsAreDownloaded() -> Bool {
         totalNumberOfItemsInReadingList == readingListItems.count
     }
 
