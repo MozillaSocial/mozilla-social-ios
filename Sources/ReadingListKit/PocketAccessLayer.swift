@@ -16,12 +16,19 @@ enum PALError: Error {
     case failedToFetchItem(_ itemURLString: String)
 }
 
+enum PALState {
+    case idle
+    case fetching
+}
+
 class PocketAccessLayer {
     let consumerKey: String
     let pageSize: GraphQLNullable<Int> = GraphQLNullable<Int>(integerLiteral: 20)
     var apolloClient: ApolloClient?
     var pagination: PocketGraph.PaginationInput
     var sessionProvider: ReadingListSessionProvider
+
+    private(set) var state: PALState = .idle
 
     weak var delegate: ReadingListModelDelegate?
 
@@ -35,13 +42,22 @@ class PocketAccessLayer {
         self.apolloClient = ApolloClient.createDefault(sessionProvider: sessionProvider, consumerKey: consumerKey)
     }
 
-    func getSaves() {
+    func fetchSaves() {
+        if state == .fetching { return }
+        state = .fetching
+        print("GraphQL Begin Fetch")
+
         let query = PocketGraph.FetchSavesQuery(
             pagination: .some(pagination),
             savedItemsFilter: .some(PocketGraph.SavedItemsFilter(status: .init(.unread)))
         )
 
         apolloClient?.fetch(query: query) { [weak self] result in
+            defer {
+                self?.state = .idle
+                print("GraphQL resetting state")
+            }
+
             switch result {
             case .success(let data):
                 if let errors = data.errors, errors.isEmpty == false {
@@ -54,17 +70,17 @@ class PocketAccessLayer {
                 }
 
                 guard let savedItems = data.data?.user?.savedItems else {
-                    print("Unable to parse savedItems from data")
+                    print("GraphQL Unable to parse savedItems from data")
                     return
                 }
-
-                print("GraphQL Fetch Success \(String(describing: data.data?.user?.savedItems?.totalCount))")
 
                 if let self = self {
                     let urlStrings = self.renderURLsFromResponse(from: savedItems)
                     self.delegate?.readingListDidLoad(urlStrings: urlStrings, totalItemCount: savedItems.totalCount)
-                }
 
+                    let cursor: String? = data.data?.user?.savedItems?.pageInfo.endCursor
+                    self.updatePagination(with: cursor)
+                }
             case .failure(let error):
                 print("GraphQL Failed with Error: \(error)")
             }
@@ -86,5 +102,15 @@ class PocketAccessLayer {
         }
 
         return edges.compactMap { $0?.node?.url }
+    }
+
+    func updatePagination(with cursor: String?) {
+        if let cursor = cursor {
+            pagination.after = .some(cursor)
+            print("GraphQL updatingPagination \(cursor)")
+        } else {
+            pagination.after = .none
+            print("GraphQL updatingPagination failed")
+        }
     }
 }

@@ -31,8 +31,12 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
         let loadMoreThreshold = readingListItems.count - 3
         if readingListItems.firstIndex(of: item) == loadMoreThreshold {
-            print("loadMore")
+            fetchMoreReadingList()
         }
+    }
+
+    func fetchMoreReadingList() {
+        pocketAccessLayer.fetchSaves()
     }
 
     private func allItemsAreDownloaded() -> Bool {
@@ -40,7 +44,7 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     }
 
     func loadReadingList() {
-        pocketAccessLayer.getSaves()
+        pocketAccessLayer.fetchSaves()
     }
 
     func readingListDidLoad(urlStrings: [String], totalItemCount: Int) {
@@ -62,19 +66,31 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
         let id = item.remoteID
         let title = item.title ?? item.givenUrl
-        let subtitle = item.domainMetadata?.name ?? host(from: item.givenUrl) ?? ""
+        let subtitle = subtitle(for: item)
         let contentURL = item.resolvedUrl ?? item.givenUrl
         let thumbnailURL = image(for: item) ?? defaultImageURLString
 
         return ReadingListCellViewModel(id: id, title: title, subtitle: subtitle, contentURL: contentURL, thumbnailURL: thumbnailURL)
     }
 
+    func image(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String? {
+        item.syndicatedArticle?.mainImage ?? item.topImageUrl ?? item.domainMetadata?.logo
+    }
+
+    func subtitle(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String {
+        let host = item.domainMetadata?.name ?? host(from: item.givenUrl)
+
+        guard let host = host else {
+            return ""
+        }
+
+        guard let timeToRead = item.timeToRead else { return host }
+
+        return host + " • " + String(describing: timeToRead) + " min"
+    }
+
     func host(from url: String) -> String? {
         guard let url = URL(string: url) else { return nil }
         return url.host
-    }
-
-    func image(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String? {
-        item.syndicatedArticle?.mainImage ?? item.topImageUrl ?? item.domainMetadata?.logo
     }
 }
