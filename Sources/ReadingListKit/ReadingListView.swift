@@ -12,9 +12,14 @@ public struct ReadingListView: View {
 
     public var body: some View {
         Text("ReadingList!")
-        List {
-            ForEach(model.readingListItems, id: \.id) {
-                ReadingListCell(model: $0)
+        ScrollView {
+            LazyVStack {
+                ForEach(model.readingListItems, id: \.id) { viewModel in
+                    ReadingListCell(model: viewModel)
+                        .onAppear {
+                            model.didDisplay(item: viewModel)
+                        }
+                }
             }
         }
     }

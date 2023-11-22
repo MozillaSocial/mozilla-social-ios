@@ -62,7 +62,7 @@ class PocketAccessLayer {
 
                 if let self = self {
                     let urlStrings = self.renderURLsFromResponse(from: savedItems)
-                    self.delegate?.readingListDidLoad(urlStrings: urlStrings)
+                    self.delegate?.readingListDidLoad(urlStrings: urlStrings, totalItemCount: savedItems.totalCount)
                 }
 
             case .failure(let error):

@@ -4,18 +4,10 @@
 
 import Foundation
 
-struct ReadingListCellViewModel: Observable, Identifiable {
+struct ReadingListCellViewModel: Observable, Identifiable, Equatable {
     var id: String
     let title: String
     let subtitle: String
     let contentURL: String
     let thumbnailURL: String
-
-    init(id: String, title: String, subtitle: String, contentURL: String, thumbnailURL: String) {
-        self.id = id
-        self.title = title
-        self.subtitle = subtitle
-        self.contentURL = contentURL
-        self.thumbnailURL = thumbnailURL
-    }
 }

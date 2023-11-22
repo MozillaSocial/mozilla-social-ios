@@ -6,11 +6,12 @@ import Foundation
 import Combine
 
 protocol ReadingListModelDelegate: AnyObject {
-    func readingListDidLoad(urlStrings: [String])
+    func readingListDidLoad(urlStrings: [String], totalItemCount: Int)
 }
 
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     let pocketAccessLayer: PocketAccessLayer
+    var totalNumberOfItemsInReadingList: Int?
     @Published var readingListItems: [ReadingListCellViewModel] = []
 
     public init(sessionProvider: @escaping ReadingListSessionProvider, groupID: String, consumerKey: String) {
@@ -21,11 +22,30 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         loadReadingList()
     }
 
+    func didDisplay(item: ReadingListCellViewModel) {
+        print("Displaying: \(item.contentURL)")
+
+        if allItemsAreDownloaded() {
+            return
+        }
+
+        let loadMoreThreshold = readingListItems.count - 3
+        if readingListItems.firstIndex(of: item) == loadMoreThreshold {
+            print("loadMore")
+        }
+    }
+
+    private func allItemsAreDownloaded() -> Bool {
+        totalNumberOfItemsInReadingList == readingListItems.count
+    }
+
     func loadReadingList() {
         pocketAccessLayer.getSaves()
     }
 
-    func readingListDidLoad(urlStrings: [String]) {
+    func readingListDidLoad(urlStrings: [String], totalItemCount: Int) {
+        totalNumberOfItemsInReadingList = totalItemCount
+
         urlStrings.forEach { urlString in
             Task {
                 guard let item = try? await pocketAccessLayer.getItemForURL(urlString) else { return }
