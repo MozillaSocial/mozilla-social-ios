@@ -46,6 +46,7 @@ struct AppConfigurator {
         discoverProvider.makeDiscoverRootView()
     }
 
+    @MainActor
     func makeReadingListTab() -> some View {
         ReadingListView(model: ReadingListModel(sessionProvider: session.pocketSession, groupID: Keys.shared.groupID, consumerKey: Keys.shared.pocketAPIConsumerKey))
     }

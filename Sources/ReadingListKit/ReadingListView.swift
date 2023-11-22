@@ -10,17 +10,28 @@ public struct ReadingListView: View {
     }
     @ObservedObject var model: ReadingListModel
 
+    @Environment(\.horizontalSizeClass)
+    var sizeClass
+
     public var body: some View {
-        Text("ReadingList!")
-        ScrollView {
-            LazyVStack {
-                ForEach(model.readingListItems, id: \.id) { viewModel in
-                    ReadingListCell(model: viewModel)
-                        .onAppear {
-                            model.didDisplay(item: viewModel)
-                        }
+        NavigationStack {
+            ScrollView {
+                LazyVStack {
+                    ForEach(model.readingListItems, id: \.id) { viewModel in
+                        ReadingListCell(model: viewModel)
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbarBackground(.visible, for: .navigationBar)
+                            .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)
+                            .onAppear {
+                                model.didDisplay(item: viewModel)
+                            }
+                    }
+                }
+                .if(sizeClass == .regular) { view in
+                    view.frame(width: 700, alignment: .center)
                 }
             }
+            .navigationTitle(Text("Reading List"))
         }
     }
 }
