@@ -18,7 +18,6 @@ public struct ReadingListView: View {
     var openURL
 
     func archiveAction(item: String) {
-        print("Archive \(item)")
         model.archive(item: item)
     }
 
