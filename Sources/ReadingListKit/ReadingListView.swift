@@ -17,12 +17,17 @@ public struct ReadingListView: View {
     @Environment(\.openURL)
     var openURL
 
+    func archiveAction(item: String) {
+        print("Archive \(item)")
+        model.archive(item: item)
+    }
+
     public var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVStack {
                     ForEach(model.readingListItems, id: \.id) { viewModel in
-                        ReadingListCell(model: viewModel, selectedRow: $selectedRow)
+                        ReadingListCell(model: viewModel, selectedRow: $selectedRow, archiveAction: self.archiveAction)
                             .navigationBarTitleDisplayMode(.inline)
                             .toolbarBackground(.visible, for: .navigationBar)
                             .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)

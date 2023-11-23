@@ -42,6 +42,8 @@ class PocketAccessLayer {
         self.apolloClient = ApolloClient.createDefault(sessionProvider: sessionProvider, consumerKey: consumerKey)
     }
 
+    // MARK: - Fetch Saves
+
     func fetchSaves() {
         if state == .fetching { return }
         state = .fetching
@@ -111,6 +113,23 @@ class PocketAccessLayer {
         } else {
             pagination.after = .none
             print("GraphQL updatingPagination failed")
+        }
+    }
+
+    // MARK: - Archive Item
+
+    func archive(item: String) {
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions.insert(.withFractionalSeconds)
+
+        let mutation = PocketGraph.ArchiveItemMutation(givenUrl: item, timestamp: dateFormatter.string(from: .now))
+        apolloClient?.perform(mutation: mutation) { [weak self] result in
+            switch result {
+            case .success(_):
+                self?.delegate?.removeItemFromList(item: item)
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 }

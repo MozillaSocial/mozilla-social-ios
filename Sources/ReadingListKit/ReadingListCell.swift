@@ -9,6 +9,7 @@ import DesignKit
 public struct ReadingListCell: View {
     let model: ReadingListCellViewModel
     @Binding var selectedRow: ReadingListCellViewModel?
+    let archiveAction: (String) -> Void
 
     public var body: some View {
         VStack {
@@ -49,6 +50,7 @@ public struct ReadingListCell: View {
                     .buttonStyle(.bordered)
                     .onTapGesture {
                         print("Archive")
+                        archiveAction(model.contentURL)
                     }
 
                 ShareLink(item: model.contentURL) {

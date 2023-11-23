@@ -7,6 +7,7 @@ import Combine
 
 protocol ReadingListModelDelegate: AnyObject {
     func readingListDidLoad(urlStrings: [String], totalItemCount: Int)
+    func removeItemFromList(item: String)
 }
 
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
@@ -21,6 +22,8 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
         loadReadingList()
     }
+
+    // MARK: - Fetch Reading List Items
 
     func didDisplay(item: ReadingListCellViewModel) {
         print("Displaying: \(item.contentURL)")
@@ -60,6 +63,22 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
             }
         }
     }
+
+    // MARK: - Archive Items
+
+    func archive(item: String) {
+        pocketAccessLayer.archive(item: item)
+    }
+
+    func removeItemFromList(item: String) {
+        let filteredItems = self.readingListItems.filter {
+            $0.contentURL != item
+        }
+
+        readingListItems = filteredItems
+    }
+
+    // MARK: - ReadingListItem Helpers
 
     func readingListItem(from item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> ReadingListCellViewModel {
         let defaultImageURLString = "https://helios-i.mashable.com/imagery/articles/05fACELrEVc4kAfNQbhhcVh/hero-image.fill.size_1248x702.v1667556469.png"
