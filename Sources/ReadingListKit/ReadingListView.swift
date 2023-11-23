@@ -52,6 +52,9 @@ public struct ReadingListView: View {
                 selectedRow = nil
                 openURL(url)
             }
+            .onAppear {
+                model.loadReadingList()
+            }
         }
     }
 }

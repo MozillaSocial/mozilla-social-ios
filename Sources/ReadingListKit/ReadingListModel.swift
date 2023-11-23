@@ -19,8 +19,6 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey)
         pocketAccessLayer.delegate = self
         pocketAccessLayer.initApolloClient()
-
-        loadReadingList()
     }
 
     // MARK: - Fetch Reading List Items

@@ -5,7 +5,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject var auth = AuthenticationService()
+    @StateObject var mosoAuth = AuthenticationService()
 
     var body: some View {
         VStack {
@@ -16,11 +16,11 @@ struct LoginView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Text("DisplayName:")
-                        Text(auth.accountDetails?.displayName ?? "-")
+                        Text(mosoAuth.accountDetails?.displayName ?? "-")
                     }
                     HStack {
                         Text("Username:")
-                        Text(auth.accountDetails?.username ?? "-")
+                        Text(mosoAuth.accountDetails?.username ?? "-")
                     }
                 }
             }
@@ -30,7 +30,7 @@ struct LoginView: View {
             VStack {
                 HStack {
                     Text("Followers:")
-                    if let count = auth.accountDetails?.followersCount {
+                    if let count = mosoAuth.accountDetails?.followersCount {
                         Text(String(count))
                     } else {
                         Text("-")
@@ -38,7 +38,7 @@ struct LoginView: View {
                 }
                 HStack {
                     Text("Following:")
-                    if let count = auth.accountDetails?.followingCount {
+                    if let count = mosoAuth.accountDetails?.followingCount {
                         Text(String(count))
                     } else {
                         Text("-")
@@ -46,7 +46,7 @@ struct LoginView: View {
                 }
                 HStack {
                     Text("Toots:")
-                    if let count = auth.accountDetails?.statusesCount {
+                    if let count = mosoAuth.accountDetails?.statusesCount {
                         Text(String(count))
                     } else {
                         Text("-")
@@ -61,7 +61,7 @@ struct LoginView: View {
     }
 
     @ViewBuilder private var loginOverlay: some View {
-        if auth.authToken == nil {
+        if mosoAuth.authToken == nil {
             VStack {
                 Image("MoSoIcon")
                     .resizable()
@@ -69,7 +69,7 @@ struct LoginView: View {
                     .clipShape(.rect(cornerRadius: 10))
                 Spacer()
                 Button("Sign in/Sign up") {
-                    auth.launchOAUTH()
+                    mosoAuth.launchOAUTH()
                 }
                 .buttonStyle(.borderedProminent)
                 .padding()

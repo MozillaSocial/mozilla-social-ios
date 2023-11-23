@@ -29,7 +29,8 @@ struct AppConfigurator {
             groupId: Keys.shared.groupID
         )
         // TODO: replace this with actual user coming from login
-        login(user: MoSoUser(username: "test-user@mozilla.com", identifier: "12345678"))
+        let user = MoSoUser(username: "test-user@mozilla.com", identifier: "12345678")
+        self.login(user: user)
     }
 
     func login(user: MoSoUser) {

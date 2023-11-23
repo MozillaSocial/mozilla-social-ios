@@ -125,7 +125,7 @@ class PocketAccessLayer {
         let mutation = PocketGraph.ArchiveItemMutation(givenUrl: item, timestamp: dateFormatter.string(from: .now))
         apolloClient?.perform(mutation: mutation) { [weak self] result in
             switch result {
-            case .success(_):
+            case .success(let data):
                 self?.delegate?.removeItemFromList(item: item)
             case .failure(let error):
                 print(error)

@@ -6,11 +6,14 @@
 public class MoSoUser {
     public let username: String
     public let identifier: String
-    public var session: MoSoSession?
+    @KeychainStorage public var session: MoSoSession?
+    @KeychainStorage public var pocketSession: MoSoSession?
 
     public init(username: String, identifier: String, session: MoSoSession? = nil) {
         self.username = username
         self.identifier = identifier
-        self.session = session
+
+        _session = KeychainStorage(account: "session", groupID: "com.ReadItLater.Ebony")
+        _pocketSession = KeychainStorage(account: "pocketSession", groupID: "com.ReadItLater.Ebony")
     }
 }
