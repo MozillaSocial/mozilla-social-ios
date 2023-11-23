@@ -6,8 +6,9 @@ import Foundation
 import Combine
 
 protocol ReadingListModelDelegate: AnyObject {
-    func readingListDidLoad(urlStrings: [String], totalItemCount: Int)
+    func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int)
     func removeItemFromList(item: String)
+    func operationFailed(with error: PALError)
 }
 
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
@@ -48,7 +49,9 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         pocketAccessLayer.fetchSaves()
     }
 
-    func readingListDidLoad(urlStrings: [String], totalItemCount: Int) {
+    // MARK: - Delegate Methods
+
+    func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int) {
         totalNumberOfItemsInReadingList = totalItemCount
 
         urlStrings.forEach { urlString in
@@ -62,18 +65,22 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         }
     }
 
-    // MARK: - Archive Items
-
-    func archive(item: String) {
-        pocketAccessLayer.archive(item: item)
-    }
-
     func removeItemFromList(item: String) {
         let filteredItems = self.readingListItems.filter {
             $0.contentURL != item
         }
 
         readingListItems = filteredItems
+    }
+
+    func operationFailed(with error: PALError) {
+        print(error)
+    }
+
+    // MARK: - Archive Items
+
+    func archive(item: String) {
+        pocketAccessLayer.archive(item: item)
     }
 
     // MARK: - ReadingListItem Helpers

@@ -13,7 +13,9 @@ public protocol ReadingListSession {
 public typealias ReadingListSessionProvider = () throws -> ReadingListSession
 
 enum PALError: Error {
+    case failedToFetchList(_ reason: String)
     case failedToFetchItem(_ itemURLString: String)
+    case invalidAuthentication
 }
 
 enum PALState {
@@ -47,7 +49,6 @@ class PocketAccessLayer {
     func fetchSaves() {
         if state == .fetching { return }
         state = .fetching
-        print("GraphQL Begin Fetch")
 
         let query = PocketGraph.FetchSavesQuery(
             pagination: .some(pagination),
@@ -57,34 +58,29 @@ class PocketAccessLayer {
         apolloClient?.fetch(query: query) { [weak self] result in
             defer {
                 self?.state = .idle
-                print("GraphQL resetting state")
             }
 
             switch result {
             case .success(let data):
                 if let errors = data.errors, errors.isEmpty == false {
-                    print("GraphQL 'succeeded' with errors:")
-                    errors.forEach { error in
-                        print(error)
-                    }
-
+                    self?.delegate?.operationFailed(with: .failedToFetchList("Successful response with errors"))
                     return
                 }
 
                 guard let savedItems = data.data?.user?.savedItems else {
-                    print("GraphQL Unable to parse savedItems from data")
+                    self?.delegate?.operationFailed(with: .failedToFetchList("Nil data retrieved"))
                     return
                 }
 
                 if let self = self {
                     let urlStrings = self.renderURLsFromResponse(from: savedItems)
-                    self.delegate?.readingListDidLoad(urlStrings: urlStrings, totalItemCount: savedItems.totalCount)
+                    self.delegate?.didFetchReadingListItems(urlStrings: urlStrings, totalItemCount: savedItems.totalCount)
 
                     let cursor: String? = data.data?.user?.savedItems?.pageInfo.endCursor
                     self.updatePagination(with: cursor)
                 }
             case .failure(let error):
-                print("GraphQL Failed with Error: \(error)")
+                self?.delegate?.operationFailed(with: .failedToFetchList("Fetch Query failed due to error: \(error)"))
             }
         }
     }
@@ -109,10 +105,8 @@ class PocketAccessLayer {
     func updatePagination(with cursor: String?) {
         if let cursor = cursor {
             pagination.after = .some(cursor)
-            print("GraphQL updatingPagination \(cursor)")
         } else {
             pagination.after = .none
-            print("GraphQL updatingPagination failed")
         }
     }
 
