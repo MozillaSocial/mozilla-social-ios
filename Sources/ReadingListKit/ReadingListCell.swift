@@ -10,6 +10,7 @@ public struct ReadingListCell: View {
     let model: ReadingListCellViewModel
     @Binding var selectedRow: ReadingListCellViewModel?
     let archiveAction: (String) -> Void
+    let shareAction: (String) -> Void
 
     public var body: some View {
         VStack {
@@ -49,13 +50,15 @@ public struct ReadingListCell: View {
                     .frame(width: Constants.buttonSize.width, height: Constants.buttonSize.height)
                     .buttonStyle(.bordered)
                     .onTapGesture {
-                        print("Archive")
                         archiveAction(model.contentURL)
                     }
 
                 ShareLink(item: model.contentURL) {
                     Image(.share)
                         .renderingMode(.template)
+                        .onTapGesture {
+                            shareAction(model.contentURL)
+                        }
                 }
                 .contentShape(Rectangle())
                 .frame(width: Constants.buttonSize.width, height: Constants.buttonSize.height)

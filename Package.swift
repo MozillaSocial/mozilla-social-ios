@@ -39,7 +39,7 @@ let package = Package(
             dependencies: ["DiscoverKit"]),
         .target(
             name: "ReadingListKit",
-            dependencies: ["MoSoCore", "DesignKit", .product(name: "Apollo", package: "apollo-ios")]
+            dependencies: ["MoSoCore", "DesignKit", "MoSoAnalytics", .product(name: "Apollo", package: "apollo-ios")]
         ),
         .testTarget(
             name: "ReadingListKitTests",

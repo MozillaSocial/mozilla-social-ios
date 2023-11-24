@@ -21,6 +21,11 @@ public final class AnalyticsProvider {
         MoSoDiscoverTracker(baseTracker: baseTracker)
     }
 
+    /// Provides a concrete implementation of `ReadingListTracker`
+    public func makeReadingListTracker() -> ReadingListTracker {
+        MoSoReadingListTracker(baseTracker: baseTracker)
+    }
+
     /// Start the analytics service. Useful if it gets stopped after init
     public func start() {
         baseTracker.start()

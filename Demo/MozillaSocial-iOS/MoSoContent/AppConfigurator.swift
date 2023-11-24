@@ -49,6 +49,7 @@ struct AppConfigurator {
 
     @MainActor
     func makeReadingListTab() -> some View {
-        ReadingListView(model: ReadingListModel(sessionProvider: session.pocketSession, groupID: Keys.shared.groupID, consumerKey: Keys.shared.pocketAPIConsumerKey))
+        let model = ReadingListModel(sessionProvider: session.pocketSession, groupID: Keys.shared.groupID, consumerKey: Keys.shared.pocketAPIConsumerKey, analyticsTracker: analyticsProvider.makeReadingListTracker())
+        return ReadingListView(model: model)
     }
 }

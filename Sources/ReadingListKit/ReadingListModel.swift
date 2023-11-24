@@ -4,6 +4,7 @@
 
 import Foundation
 import Combine
+import MoSoAnalytics
 
 protocol ReadingListModelDelegate: AnyObject {
     func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int)
@@ -19,15 +20,41 @@ enum ReadingListDisplayMode {
 }
 
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
+
+    private let analytics: ReadingListTracker
+
     var pocketAccessLayer: PocketAccessLayer
     var totalNumberOfItemsInReadingList: Int?
     @Published private(set) var displayMode: ReadingListDisplayMode = .normal
     @Published private(set) var readingListItems: [ReadingListCellViewModel] = []
 
-    public init(sessionProvider: @escaping ReadingListSessionProvider, groupID: String, consumerKey: String) {
+    public init(sessionProvider: @escaping ReadingListSessionProvider, groupID: String, consumerKey: String, analyticsTracker: ReadingListTracker) {
+        self.analytics = analyticsTracker
         pocketAccessLayer = PocketAccessLayerImplementation(sessionProvider, consumerKey)
         pocketAccessLayer.delegate = self
         pocketAccessLayer.initApolloClient()
+    }
+
+    // MARK: - Analytics Events
+
+    func trackReadingListViewImpression() {
+        analytics.trackReadingListScreenImpression()
+    }
+
+    func trackReadingListItemShare(itemURL: String) {
+        analytics.trackItemShare(itemURL: itemURL)
+    }
+
+    func trackReadingListItemImpression(itemURL: String) {
+        analytics.trackItemImpression(itemURL: itemURL)
+    }
+
+    func trackReadingListItemArchive(itemURL: String) {
+        analytics.trackItemArchive(itemURL: itemURL)
+    }
+
+    func trackReadingListItemOpen(itemURL: String) {
+        analytics.trackItemOpen(itemURL: itemURL)
     }
 
     // MARK: - Fetch Reading List Items
