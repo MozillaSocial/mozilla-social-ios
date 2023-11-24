@@ -4,6 +4,44 @@
 
 import XCTest
 @testable import ReadingListKit
+@testable import MoSoCore
 
 final class ReadingListKitTests: XCTestCase {
+    func testExample() {
+        let mockSessionProvider: ReadingListSessionProvider = { return MoSoSession(token: "Token", guid: "GUID") as! ReadingListSession }
+        var model = ReadingListModel(sessionProvider: mockSessionProvider, groupID: "GroupID", consumerKey: "ConsumerKey")
+        
+        let mockAccessLayer = MocketAccessLayer()
+        mockAccessLayer.fetchSavesAction = {
+            XCTAssert(true) // Check that the code was indeed called as expected.
+        }
+        model.pocketAccessLayer = mockAccessLayer
+
+        model.fetchMoreReadingList()
+    }
+}
+
+class MocketAccessLayer: PocketAccessLayer {
+    var delegate: ReadingListKit.ReadingListModelDelegate?
+
+    var fetchSavesAction: () -> Void = { XCTAssert(false) } // Fail by default
+    var initApolloAction: () -> Void = { XCTAssert(false) }
+    var getItemForURLAction: () -> Void = { XCTAssert(false) }
+    var archiveAction: () -> Void = { XCTAssert(false) }
+
+    func fetchSaves() {
+        fetchSavesAction()
+    }
+
+    func initApolloClient() {
+        initApolloAction()
+    }
+
+    func getItemForURL(_ urlString: String) async throws -> ReadingListKit.PocketGraph.ItemByURLQuery.Data.ItemByUrl {
+        fatalError()
+    }
+
+    func archive(item: String) {
+        archiveAction()
+    }
 }
