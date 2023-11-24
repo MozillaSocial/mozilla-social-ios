@@ -13,12 +13,14 @@ public protocol BaseTracker {
     func stop()
     func trackImpression(postID: String?,
                          recommendationID: String?,
+                         itemURL: String?,
                          additionalInfo: String?,
                          uiIdentifier: String?)
     func trackEngagement(action: EngagementAction,
                          associatedValue: String?,
                          postID: String?,
                          recommendationID: String?,
+                         itemURL: String?,
                          additionalInfo: String?,
                          uiIdentifier: String?)
 }
@@ -45,6 +47,7 @@ struct GleanBaseTracker: BaseTracker {
 
     func trackImpression(postID: String?,
                          recommendationID: String?,
+                         itemURL: String?,
                          additionalInfo: String?,
                          uiIdentifier: String?) {
         GleanMetrics.Ui.impression.record(
@@ -52,7 +55,7 @@ struct GleanBaseTracker: BaseTracker {
                 mastodonAccountHandle: session.user?.username,
                 mastodonAccountId: session.user?.identifier,
                 mastodonStatusId: postID,
-                recommendationId: recommendationID,
+                recommendationId: recommendationID ?? itemURL, //Piggybacking here until we have clarity around how to report ReadingList events.
                 uiAdditionalDetail: additionalInfo,
                 uiIdentifier: uiIdentifier
             )
@@ -63,6 +66,7 @@ struct GleanBaseTracker: BaseTracker {
                          associatedValue: String?,
                          postID: String?,
                          recommendationID: String?,
+                         itemURL: String?,
                          additionalInfo: String?,
                          uiIdentifier: String?) {
         GleanMetrics.Ui.engagement.record(
@@ -72,7 +76,7 @@ struct GleanBaseTracker: BaseTracker {
                 mastodonAccountHandle: session.user?.username,
                 mastodonAccountId: session.user?.identifier,
                 mastodonStatusId: postID,
-                recommendationId: recommendationID,
+                recommendationId: recommendationID ?? itemURL, //Piggybacking here until we have clarity around how to report ReadingList events.
                 uiAdditionalDetail: additionalInfo,
                 uiIdentifier: uiIdentifier
             )
