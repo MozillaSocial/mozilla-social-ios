@@ -4,6 +4,7 @@
 
 import Foundation
 import Apollo
+import MoSoCore
 
 public protocol ReadingListSession {
     var token: String { get }
@@ -80,7 +81,13 @@ class PocketAccessLayer {
                     self.updatePagination(with: cursor)
                 }
             case .failure(let error):
-                self?.delegate?.operationFailed(with: .failedToFetchList("Fetch Query failed due to error: \(error)"))
+                if case MoSoSessionError.UserNotLoggedIn = error {
+                    self?.delegate?.operationFailed(with: .invalidAuthentication)
+                } else if case MoSoSessionError.UserSessionInvalid = error {
+                    self?.delegate?.operationFailed(with: .invalidAuthentication)
+                } else {
+                    self?.delegate?.operationFailed(with: .failedToFetchList("Fetch Query failed due to error: \(error)"))
+                }
             }
         }
     }

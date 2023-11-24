@@ -34,10 +34,10 @@ public struct ReadingListView: View {
                                 model.didDisplay(item: viewModel)
                             }
                             .if(sizeClass == .regular) { view in
-                                view.frame(width: 700, alignment: .center)
+                                view.frame(width: Constants.readableWidth, alignment: .center)
                             }
                     }
-                    if model.allItemsAreDownloaded() == false {
+                    if model.allItemsAreDownloaded() == false && model.displayMode == .normal {
                         ProgressView()
                     }
                 }
@@ -55,6 +55,19 @@ public struct ReadingListView: View {
             .onAppear {
                 model.loadReadingList()
             }
+            .overlay {
+                if model.displayMode == .loggedOut {
+                    Text("You need to log into your Pocket Account to view your Reading List") // TODO: Fix: Navigate away and then back to the tab and this is ignored.
+                } else if model.displayMode == .empty {
+                    Text("Your Reading List is empty!")
+                }
+            }
         }
+    }
+
+    // MARK: - Constants
+
+    private enum Constants {
+        static let readableWidth: CGFloat = 700
     }
 }

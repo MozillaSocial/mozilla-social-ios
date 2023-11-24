@@ -26,13 +26,18 @@ class AuthParamsInterceptor: ApolloInterceptor {
         response: HTTPResponse<Operation>?,
         completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) -> Void
     ) where Operation: GraphQLOperation {
-        request.graphQLEndpoint = appendAuthorizationQueryParameters(to: request.graphQLEndpoint)
+        do {
+            request.graphQLEndpoint = try appendAuthorizationQueryParameters(to: request.graphQLEndpoint)
+        } catch {
+            completion(.failure(error))
+            return
+        }
+
         chain.proceedAsync(request: request, response: response, completion: completion)
     }
 
-    private func appendAuthorizationQueryParameters(to url: URL) -> URL {
+    private func appendAuthorizationQueryParameters(to url: URL) throws -> URL {
         guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-//            Log.capture(message: "Error - could not break Apollo url into components")
             return url
         }
 
@@ -41,13 +46,9 @@ class AuthParamsInterceptor: ApolloInterceptor {
             URLQueryItem(name: "consumer_key", value: consumerKey),
         ])
 
-        do {
-            let session = try sessionProvider()
-            items.append(URLQueryItem(name: "guid", value: session.guid))
-            items.append(URLQueryItem(name: "access_token", value: session.token))
-        } catch {
-            print("Error: \(error)")
-        }
+        let session = try sessionProvider()
+        items.append(URLQueryItem(name: "guid", value: session.guid))
+        items.append(URLQueryItem(name: "access_token", value: session.token))
 
         components.queryItems = items
 

@@ -11,10 +11,18 @@ protocol ReadingListModelDelegate: AnyObject {
     func operationFailed(with error: PALError)
 }
 
+enum ReadingListDisplayMode {
+    case normal
+    case empty
+    case error
+    case loggedOut
+}
+
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     let pocketAccessLayer: PocketAccessLayer
     var totalNumberOfItemsInReadingList: Int?
-    @Published var readingListItems: [ReadingListCellViewModel] = []
+    @Published private(set) var displayMode: ReadingListDisplayMode = .normal
+    @Published private(set) var readingListItems: [ReadingListCellViewModel] = []
 
     public init(sessionProvider: @escaping ReadingListSessionProvider, groupID: String, consumerKey: String) {
         pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey)
@@ -25,8 +33,6 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     // MARK: - Fetch Reading List Items
 
     func didDisplay(item: ReadingListCellViewModel) {
-        print("Displaying: \(item.contentURL)")
-
         if allItemsAreDownloaded() {
             return
         }
@@ -54,6 +60,14 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int) {
         totalNumberOfItemsInReadingList = totalItemCount
 
+        displayMode = .normal
+        print("Set displayMode to: \(displayMode)")
+
+        if totalItemCount == 0 {
+            displayMode = .empty
+            print("Set displayMode to: \(displayMode)")
+        }
+
         urlStrings.forEach { urlString in
             Task {
                 guard let item = try? await pocketAccessLayer.getItemForURL(urlString) else { return }
@@ -71,10 +85,24 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         }
 
         readingListItems = filteredItems
+
+        if let oldTotal = totalNumberOfItemsInReadingList {
+            totalNumberOfItemsInReadingList = oldTotal - 1
+        }
+
+        if totalNumberOfItemsInReadingList == 0 {
+            displayMode = .empty
+            print("Set displayMode to: \(displayMode)")
+        }
     }
 
     func operationFailed(with error: PALError) {
-        print(error)
+        if case PALError.invalidAuthentication = error {
+            displayMode = .loggedOut
+        } else {
+            displayMode = .error
+        }
+        print("Set displayMode to: \(displayMode)")
     }
 
     // MARK: - Archive Items
