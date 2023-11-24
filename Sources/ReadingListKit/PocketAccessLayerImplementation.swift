@@ -11,6 +11,15 @@ public protocol ReadingListSession {
     var guid: String { get }
 }
 
+protocol PocketAccessLayer {
+    var delegate: ReadingListModelDelegate? { get set }
+
+    func fetchSaves()
+    func initApolloClient()
+    func getItemForURL(_ urlString: String) async throws -> PocketGraph.ItemByURLQuery.Data.ItemByUrl
+    func archive(item: String)
+}
+
 public typealias ReadingListSessionProvider = () throws -> ReadingListSession
 
 enum PALError: Error {
@@ -24,7 +33,7 @@ enum PALState {
     case fetching
 }
 
-class PocketAccessLayer {
+class PocketAccessLayerImplementation: PocketAccessLayer {
     let consumerKey: String
     let pageSize: GraphQLNullable<Int> = GraphQLNullable<Int>(integerLiteral: 20)
     var apolloClient: ApolloClient?

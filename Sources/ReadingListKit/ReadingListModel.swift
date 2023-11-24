@@ -19,13 +19,13 @@ enum ReadingListDisplayMode {
 }
 
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
-    let pocketAccessLayer: PocketAccessLayer
+    var pocketAccessLayer: PocketAccessLayer
     var totalNumberOfItemsInReadingList: Int?
     @Published private(set) var displayMode: ReadingListDisplayMode = .normal
     @Published private(set) var readingListItems: [ReadingListCellViewModel] = []
 
     public init(sessionProvider: @escaping ReadingListSessionProvider, groupID: String, consumerKey: String) {
-        pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey)
+        pocketAccessLayer = PocketAccessLayerImplementation(sessionProvider, consumerKey)
         pocketAccessLayer.delegate = self
         pocketAccessLayer.initApolloClient()
     }
