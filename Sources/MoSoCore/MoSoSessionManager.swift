@@ -51,4 +51,9 @@ public enum MoSoSessionError: Error {
 public struct MoSoSession: Codable, Equatable {
     public let token: String
     public let guid: String
+
+    public init(token: String, guid: String) {
+        self.token = token
+        self.guid = guid
+    }
 }

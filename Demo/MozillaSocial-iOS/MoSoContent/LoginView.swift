@@ -3,11 +3,27 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import SwiftUI
+import MoSoCore
 
 struct LoginView: View {
     @StateObject var mosoAuth = AuthenticationService()
+    @StateObject var pocketAuth = PocketAuthenticationService(consumerKey: Keys.shared.pocketAPIConsumerKey)
+    @State var pocketAuthResponse: Response?
+    let sessionManager: MoSoSessionManager
 
     var body: some View {
+        VStack {
+            Spacer()
+            accountInfo
+                .overlay(loginOverlay)
+            Spacer()
+            Text("Signed in to Pocket")
+                .overlay(pocketLoginOverlay)
+            Spacer()
+        }
+    }
+
+    @ViewBuilder private var accountInfo: some View {
         VStack {
             HStack {
                 Image(systemName: "person.circle")
@@ -57,7 +73,6 @@ struct LoginView: View {
             .background(Color.purple)
             .clipShape(.rect(cornerRadius: 10))
         }
-        .overlay(loginOverlay)
     }
 
     @ViewBuilder private var loginOverlay: some View {
@@ -79,8 +94,43 @@ struct LoginView: View {
             .clipShape(.rect(cornerRadius: 10))
         }
     }
+
+    @ViewBuilder private var pocketLoginOverlay: some View {
+        if pocketAuthResponse == nil {
+            VStack {
+                Image("pocketIcon")
+                    .resizable()
+                    .frame(width: 200, height: 200)
+                    .clipShape(.rect(cornerRadius: 10))
+                Spacer()
+                HStack {
+                    Button("Sign in") {
+                        Task {
+                            guard let authResponse = try? await pocketAuth.logIn() else { return }
+                            pocketAuthResponse = authResponse
+                            let newSession = MoSoSession(token: authResponse.accessToken, guid: authResponse.guid)
+                            sessionManager.user?.pocketSession = newSession
+                        }
+                    }
+                    Button("Sign up") {
+                        Task {
+                            guard let authResponse = try? await pocketAuth.signUp() else { return }
+                            pocketAuthResponse = authResponse
+                            let newSession = MoSoSession(token: authResponse.accessToken, guid: authResponse.guid)
+                            sessionManager.user?.pocketSession = newSession
+                        }
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .padding()
+            }
+            .padding()
+            .background(Color.gray)
+            .clipShape(.rect(cornerRadius: 10))
+        }
+    }
 }
 
 #Preview {
-    LoginView()
+    LoginView(sessionManager: MoSoSessionManager())
 }

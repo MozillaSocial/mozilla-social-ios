@@ -22,7 +22,7 @@ enum PocketAuthenticationError: Error {
     case other(Swift.Error)
 }
 
-class PocketAuthenticationService: NSObject, ASWebAuthenticationPresentationContextProviding {
+class PocketAuthenticationService: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding {
     private var isAuthenticating = false
     private let consumerKey: String
 

@@ -34,7 +34,7 @@ struct RootView: View {
                     }
                     .tag(Tab.readingList)
 
-                LoginView()
+                LoginView(sessionManager: configurator.session)
                 .tabItem {
                     Image(systemName: "person")
                 }
