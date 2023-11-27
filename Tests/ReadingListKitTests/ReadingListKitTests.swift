@@ -4,13 +4,14 @@
 
 import XCTest
 @testable import ReadingListKit
+@testable import MoSoAnalytics
 @testable import MoSoCore
 
 final class ReadingListKitTests: XCTestCase {
     func testExample() {
         let mockSessionProvider: ReadingListSessionProvider = { return MoSoSession(token: "Token", guid: "GUID") as! ReadingListSession }
-        var model = ReadingListModel(sessionProvider: mockSessionProvider, groupID: "GroupID", consumerKey: "ConsumerKey")
-        
+        var model = ReadingListModel(sessionProvider: mockSessionProvider, groupID: "GroupID", consumerKey: "ConsumerKey", analyticsTracker: MoSoReadingListTracker(baseTracker: MockBaseTracker()))
+
         let mockAccessLayer = MocketAccessLayer()
         mockAccessLayer.fetchSavesAction = {
             XCTAssert(true) // Check that the code was indeed called as expected.
@@ -43,5 +44,19 @@ class MocketAccessLayer: PocketAccessLayer {
 
     func archive(item: String) {
         archiveAction()
+    }
+}
+
+class MockBaseTracker: BaseTracker {
+    func start() {
+    }
+
+    func stop() {
+    }
+
+    func trackImpression(postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
+    }
+
+    func trackEngagement(action: MoSoAnalytics.EngagementAction, associatedValue: String?, postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
     }
 }

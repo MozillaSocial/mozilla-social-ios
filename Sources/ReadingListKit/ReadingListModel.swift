@@ -20,7 +20,6 @@ enum ReadingListDisplayMode {
 }
 
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
-
     private let analytics: ReadingListTracker
 
     var pocketAccessLayer: PocketAccessLayer

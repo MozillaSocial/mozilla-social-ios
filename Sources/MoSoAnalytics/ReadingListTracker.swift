@@ -33,8 +33,7 @@ struct MoSoReadingListTracker: ReadingListTracker {
         baseTracker.trackImpression(postID: nil, recommendationID: nil, itemURL: itemURL, additionalInfo: nil, uiIdentifier: UIIdentifiers.itemImpression)
     }
 
-
-    func trackReadingListScreenImpression(){
+    func trackReadingListScreenImpression() {
         baseTracker.trackImpression(postID: nil, recommendationID: nil, itemURL: nil, additionalInfo: nil, uiIdentifier: UIIdentifiers.screenImpression)
     }
 

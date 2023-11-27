@@ -55,7 +55,7 @@ struct GleanBaseTracker: BaseTracker {
                 mastodonAccountHandle: session.user?.username,
                 mastodonAccountId: session.user?.identifier,
                 mastodonStatusId: postID,
-                recommendationId: recommendationID ?? itemURL, //Piggybacking here until we have clarity around how to report ReadingList events.
+                recommendationId: recommendationID ?? itemURL, // Piggybacking here until we have clarity around how to report ReadingList events.
                 uiAdditionalDetail: additionalInfo,
                 uiIdentifier: uiIdentifier
             )
@@ -76,7 +76,7 @@ struct GleanBaseTracker: BaseTracker {
                 mastodonAccountHandle: session.user?.username,
                 mastodonAccountId: session.user?.identifier,
                 mastodonStatusId: postID,
-                recommendationId: recommendationID ?? itemURL, //Piggybacking here until we have clarity around how to report ReadingList events.
+                recommendationId: recommendationID ?? itemURL, // Piggybacking here until we have clarity around how to report ReadingList events.
                 uiAdditionalDetail: additionalInfo,
                 uiIdentifier: uiIdentifier
             )

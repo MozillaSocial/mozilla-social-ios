@@ -44,7 +44,7 @@ struct MoSoDiscoverTracker: DiscoverTracker {
             action: action,
             associatedValue: nil,
             postID: nil,
-            recommendationID: recommendationID, 
+            recommendationID: recommendationID,
             itemURL: nil,
             additionalInfo: nil,
             uiIdentifier: uiIdentifier
