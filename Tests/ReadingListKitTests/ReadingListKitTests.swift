@@ -10,7 +10,7 @@ import XCTest
 final class ReadingListKitTests: XCTestCase {
     func testExample() {
         let mockSessionProvider: ReadingListSessionProvider = { return MoSoSession(token: "Token", guid: "GUID") as! ReadingListSession }
-        var model = ReadingListModel(sessionProvider: mockSessionProvider, groupID: "GroupID", consumerKey: "ConsumerKey", analyticsTracker: MoSoReadingListTracker(baseTracker: MockBaseTracker()))
+        let model = ReadingListModel(sessionProvider: mockSessionProvider, groupID: "GroupID", consumerKey: "ConsumerKey", analyticsTracker: MoSoReadingListTracker(baseTracker: MockBaseTracker()))
 
         let mockAccessLayer = MocketAccessLayer()
         mockAccessLayer.fetchSavesAction = {
@@ -39,7 +39,7 @@ class MocketAccessLayer: PocketAccessLayer {
     }
 
     func getItemForURL(_ urlString: String) async throws -> ReadingListKit.PocketGraph.ItemByURLQuery.Data.ItemByUrl {
-        fatalError()
+        fatalError() // The return type makes this is little more awkward to wrap/ignore.
     }
 
     func archive(item: String) {
@@ -48,15 +48,24 @@ class MocketAccessLayer: PocketAccessLayer {
 }
 
 class MockBaseTracker: BaseTracker {
+    var startAction: () -> Void = { XCTAssert(false) } // Fail by default
+    var stopAction: () -> Void = { XCTAssert(false) }
+    var trackImpressionAction: () -> Void = { XCTAssert(false) }
+    var trackEngagementAction: () -> Void = { XCTAssert(false) }
+
     func start() {
+        startAction()
     }
 
     func stop() {
+        stopAction()
     }
 
     func trackImpression(postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
+        trackImpressionAction()
     }
 
     func trackEngagement(action: MoSoAnalytics.EngagementAction, associatedValue: String?, postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
+        trackEngagementAction()
     }
 }
