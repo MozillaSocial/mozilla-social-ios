@@ -27,7 +27,7 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     @Published private(set) var displayMode: ReadingListDisplayMode = .normal
     @Published private(set) var readingListItems: [ReadingListCellViewModel] = []
 
-    public init(sessionProvider: @escaping ReadingListSessionProvider, groupID: String, consumerKey: String, analyticsTracker: ReadingListTracker) {
+    public init(sessionProvider: @escaping ReadingListSessionProvider, consumerKey: String, analyticsTracker: ReadingListTracker) {
         self.analytics = analyticsTracker
         pocketAccessLayer = PocketAccessLayerImplementation(sessionProvider, consumerKey)
         pocketAccessLayer.delegate = self

@@ -10,7 +10,7 @@ import XCTest
 final class ReadingListKitTests: XCTestCase {
     func testExample() {
         let mockSessionProvider: ReadingListSessionProvider = { return MoSoSession(token: "Token", guid: "GUID") as! ReadingListSession }
-        let model = ReadingListModel(sessionProvider: mockSessionProvider, groupID: "GroupID", consumerKey: "ConsumerKey", analyticsTracker: MoSoReadingListTracker(baseTracker: MockBaseTracker()))
+        let model = ReadingListModel(sessionProvider: mockSessionProvider, consumerKey: "ConsumerKey", analyticsTracker: MoSoReadingListTracker(baseTracker: MockBaseTracker()))
 
         let mockAccessLayer = MocketAccessLayer()
         mockAccessLayer.fetchSavesAction = {
