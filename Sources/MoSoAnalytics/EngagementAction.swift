@@ -11,6 +11,7 @@ public enum EngagementAction: String {
     case bookmark
     case share
     case general
+    case archive
     case none
 
     var description: String? {

@@ -26,7 +26,7 @@ struct MoSoReadingListTracker: ReadingListTracker {
     }
 
     func trackItemArchive(itemURL: String) {
-        trackEngagement(action: .general, itemURL: itemURL, uiIdentifier: UIIdentifiers.itemArchive)
+        trackEngagement(action: .archive, itemURL: itemURL, uiIdentifier: UIIdentifiers.itemArchive)
     }
 
     func trackItemImpression(itemURL: String) {
