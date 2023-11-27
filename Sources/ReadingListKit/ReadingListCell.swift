@@ -56,10 +56,10 @@ public struct ReadingListCell: View {
                 ShareLink(item: model.contentURL) {
                     Image(.share)
                         .renderingMode(.template)
-                        .onTapGesture {
-                            shareAction(model.contentURL)
-                        }
                 }
+                .simultaneousGesture(TapGesture().onEnded {
+                    shareAction(model.contentURL)
+                })
                 .contentShape(Rectangle())
                 .frame(width: Constants.buttonSize.width, height: Constants.buttonSize.height)
                 .buttonStyle(.plain)
