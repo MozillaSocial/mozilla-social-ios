@@ -90,9 +90,9 @@ class PocketAccessLayerImplementation: PocketAccessLayer {
                     self.updatePagination(with: cursor)
                 }
             case .failure(let error):
-                if case MoSoSessionError.UserNotLoggedIn = error {
+                if case MoSoSessionError.userNotLoggedIn = error {
                     self?.delegate?.operationFailed(with: .invalidAuthentication)
-                } else if case MoSoSessionError.UserSessionInvalid = error {
+                } else if case MoSoSessionError.userSessionInvalid = error {
                     self?.delegate?.operationFailed(with: .invalidAuthentication)
                 } else {
                     self?.delegate?.operationFailed(with: .failedToFetchList("Fetch Query failed due to error: \(error)"))

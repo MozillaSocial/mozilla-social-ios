@@ -99,7 +99,7 @@ public class KeychainStorage<T: Codable & Equatable> {
     }
 
     private func makeQuery(_ additionalProperties: [CFString: Any] = [:]) -> CFDictionary {
-        var keys: [CFString : Any] = [
+        var keys: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
             kSecAttrAccount: account

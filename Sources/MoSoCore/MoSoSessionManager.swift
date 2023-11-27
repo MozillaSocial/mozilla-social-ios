@@ -23,10 +23,10 @@ public class MoSoSessionManager {
 
     public func activeSession() throws -> MoSoSession {
         guard let user = user else {
-            throw MoSoSessionError.UserNotLoggedIn
+            throw MoSoSessionError.userNotLoggedIn
         }
         guard let session = user.session else {
-            throw MoSoSessionError.UserSessionInvalid
+            throw MoSoSessionError.userSessionInvalid
         }
         return session
     }
@@ -34,18 +34,18 @@ public class MoSoSessionManager {
     // Should be removed once the Mastodon Token supports Pocket API access
     public func pocketSession() throws -> MoSoSession {
         guard let user = user else {
-            throw MoSoSessionError.UserNotLoggedIn
+            throw MoSoSessionError.userNotLoggedIn
         }
         guard let session = user.pocketSession else {
-            throw MoSoSessionError.UserSessionInvalid
+            throw MoSoSessionError.userSessionInvalid
         }
         return session
     }
 }
 
 public enum MoSoSessionError: Error {
-    case UserNotLoggedIn
-    case UserSessionInvalid
+    case userNotLoggedIn
+    case userSessionInvalid
 }
 
 public struct MoSoSession: Codable, Equatable {
