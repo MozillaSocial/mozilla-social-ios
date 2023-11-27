@@ -13,7 +13,7 @@ public class MoSoUser {
         self.username = username
         self.identifier = identifier
 
-        _session = KeychainStorage(account: "session", groupID: "com.ReadItLater.Ebony")
-        _pocketSession = KeychainStorage(account: "pocketSession", groupID: "com.ReadItLater.Ebony")
+        _session = KeychainStorage(account: "session")
+        _pocketSession = KeychainStorage(account: "pocketSession")
     }
 }

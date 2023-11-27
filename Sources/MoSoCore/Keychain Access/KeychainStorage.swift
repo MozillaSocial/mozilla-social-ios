@@ -10,7 +10,7 @@ public class KeychainStorage<T: Codable & Equatable> {
     private let keychain: Keychain
     private let service: String
     private let account: String
-    private let accessGroup: String
+    private let accessGroup: String?
 
     private var _wrappedValue: T?
     public var wrappedValue: T? {
@@ -34,7 +34,7 @@ public class KeychainStorage<T: Codable & Equatable> {
         keychain: Keychain = SecItemKeychain(),
         service: String = "pocket",
         account: String,
-        groupID: String
+        groupID: String? = nil
     ) {
         self.keychain = keychain
         self.service = service
@@ -99,11 +99,16 @@ public class KeychainStorage<T: Codable & Equatable> {
     }
 
     private func makeQuery(_ additionalProperties: [CFString: Any] = [:]) -> CFDictionary {
-        [
+        var keys: [CFString : Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
-            kSecAttrAccount: account,
-            kSecAttrAccessGroup: accessGroup
-        ].merging(additionalProperties) { _, new in new } as CFDictionary
+            kSecAttrAccount: account
+        ]
+
+        if let accessGroup = accessGroup {
+            keys[kSecAttrAccessGroup] = accessGroup
+        }
+
+        return keys.merging(additionalProperties) { _, new in new } as CFDictionary
     }
 }
