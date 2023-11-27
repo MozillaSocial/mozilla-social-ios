@@ -18,15 +18,15 @@ struct MoSoReadingListTracker: ReadingListTracker {
     }
 
     func trackItemOpen(itemURL: String) {
-        trackRecommendationEngagement(action: .general, itemURL: itemURL, uiIdentifier: UIIdentifiers.itemOpen)
+        trackEngagement(action: .general, itemURL: itemURL, uiIdentifier: UIIdentifiers.itemOpen)
     }
 
     func trackItemShare(itemURL: String) {
-        trackRecommendationEngagement(action: .share, itemURL: itemURL, uiIdentifier: UIIdentifiers.itemShare)
+        trackEngagement(action: .share, itemURL: itemURL, uiIdentifier: UIIdentifiers.itemShare)
     }
 
     func trackItemArchive(itemURL: String) {
-        trackRecommendationEngagement(action: .bookmark, itemURL: itemURL, uiIdentifier: UIIdentifiers.itemArchive)
+        trackEngagement(action: .general, itemURL: itemURL, uiIdentifier: UIIdentifiers.itemArchive)
     }
 
     func trackItemImpression(itemURL: String) {
@@ -37,7 +37,7 @@ struct MoSoReadingListTracker: ReadingListTracker {
         baseTracker.trackImpression(postID: nil, recommendationID: nil, itemURL: nil, additionalInfo: nil, uiIdentifier: UIIdentifiers.screenImpression)
     }
 
-    private func trackRecommendationEngagement(action: EngagementAction, itemURL: String, uiIdentifier: String) {
+    private func trackEngagement(action: EngagementAction, itemURL: String, uiIdentifier: String) {
         baseTracker.trackEngagement(
             action: action,
             associatedValue: nil,
