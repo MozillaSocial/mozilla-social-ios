@@ -32,28 +32,8 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         pocketAccessLayer = PocketAccessLayerImplementation(sessionProvider, consumerKey)
         pocketAccessLayer.delegate = self
         pocketAccessLayer.initApolloClient()
-    }
 
-    // MARK: - Analytics Events
-
-    func trackReadingListViewImpression() {
-        analytics.trackReadingListScreenImpression()
-    }
-
-    func trackReadingListItemShare(itemURL: String) {
-        analytics.trackItemShare(itemURL: itemURL)
-    }
-
-    func trackReadingListItemImpression(itemURL: String) {
-        analytics.trackItemImpression(itemURL: itemURL)
-    }
-
-    func trackReadingListItemArchive(itemURL: String) {
-        analytics.trackItemArchive(itemURL: itemURL)
-    }
-
-    func trackReadingListItemOpen(itemURL: String) {
-        analytics.trackItemOpen(itemURL: itemURL)
+        fetchMoreReadingList()
     }
 
     // MARK: - Fetch Reading List Items
@@ -77,21 +57,15 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         totalNumberOfItemsInReadingList == readingListItems.count
     }
 
-    func loadReadingList() {
-        pocketAccessLayer.fetchSaves()
-    }
-
     // MARK: - Delegate Methods
 
     func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int) {
         totalNumberOfItemsInReadingList = totalItemCount
 
         displayMode = .normal
-        print("Set displayMode to: \(displayMode)")
 
         if totalItemCount == 0 {
             displayMode = .empty
-            print("Set displayMode to: \(displayMode)")
         }
 
         urlStrings.forEach { urlString in
@@ -118,7 +92,6 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
         if totalNumberOfItemsInReadingList == 0 {
             displayMode = .empty
-            print("Set displayMode to: \(displayMode)")
         }
     }
 
@@ -128,7 +101,6 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         } else {
             displayMode = .error
         }
-        print("Set displayMode to: \(displayMode)")
     }
 
     // MARK: - Archive Items
@@ -170,5 +142,27 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     func host(from url: String) -> String? {
         guard let url = URL(string: url) else { return nil }
         return url.host
+    }
+
+    // MARK: - Analytics Events
+
+    func trackReadingListViewImpression() {
+        analytics.trackReadingListScreenImpression()
+    }
+
+    func trackReadingListItemShare(itemURL: String) {
+        analytics.trackItemShare(itemURL: itemURL)
+    }
+
+    func trackReadingListItemImpression(itemURL: String) {
+        analytics.trackItemImpression(itemURL: itemURL)
+    }
+
+    func trackReadingListItemArchive(itemURL: String) {
+        analytics.trackItemArchive(itemURL: itemURL)
+    }
+
+    func trackReadingListItemOpen(itemURL: String) {
+        analytics.trackItemOpen(itemURL: itemURL)
     }
 }

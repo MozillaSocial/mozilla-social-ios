@@ -6,10 +6,7 @@ import SwiftUI
 import Combine
 
 public struct ReadingListView: View {
-    public init(model: ReadingListModel) {
-        self.model = model
-    }
-    @ObservedObject var model: ReadingListModel
+    @StateObject var model: ReadingListModel
     @State private var selectedRow: ReadingListCellViewModel?
 
     @Environment(\.horizontalSizeClass)
@@ -42,7 +39,6 @@ public struct ReadingListView: View {
                 model.trackReadingListItemOpen(itemURL: urlString)
             }
             .onAppear {
-                model.loadReadingList()
                 model.trackReadingListViewImpression()
             }
             .overlay {
