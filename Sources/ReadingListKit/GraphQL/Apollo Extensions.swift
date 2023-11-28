@@ -14,8 +14,7 @@ extension ApolloClient {
         sessionProvider: @escaping ReadingListSessionProvider,
         consumerKey: String
     ) -> ApolloClient {
-        // guard let url = URL(string: ApolloClient.endpointURLString()) else { fatalError() }
-        let url = URL(string: "https://api.getpocket.com/graphql")!
+        guard let url = URL(string: ApolloClient.endpointURLString()) else { fatalError() }
 
         let authParams = AuthParamsInterceptor(
             sessionProvider: sessionProvider,
