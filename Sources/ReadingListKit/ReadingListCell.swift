@@ -26,20 +26,21 @@ public struct ReadingListCell: View {
                     switch phase {
                     case .empty:
                         Image(systemName: "photo")
-                            .frame(width: Constants.width, height: Constants.height)
+                            .frame(width: Constants.thumbnailSize.width, height: Constants.thumbnailSize.height)
                     case .success(let image):
                         image.resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: Constants.width, maxHeight: Constants.height)
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: Constants.thumbnailSize.width, height: Constants.thumbnailSize.height)
                     case .failure:
                         Image(systemName: "photo")
-                            .frame(width: Constants.width, height: Constants.height)
+                            .frame(width: Constants.thumbnailSize.width, height: Constants.thumbnailSize.height)
                     @unknown default:
                         EmptyView()
-                            .frame(width: Constants.width, height: Constants.height)
+                            .frame(width: Constants.thumbnailSize.width, height: Constants.thumbnailSize.height)
                     }
                 }
-                .frame(width: Constants.width, height: Constants.height)
+                .frame(width: Constants.thumbnailSize.width, height: Constants.thumbnailSize.height)
+                .cornerRadius(Constants.cornerRadius)
             }
             HStack {
                 Spacer()
@@ -76,8 +77,8 @@ public struct ReadingListCell: View {
     // MARK: - Constants
 
     private enum Constants {
-        static let width: CGFloat = 90
-        static let height: CGFloat = 60
+        static let thumbnailSize: CGSize = CGSize(width: 80, height: 80)
         static let buttonSize: CGSize = CGSize(width: 48, height: 48)
+        static let cornerRadius: CGFloat = 8.0
     }
 }
