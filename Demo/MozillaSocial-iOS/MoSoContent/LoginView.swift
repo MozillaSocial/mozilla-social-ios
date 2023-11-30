@@ -8,7 +8,6 @@ import MoSoCore
 struct LoginView: View {
     @StateObject var mosoAuth = AuthenticationService()
     @StateObject var pocketAuth = PocketAuthenticationService(consumerKey: Keys.shared.pocketAPIConsumerKey)
-    @State var pocketAuthResponse: Response?
     let sessionManager: MoSoSessionManager
 
     var body: some View {
@@ -17,7 +16,9 @@ struct LoginView: View {
             accountInfo
                 .overlay(loginOverlay)
             Spacer()
-            Text("Signed in to Pocket")
+            Button("Sign out of Pocket") {
+                sessionManager.user?.pocketSession = nil
+            }
                 .overlay(pocketLoginOverlay)
             Spacer()
         }
@@ -96,7 +97,7 @@ struct LoginView: View {
     }
 
     @ViewBuilder private var pocketLoginOverlay: some View {
-        if pocketAuthResponse == nil {
+        if (try? sessionManager.pocketSession()) == nil {
             VStack {
                 Image("pocketIcon")
                     .resizable()
@@ -107,7 +108,6 @@ struct LoginView: View {
                     Button("Sign in") {
                         Task {
                             guard let authResponse = try? await pocketAuth.logIn() else { return }
-                            pocketAuthResponse = authResponse
                             let newSession = MoSoSession(token: authResponse.accessToken, guid: authResponse.guid)
                             sessionManager.user?.pocketSession = newSession
                         }
@@ -115,7 +115,6 @@ struct LoginView: View {
                     Button("Sign up") {
                         Task {
                             guard let authResponse = try? await pocketAuth.signUp() else { return }
-                            pocketAuthResponse = authResponse
                             let newSession = MoSoSession(token: authResponse.accessToken, guid: authResponse.guid)
                             sessionManager.user?.pocketSession = newSession
                         }
