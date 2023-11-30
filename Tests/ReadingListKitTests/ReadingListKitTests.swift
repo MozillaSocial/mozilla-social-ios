@@ -29,6 +29,7 @@ class MocketAccessLayer: PocketAccessLayer {
     var initApolloAction: () -> Void = { XCTAssert(false) }
     var getItemForURLAction: () -> Void = { XCTAssert(false) }
     var archiveAction: () -> Void = { XCTAssert(false) }
+    var resetPaginationAction: () -> Void = { XCTAssert(false) }
 
     func fetchSaves() {
         fetchSavesAction()
@@ -44,6 +45,10 @@ class MocketAccessLayer: PocketAccessLayer {
 
     func archive(item: String) {
         archiveAction()
+    }
+
+    func resetPagination() {
+        resetPaginationAction()
     }
 }
 

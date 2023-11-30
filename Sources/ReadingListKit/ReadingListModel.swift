@@ -5,6 +5,7 @@
 import Foundation
 import Combine
 import MoSoAnalytics
+import MoSoCore
 
 protocol ReadingListModelDelegate: AnyObject {
     func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int)
@@ -32,28 +33,8 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         pocketAccessLayer = PocketAccessLayerImplementation(sessionProvider, consumerKey)
         pocketAccessLayer.delegate = self
         pocketAccessLayer.initApolloClient()
-    }
 
-    // MARK: - Analytics Events
-
-    func trackReadingListViewImpression() {
-        analytics.trackReadingListScreenImpression()
-    }
-
-    func trackReadingListItemShare(itemURL: String) {
-        analytics.trackItemShare(itemURL: itemURL)
-    }
-
-    func trackReadingListItemImpression(itemURL: String) {
-        analytics.trackItemImpression(itemURL: itemURL)
-    }
-
-    func trackReadingListItemArchive(itemURL: String) {
-        analytics.trackItemArchive(itemURL: itemURL)
-    }
-
-    func trackReadingListItemOpen(itemURL: String) {
-        analytics.trackItemOpen(itemURL: itemURL)
+        NotificationCenter.default.addObserver(self, selector: #selector(userAuthDidChange), name: .userAuthDidChange, object: nil)
     }
 
     // MARK: - Fetch Reading List Items
@@ -170,5 +151,37 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     func host(from url: String) -> String? {
         guard let url = URL(string: url) else { return nil }
         return url.host
+    }
+
+    // MARK: - Notification Events
+
+    @objc
+    func userAuthDidChange() {
+        readingListItems.removeAll()
+        displayMode = .normal
+        pocketAccessLayer.resetPagination()
+        fetchMoreReadingList()
+    }
+
+    // MARK: - Analytics Events
+
+    func trackReadingListViewImpression() {
+        analytics.trackReadingListScreenImpression()
+    }
+
+    func trackReadingListItemShare(itemURL: String) {
+        analytics.trackItemShare(itemURL: itemURL)
+    }
+
+    func trackReadingListItemImpression(itemURL: String) {
+        analytics.trackItemImpression(itemURL: itemURL)
+    }
+
+    func trackReadingListItemArchive(itemURL: String) {
+        analytics.trackItemArchive(itemURL: itemURL)
+    }
+
+    func trackReadingListItemOpen(itemURL: String) {
+        analytics.trackItemOpen(itemURL: itemURL)
     }
 }

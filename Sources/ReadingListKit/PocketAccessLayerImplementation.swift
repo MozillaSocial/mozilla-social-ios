@@ -18,6 +18,8 @@ protocol PocketAccessLayer {
     func initApolloClient()
     func getItemForURL(_ urlString: String) async throws -> PocketGraph.ItemByURLQuery.Data.ItemByUrl
     func archive(item: String)
+
+    func resetPagination()
 }
 
 public typealias ReadingListSessionProvider = () throws -> ReadingListSession
@@ -52,6 +54,10 @@ class PocketAccessLayerImplementation: PocketAccessLayer {
 
     func initApolloClient() {
         self.apolloClient = ApolloClient.createDefault(sessionProvider: sessionProvider, consumerKey: consumerKey)
+    }
+
+    func resetPagination() {
+        self.pagination = PocketGraph.PaginationInput(after: .none, first: pageSize)
     }
 
     // MARK: - Fetch Saves
