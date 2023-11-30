@@ -35,6 +35,8 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         pocketAccessLayer.initApolloClient()
 
         NotificationCenter.default.addObserver(self, selector: #selector(userAuthDidChange), name: .userAuthDidChange, object: nil)
+
+        fetchMoreReadingList()
     }
 
     // MARK: - Fetch Reading List Items
@@ -58,21 +60,15 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         totalNumberOfItemsInReadingList == readingListItems.count
     }
 
-    func loadReadingList() {
-        pocketAccessLayer.fetchSaves()
-    }
-
     // MARK: - Delegate Methods
 
     func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int) {
         totalNumberOfItemsInReadingList = totalItemCount
 
         displayMode = .normal
-        print("Set displayMode to: \(displayMode)")
 
         if totalItemCount == 0 {
             displayMode = .empty
-            print("Set displayMode to: \(displayMode)")
         }
 
         urlStrings.forEach { urlString in
@@ -99,7 +95,6 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
         if totalNumberOfItemsInReadingList == 0 {
             displayMode = .empty
-            print("Set displayMode to: \(displayMode)")
         }
     }
 
@@ -109,7 +104,6 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         } else {
             displayMode = .error
         }
-        print("Set displayMode to: \(displayMode)")
     }
 
     // MARK: - Archive Items

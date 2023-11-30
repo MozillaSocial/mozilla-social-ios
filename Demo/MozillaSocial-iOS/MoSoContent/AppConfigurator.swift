@@ -13,6 +13,7 @@ struct AppConfigurator {
     let session: MoSoSessionManager
     let analyticsProvider: AnalyticsProvider
     let discoverProvider: DiscoverProvider
+    let readingListProvider: ReadingListProvider
     let braze: MoSoBraze
 
     var loggedIn: Bool {
@@ -23,6 +24,8 @@ struct AppConfigurator {
         session = MoSoSessionManager()
         analyticsProvider = AnalyticsProvider(session: session)
         discoverProvider  = DiscoverProvider(session: session, tracker: analyticsProvider.makeDiscoverTracker())
+        readingListProvider = ReadingListProvider(sessionProvider: session.pocketSession, consumerKey: Keys.shared.pocketAPIConsumerKey, tracker: analyticsProvider.makeReadingListTracker())
+
         braze = MoSoBraze(
             apiKey: Keys.shared.brazeAPIKey,
             endpoint: Keys.shared.brazeAPIEndpoint,
@@ -49,7 +52,6 @@ struct AppConfigurator {
 
     @MainActor
     func makeReadingListTab() -> some View {
-        let model = ReadingListModel(sessionProvider: session.pocketSession, consumerKey: Keys.shared.pocketAPIConsumerKey, analyticsTracker: analyticsProvider.makeReadingListTracker())
-        return ReadingListView(model: model)
+        readingListProvider.makeReadingListView()
     }
 }
