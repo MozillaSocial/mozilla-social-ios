@@ -9,7 +9,7 @@ public class MoSoUser {
     @KeychainStorage public var session: MoSoSession?
     @KeychainStorage public var pocketSession: MoSoSession?
 
-    public init(username: String, identifier: String, session: MoSoSession? = nil) {
+    public init(username: String, identifier: String) {
         self.username = username
         self.identifier = identifier
 
