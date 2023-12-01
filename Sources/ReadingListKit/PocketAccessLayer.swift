@@ -22,13 +22,13 @@ protocol PocketAccessLayerProtocol {
 
 public typealias ReadingListSessionProvider = () throws -> ReadingListSession
 
-enum PALError: Error {
+enum PocketAccessLayerError: Error {
     case failedToFetchList(_ reason: String)
     case failedToFetchItem(_ itemURLString: String)
     case invalidAuthentication
 }
 
-enum PALState {
+enum PocketAccessLayerState {
     case idle
     case fetching
 }
@@ -39,7 +39,7 @@ class PocketAccessLayer: PocketAccessLayerProtocol {
     var apolloClient: ApolloClient?
     var sessionProvider: ReadingListSessionProvider
 
-    private(set) var state: PALState = .idle
+    private(set) var state: PocketAccessLayerState = .idle
 
     weak var delegate: ReadingListModelDelegate?
 
@@ -103,7 +103,7 @@ class PocketAccessLayer: PocketAccessLayerProtocol {
         let query = PocketGraph.ItemByURLQuery(url: urlString)
 
         let data = try await apolloClient?.fetch(query: query)
-        guard let item = data?.data?.itemByUrl else { throw PALError.failedToFetchItem(urlString) }
+        guard let item = data?.data?.itemByUrl else { throw PocketAccessLayerError.failedToFetchItem(urlString) }
 
         return item
     }

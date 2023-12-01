@@ -9,7 +9,7 @@ import MoSoAnalytics
 protocol ReadingListModelDelegate: AnyObject {
     func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int, cursor: String?)
     func removeItemFromList(item: String)
-    func operationFailed(with error: PALError)
+    func operationFailed(with error: PocketAccessLayerError)
 }
 
 enum ReadingListDisplayMode {
@@ -97,8 +97,8 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         }
     }
 
-    func operationFailed(with error: PALError) {
-        if case PALError.invalidAuthentication = error {
+    func operationFailed(with error: PocketAccessLayerError) {
+        if case PocketAccessLayerError.invalidAuthentication = error {
             displayMode = .loggedOut
         } else {
             displayMode = .error
