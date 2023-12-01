@@ -16,7 +16,7 @@ protocol PocketAccessLayerProtocol {
 
     func fetchSaves(after cursor: String?)
     func initApolloClient()
-    func getItemForURL(_ urlString: String) async throws -> PocketGraph.ItemByURLQuery.Data.ItemByUrl
+    func getItemForURL(_ urlString: String) async throws -> PocketItem
     func archive(item: String)
 }
 
@@ -99,7 +99,7 @@ class PocketAccessLayer: PocketAccessLayerProtocol {
         }
     }
 
-    func getItemForURL(_ urlString: String) async throws -> PocketGraph.ItemByURLQuery.Data.ItemByUrl {
+    func getItemForURL(_ urlString: String) async throws -> PocketItem {
         let query = PocketGraph.ItemByURLQuery(url: urlString)
 
         let data = try await apolloClient?.fetch(query: query)

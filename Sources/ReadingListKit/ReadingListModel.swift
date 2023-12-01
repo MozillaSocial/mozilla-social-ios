@@ -113,37 +113,16 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
     // MARK: - ReadingListItem Helpers
 
-    func readingListItem(from item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> ReadingListCellViewModel {
+    func readingListItem(from item: PocketItem) -> ReadingListCellViewModel {
         let defaultImageURLString = "https://helios-i.mashable.com/imagery/articles/05fACELrEVc4kAfNQbhhcVh/hero-image.fill.size_1248x702.v1667556469.png"
 
         let id = item.remoteID
         let title = item.title ?? item.givenUrl
-        let subtitle = subtitle(for: item)
+        let subtitle = item.subtitle
         let contentURL = item.resolvedUrl ?? item.givenUrl
-        let thumbnailURL = image(for: item) ?? defaultImageURLString
+        let thumbnailURL = item.image ?? defaultImageURLString
 
-        return ReadingListCellViewModel(id: id, title: title, subtitle: subtitle, contentURL: contentURL, thumbnailURL: thumbnailURL)
-    }
-
-    func image(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String? {
-        item.syndicatedArticle?.mainImage ?? item.topImageUrl ?? item.domainMetadata?.logo
-    }
-
-    func subtitle(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String {
-        let host = item.domainMetadata?.name ?? host(from: item.givenUrl)
-
-        guard let host = host else {
-            return ""
-        }
-
-        guard let timeToRead = item.timeToRead else { return host }
-
-        return host + " • " + String(describing: timeToRead) + " min"
-    }
-
-    func host(from url: String) -> String? {
-        guard let url = URL(string: url) else { return nil }
-        return url.host
+        return ReadingListCellViewModel(id: id, title: title, subtitle: subtitle ?? "", contentURL: contentURL, thumbnailURL: thumbnailURL)
     }
 
     // MARK: - Analytics Events
