@@ -17,7 +17,7 @@ class AuthParamsInterceptor: ApolloInterceptor {
     ) {
         self.sessionProvider = sessionProvider
         self.consumerKey = consumerKey
-        self.id = "Test"
+        self.id = ""
     }
 
     func interceptAsync<Operation>(
