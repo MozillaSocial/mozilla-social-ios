@@ -70,15 +70,21 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
             displayMode = .empty
         }
 
-        urlStrings.forEach { urlString in
-            Task {
-                guard let item = try? await pocketAccessLayer.getItemForURL(urlString) else { return }
-                let readingListItem = readingListItem(from: item)
-                await MainActor.run {
-                    readingListItems.append(readingListItem)
-                }
-            }
+        Task {
+            await fetchAndAppend(itemUrls: urlStrings)
         }
+    }
+
+    @MainActor
+    func fetchAndAppend(itemUrls: [String]) async {
+        var newItems: [ReadingListCellViewModel] = []
+
+        for url in itemUrls {
+            guard let item = try? await pocketAccessLayer.getItemForURL(url) else { continue }
+            newItems.append(readingListItem(from: item))
+        }
+
+        readingListItems.append(contentsOf: newItems)
     }
 
     func removeItemFromList(item: String) {
