@@ -7,7 +7,7 @@ import Combine
 import MoSoAnalytics
 
 protocol ReadingListModelDelegate: AnyObject {
-    func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int)
+    func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int, cursor: String?)
     func removeItemFromList(item: String)
     func operationFailed(with error: PALError)
 }
@@ -22,14 +22,15 @@ enum ReadingListDisplayMode {
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     private let analytics: ReadingListTracker
 
-    var pocketAccessLayer: PocketAccessLayer
+    var pocketAccessLayer: PocketAccessLayerProtocol
     var totalNumberOfItemsInReadingList: Int?
     @Published private(set) var displayMode: ReadingListDisplayMode = .normal
     @Published private(set) var readingListItems: [ReadingListCellViewModel] = []
+    private var paginationCursor: String?
 
     public init(sessionProvider: @escaping ReadingListSessionProvider, consumerKey: String, analyticsTracker: ReadingListTracker) {
         self.analytics = analyticsTracker
-        pocketAccessLayer = PocketAccessLayerImplementation(sessionProvider, consumerKey)
+        pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey)
         pocketAccessLayer.delegate = self
         pocketAccessLayer.initApolloClient()
 
@@ -50,7 +51,7 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     }
 
     func fetchMoreReadingList() {
-        pocketAccessLayer.fetchSaves()
+        pocketAccessLayer.fetchSaves(after: paginationCursor)
     }
 
     func allItemsAreDownloaded() -> Bool {
@@ -59,8 +60,9 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
     // MARK: - Delegate Methods
 
-    func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int) {
+    func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int, cursor: String?) {
         totalNumberOfItemsInReadingList = totalItemCount
+        paginationCursor = cursor
 
         displayMode = .normal
 

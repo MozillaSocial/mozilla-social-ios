@@ -22,7 +22,7 @@ final class ReadingListKitTests: XCTestCase {
     }
 }
 
-class MocketAccessLayer: PocketAccessLayer {
+class MocketAccessLayer: PocketAccessLayerProtocol {
     var delegate: ReadingListKit.ReadingListModelDelegate?
 
     var fetchSavesAction: () -> Void = { XCTAssert(false) } // Fail by default
@@ -30,7 +30,7 @@ class MocketAccessLayer: PocketAccessLayer {
     var getItemForURLAction: () -> Void = { XCTAssert(false) }
     var archiveAction: () -> Void = { XCTAssert(false) }
 
-    func fetchSaves() {
+    func fetchSaves(after cursor: String?) {
         fetchSavesAction()
     }
 
