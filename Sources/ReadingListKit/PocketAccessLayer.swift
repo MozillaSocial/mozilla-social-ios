@@ -6,6 +6,8 @@ import Foundation
 import Apollo
 import MoSoCore
 
+// MARK: - Types
+
 public protocol ReadingListSession {
     var token: String { get }
     var guid: String { get }
@@ -33,12 +35,13 @@ enum PocketAccessLayerState {
     case fetching
 }
 
-class PocketAccessLayer: PocketAccessLayerProtocol {
-    let consumerKey: String
-    let pageSize: GraphQLNullable<Int> = GraphQLNullable<Int>(integerLiteral: 20)
-    var apolloClient: ApolloClient?
-    var sessionProvider: ReadingListSessionProvider
+// MARK: - Implementation
 
+class PocketAccessLayer: PocketAccessLayerProtocol {
+    private let consumerKey: String
+    private let pageSize: GraphQLNullable<Int> = GraphQLNullable<Int>(integerLiteral: 20)
+    private var apolloClient: ApolloClient?
+    private var sessionProvider: ReadingListSessionProvider
     private(set) var state: PocketAccessLayerState = .idle
 
     weak var delegate: ReadingListModelDelegate?
