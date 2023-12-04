@@ -17,7 +17,6 @@ protocol PocketAccessLayerProtocol {
     var delegate: ReadingListModelDelegate? { get set }
 
     func fetchSaves(after cursor: String?)
-    func initApolloClient()
     func getItemForURL(_ urlString: String) async throws -> PocketItem
     func archive(item: String)
 }
@@ -49,9 +48,6 @@ class PocketAccessLayer: PocketAccessLayerProtocol {
     init(_ authTokenProvider: @escaping ReadingListSessionProvider, _ consumerKey: String) {
         self.sessionProvider = authTokenProvider
         self.consumerKey = consumerKey
-    }
-
-    func initApolloClient() {
         self.apolloClient = ApolloClient.createDefault(sessionProvider: sessionProvider, consumerKey: consumerKey)
     }
 

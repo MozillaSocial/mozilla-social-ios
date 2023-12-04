@@ -32,7 +32,6 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         self.analytics = analyticsTracker
         pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey)
         pocketAccessLayer.delegate = self
-        pocketAccessLayer.initApolloClient()
 
         fetchMoreReadingList()
     }
