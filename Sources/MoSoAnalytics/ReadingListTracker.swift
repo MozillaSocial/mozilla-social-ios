@@ -30,11 +30,11 @@ struct MoSoReadingListTracker: ReadingListTracker {
     }
 
     func trackItemImpression(itemURL: String) {
-        baseTracker.trackImpression(postID: nil, recommendationID: nil, itemURL: itemURL, additionalInfo: nil, uiIdentifier: UIIdentifiers.itemImpression)
+        baseTracker.trackImpression(postID: nil, recommendationID: nil, additionalInfo: nil, uiIdentifier: UIIdentifiers.itemImpression, url: itemURL)
     }
 
     func trackReadingListScreenImpression() {
-        baseTracker.trackImpression(postID: nil, recommendationID: nil, itemURL: nil, additionalInfo: nil, uiIdentifier: UIIdentifiers.screenImpression)
+        baseTracker.trackImpression(postID: nil, recommendationID: nil, additionalInfo: nil, uiIdentifier: UIIdentifiers.screenImpression, url: nil)
     }
 
     private func trackEngagement(action: EngagementAction, itemURL: String, uiIdentifier: String) {
@@ -43,9 +43,9 @@ struct MoSoReadingListTracker: ReadingListTracker {
             associatedValue: nil,
             postID: nil,
             recommendationID: nil,
-            itemURL: itemURL,
             additionalInfo: nil,
-            uiIdentifier: uiIdentifier
+            uiIdentifier: uiIdentifier,
+            url: itemURL
         )
     }
 

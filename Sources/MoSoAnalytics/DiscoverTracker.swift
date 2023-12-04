@@ -32,11 +32,11 @@ struct MoSoDiscoverTracker: DiscoverTracker {
     }
 
     func trackDiscoverScreenImpression() {
-        baseTracker.trackImpression(postID: nil, recommendationID: nil, itemURL: nil, additionalInfo: nil, uiIdentifier: UIIdentifiers.discoverScreenImpression)
+        baseTracker.trackImpression(postID: nil, recommendationID: nil, additionalInfo: nil, uiIdentifier: UIIdentifiers.discoverScreenImpression, url: nil)
     }
 
     func trackRecommendationImpression(recommendationID: String) {
-        baseTracker.trackImpression(postID: nil, recommendationID: recommendationID, itemURL: nil, additionalInfo: nil, uiIdentifier: UIIdentifiers.recommendationImpression)
+        baseTracker.trackImpression(postID: nil, recommendationID: recommendationID, additionalInfo: nil, uiIdentifier: UIIdentifiers.recommendationImpression, url: nil)
     }
 
     private func trackRecommendationEngagement(action: EngagementAction, recommendationID: String, uiIdentifier: String) {
@@ -45,9 +45,9 @@ struct MoSoDiscoverTracker: DiscoverTracker {
             associatedValue: nil,
             postID: nil,
             recommendationID: recommendationID,
-            itemURL: nil,
             additionalInfo: nil,
-            uiIdentifier: uiIdentifier
+            uiIdentifier: uiIdentifier,
+            url: nil
         )
     }
 }
