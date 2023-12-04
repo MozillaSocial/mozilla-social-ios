@@ -19,8 +19,6 @@ protocol PocketAccessLayerProtocol {
     func fetchSaves(after cursor: String?)
     func getItemForURL(_ urlString: String) async throws -> PocketItem
     func archive(item: String)
-
-    func resetPagination()
 }
 
 public typealias ReadingListSessionProvider = () throws -> ReadingListSession
@@ -51,10 +49,6 @@ class PocketAccessLayer: PocketAccessLayerProtocol {
         self.sessionProvider = authTokenProvider
         self.consumerKey = consumerKey
         self.apolloClient = ApolloClient.createDefault(sessionProvider: sessionProvider, consumerKey: consumerKey)
-    }
-
-    func resetPagination() {
-        self.pagination = PocketGraph.PaginationInput(after: .none, first: pageSize)
     }
 
     // MARK: - Fetch Saves

@@ -31,7 +31,6 @@ class MocketAccessLayer: PocketAccessLayerProtocol {
         return MockPocketItem(remoteID: "rID", givenUrl: "gURL")
     }
     var archiveAction: () -> Void = { XCTAssert(false) }
-    var resetPaginationAction: () -> Void = { XCTAssert(false) }
 
     func fetchSaves(after cursor: String?) {
         fetchSavesAction()
@@ -43,10 +42,6 @@ class MocketAccessLayer: PocketAccessLayerProtocol {
 
     func archive(item: String) {
         archiveAction()
-    }
-
-    func resetPagination() {
-        resetPaginationAction()
     }
 }
 

@@ -138,8 +138,8 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     @objc
     func userAuthDidChange() {
         readingListItems.removeAll()
+        paginationCursor = nil
         displayMode = .normal
-        pocketAccessLayer.resetPagination()
         fetchMoreReadingList()
     }
 
