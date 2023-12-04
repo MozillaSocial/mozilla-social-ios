@@ -27,7 +27,10 @@ class MocketAccessLayer: PocketAccessLayerProtocol {
 
     var fetchSavesAction: () -> Void = { XCTAssert(false) } // Fail by default
     var initApolloAction: () -> Void = { XCTAssert(false) }
-    var getItemForURLAction: () -> Void = { XCTAssert(false) }
+    var getItemForURLAction: () -> ReadingListKit.PocketItem = {
+        XCTAssert(false)
+        return MockPocketItem(remoteID: "rID", givenUrl: "gURL")
+    }
     var archiveAction: () -> Void = { XCTAssert(false) }
 
     func fetchSaves(after cursor: String?) {
@@ -38,8 +41,8 @@ class MocketAccessLayer: PocketAccessLayerProtocol {
         initApolloAction()
     }
 
-    func getItemForURL(_ urlString: String) async throws -> ReadingListKit.PocketGraph.ItemByURLQuery.Data.ItemByUrl {
-        fatalError() // The return type makes this is little more awkward to wrap/ignore.
+    func getItemForURL(_ urlString: String) async throws -> ReadingListKit.PocketItem {
+        getItemForURLAction()
     }
 
     func archive(item: String) {
@@ -68,4 +71,13 @@ class MockBaseTracker: BaseTracker {
     func trackEngagement(action: MoSoAnalytics.EngagementAction, associatedValue: String?, postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
         trackEngagementAction()
     }
+}
+
+struct MockPocketItem: PocketItem {
+    var remoteID: String
+    var title: String?
+    var givenUrl: String
+    var resolvedUrl: String?
+    var image: String?
+    var subtitle: String?
 }
