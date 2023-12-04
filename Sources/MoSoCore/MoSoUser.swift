@@ -15,7 +15,7 @@ public class MoSoUser {
         }
     }
 
-    public init(username: String, identifier: String, session: MoSoSession? = nil) {
+    public init(username: String, identifier: String) {
         self.username = username
         self.identifier = identifier
 

@@ -6,17 +6,18 @@ import Foundation
 import Apollo
 import MoSoCore
 
+// MARK: - Types
+
 public protocol ReadingListSession {
     var token: String { get }
     var guid: String { get }
 }
 
-protocol PocketAccessLayer {
+protocol PocketAccessLayerProtocol {
     var delegate: ReadingListModelDelegate? { get set }
 
-    func fetchSaves()
-    func initApolloClient()
-    func getItemForURL(_ urlString: String) async throws -> PocketGraph.ItemByURLQuery.Data.ItemByUrl
+    func fetchSaves(after cursor: String?)
+    func getItemForURL(_ urlString: String) async throws -> PocketItem
     func archive(item: String)
 
     func resetPagination()
@@ -24,35 +25,31 @@ protocol PocketAccessLayer {
 
 public typealias ReadingListSessionProvider = () throws -> ReadingListSession
 
-enum PALError: Error {
+enum PocketAccessLayerError: Error {
     case failedToFetchList(_ reason: String)
     case failedToFetchItem(_ itemURLString: String)
     case invalidAuthentication
 }
 
-enum PALState {
+enum PocketAccessLayerState {
     case idle
     case fetching
 }
 
-class PocketAccessLayerImplementation: PocketAccessLayer {
-    let consumerKey: String
-    let pageSize: GraphQLNullable<Int> = GraphQLNullable<Int>(integerLiteral: 20)
-    var apolloClient: ApolloClient?
-    var pagination: PocketGraph.PaginationInput
-    var sessionProvider: ReadingListSessionProvider
+// MARK: - Implementation
 
-    private(set) var state: PALState = .idle
+class PocketAccessLayer: PocketAccessLayerProtocol {
+    private let consumerKey: String
+    private let pageSize: GraphQLNullable<Int> = GraphQLNullable<Int>(integerLiteral: 20)
+    private var apolloClient: ApolloClient?
+    private var sessionProvider: ReadingListSessionProvider
+    private(set) var state: PocketAccessLayerState = .idle
 
     weak var delegate: ReadingListModelDelegate?
 
     init(_ authTokenProvider: @escaping ReadingListSessionProvider, _ consumerKey: String) {
         self.sessionProvider = authTokenProvider
         self.consumerKey = consumerKey
-        self.pagination = PocketGraph.PaginationInput(after: .none, first: pageSize)
-    }
-
-    func initApolloClient() {
         self.apolloClient = ApolloClient.createDefault(sessionProvider: sessionProvider, consumerKey: consumerKey)
     }
 
@@ -62,9 +59,11 @@ class PocketAccessLayerImplementation: PocketAccessLayer {
 
     // MARK: - Fetch Saves
 
-    func fetchSaves() {
+    func fetchSaves(after cursor: String?) {
         if state == .fetching { return }
         state = .fetching
+
+        let pagination = pagination(with: cursor)
 
         let query = PocketGraph.FetchSavesQuery(
             pagination: .some(pagination),
@@ -89,11 +88,9 @@ class PocketAccessLayerImplementation: PocketAccessLayer {
                 }
 
                 if let self = self {
-                    let urlStrings = self.renderURLsFromResponse(from: savedItems)
-                    self.delegate?.didFetchReadingListItems(urlStrings: urlStrings, totalItemCount: savedItems.totalCount)
-
                     let cursor: String? = data.data?.user?.savedItems?.pageInfo.endCursor
-                    self.updatePagination(with: cursor)
+                    let urlStrings = self.renderURLsFromResponse(from: savedItems)
+                    self.delegate?.didFetchReadingListItems(urlStrings: urlStrings, totalItemCount: savedItems.totalCount, cursor: cursor)
                 }
             case .failure(let error):
                 if case MoSoSessionError.userNotLoggedIn = error {
@@ -107,11 +104,11 @@ class PocketAccessLayerImplementation: PocketAccessLayer {
         }
     }
 
-    func getItemForURL(_ urlString: String) async throws -> PocketGraph.ItemByURLQuery.Data.ItemByUrl {
+    func getItemForURL(_ urlString: String) async throws -> PocketItem {
         let query = PocketGraph.ItemByURLQuery(url: urlString)
 
         let data = try await apolloClient?.fetch(query: query)
-        guard let item = data?.data?.itemByUrl else { throw PALError.failedToFetchItem(urlString) }
+        guard let item = data?.data?.itemByUrl else { throw PocketAccessLayerError.failedToFetchItem(urlString) }
 
         return item
     }
@@ -124,11 +121,11 @@ class PocketAccessLayerImplementation: PocketAccessLayer {
         return edges.compactMap { $0?.node?.url }
     }
 
-    func updatePagination(with cursor: String?) {
+    func pagination(with cursor: String?) -> PocketGraph.PaginationInput {
         if let cursor = cursor {
-            pagination.after = .some(cursor)
+            return PocketGraph.PaginationInput(after: .some(cursor), first: pageSize)
         } else {
-            pagination.after = .none
+            return PocketGraph.PaginationInput(after: .none, first: pageSize)
         }
     }
 

@@ -8,9 +8,9 @@ import MoSoAnalytics
 import MoSoCore
 
 protocol ReadingListModelDelegate: AnyObject {
-    func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int)
+    func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int, cursor: String?)
     func removeItemFromList(item: String)
-    func operationFailed(with error: PALError)
+    func operationFailed(with error: PocketAccessLayerError)
 }
 
 enum ReadingListDisplayMode {
@@ -23,16 +23,16 @@ enum ReadingListDisplayMode {
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     private let analytics: ReadingListTracker
 
-    var pocketAccessLayer: PocketAccessLayer
+    var pocketAccessLayer: PocketAccessLayerProtocol
     var totalNumberOfItemsInReadingList: Int?
     @Published private(set) var displayMode: ReadingListDisplayMode = .normal
     @Published private(set) var readingListItems: [ReadingListCellViewModel] = []
+    private var paginationCursor: String?
 
     public init(sessionProvider: @escaping ReadingListSessionProvider, consumerKey: String, analyticsTracker: ReadingListTracker) {
         self.analytics = analyticsTracker
-        pocketAccessLayer = PocketAccessLayerImplementation(sessionProvider, consumerKey)
+        pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey)
         pocketAccessLayer.delegate = self
-        pocketAccessLayer.initApolloClient()
 
         NotificationCenter.default.addObserver(self, selector: #selector(userAuthDidChange), name: .userAuthDidChange, object: nil)
 
@@ -53,7 +53,7 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     }
 
     func fetchMoreReadingList() {
-        pocketAccessLayer.fetchSaves()
+        pocketAccessLayer.fetchSaves(after: paginationCursor)
     }
 
     func allItemsAreDownloaded() -> Bool {
@@ -62,8 +62,9 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
     // MARK: - Delegate Methods
 
-    func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int) {
+    func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int, cursor: String?) {
         totalNumberOfItemsInReadingList = totalItemCount
+        paginationCursor = cursor
 
         displayMode = .normal
 
@@ -71,15 +72,21 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
             displayMode = .empty
         }
 
-        urlStrings.forEach { urlString in
-            Task {
-                guard let item = try? await pocketAccessLayer.getItemForURL(urlString) else { return }
-                let readingListItem = readingListItem(from: item)
-                await MainActor.run {
-                    readingListItems.append(readingListItem)
-                }
-            }
+        Task {
+            await fetchAndAppend(itemUrls: urlStrings)
         }
+    }
+
+    @MainActor
+    func fetchAndAppend(itemUrls: [String]) async {
+        var newItems: [ReadingListCellViewModel] = []
+
+        for url in itemUrls {
+            guard let item = try? await pocketAccessLayer.getItemForURL(url) else { continue }
+            newItems.append(readingListItem(from: item))
+        }
+
+        readingListItems.append(contentsOf: newItems)
     }
 
     func removeItemFromList(item: String) {
@@ -98,8 +105,8 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         }
     }
 
-    func operationFailed(with error: PALError) {
-        if case PALError.invalidAuthentication = error {
+    func operationFailed(with error: PocketAccessLayerError) {
+        if case PocketAccessLayerError.invalidAuthentication = error {
             displayMode = .loggedOut
         } else {
             displayMode = .error
@@ -114,37 +121,16 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
     // MARK: - ReadingListItem Helpers
 
-    func readingListItem(from item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> ReadingListCellViewModel {
+    func readingListItem(from item: PocketItem) -> ReadingListCellViewModel {
         let defaultImageURLString = "https://helios-i.mashable.com/imagery/articles/05fACELrEVc4kAfNQbhhcVh/hero-image.fill.size_1248x702.v1667556469.png"
 
         let id = item.remoteID
         let title = item.title ?? item.givenUrl
-        let subtitle = subtitle(for: item)
+        let subtitle = item.subtitle
         let contentURL = item.resolvedUrl ?? item.givenUrl
-        let thumbnailURL = image(for: item) ?? defaultImageURLString
+        let thumbnailURL = item.image ?? defaultImageURLString
 
-        return ReadingListCellViewModel(id: id, title: title, subtitle: subtitle, contentURL: contentURL, thumbnailURL: thumbnailURL)
-    }
-
-    func image(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String? {
-        item.syndicatedArticle?.mainImage ?? item.topImageUrl ?? item.domainMetadata?.logo
-    }
-
-    func subtitle(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String {
-        let host = item.domainMetadata?.name ?? host(from: item.givenUrl)
-
-        guard let host = host else {
-            return ""
-        }
-
-        guard let timeToRead = item.timeToRead else { return host }
-
-        return host + " • " + String(describing: timeToRead) + " min"
-    }
-
-    func host(from url: String) -> String? {
-        guard let url = URL(string: url) else { return nil }
-        return url.host
+        return ReadingListCellViewModel(id: id, title: title, subtitle: subtitle ?? "", contentURL: contentURL, thumbnailURL: thumbnailURL)
     }
 
     // MARK: - Notification Events

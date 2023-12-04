@@ -9,7 +9,7 @@ import XCTest
 
 final class ReadingListKitTests: XCTestCase {
     func testExample() {
-        let mockSessionProvider: ReadingListSessionProvider = { return MoSoSession(token: "Token", guid: "GUID") as! ReadingListSession }
+        let mockSessionProvider: ReadingListSessionProvider = sessionProvider
         let model = ReadingListModel(sessionProvider: mockSessionProvider, consumerKey: "ConsumerKey", analyticsTracker: MoSoReadingListTracker(baseTracker: MockBaseTracker()))
 
         let mockAccessLayer = MocketAccessLayer()
@@ -22,25 +22,23 @@ final class ReadingListKitTests: XCTestCase {
     }
 }
 
-class MocketAccessLayer: PocketAccessLayer {
+class MocketAccessLayer: PocketAccessLayerProtocol {
     var delegate: ReadingListKit.ReadingListModelDelegate?
 
     var fetchSavesAction: () -> Void = { XCTAssert(false) } // Fail by default
-    var initApolloAction: () -> Void = { XCTAssert(false) }
-    var getItemForURLAction: () -> Void = { XCTAssert(false) }
+    var getItemForURLAction: () -> ReadingListKit.PocketItem = {
+        XCTAssert(false)
+        return MockPocketItem(remoteID: "rID", givenUrl: "gURL")
+    }
     var archiveAction: () -> Void = { XCTAssert(false) }
     var resetPaginationAction: () -> Void = { XCTAssert(false) }
 
-    func fetchSaves() {
+    func fetchSaves(after cursor: String?) {
         fetchSavesAction()
     }
 
-    func initApolloClient() {
-        initApolloAction()
-    }
-
-    func getItemForURL(_ urlString: String) async throws -> ReadingListKit.PocketGraph.ItemByURLQuery.Data.ItemByUrl {
-        fatalError() // The return type makes this is little more awkward to wrap/ignore.
+    func getItemForURL(_ urlString: String) async throws -> ReadingListKit.PocketItem {
+        getItemForURLAction()
     }
 
     func archive(item: String) {
@@ -73,4 +71,19 @@ class MockBaseTracker: BaseTracker {
     func trackEngagement(action: MoSoAnalytics.EngagementAction, associatedValue: String?, postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
         trackEngagementAction()
     }
+}
+
+struct MockPocketItem: PocketItem {
+    var remoteID: String
+    var title: String?
+    var givenUrl: String
+    var resolvedUrl: String?
+    var image: String?
+    var subtitle: String?
+}
+
+extension MoSoSession: ReadingListSession {}
+
+func sessionProvider() throws -> MoSoSession {
+    MoSoSession(token: "Token", guid: "GUID")
 }
