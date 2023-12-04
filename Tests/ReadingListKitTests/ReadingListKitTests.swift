@@ -9,7 +9,7 @@ import XCTest
 
 final class ReadingListKitTests: XCTestCase {
     func testExample() {
-        let mockSessionProvider: ReadingListSessionProvider = { return MoSoSession(token: "Token", guid: "GUID") as! ReadingListSession }
+        let mockSessionProvider: ReadingListSessionProvider = sessionProvider
         let model = ReadingListModel(sessionProvider: mockSessionProvider, consumerKey: "ConsumerKey", analyticsTracker: MoSoReadingListTracker(baseTracker: MockBaseTracker()))
 
         let mockAccessLayer = MocketAccessLayer()
@@ -26,7 +26,6 @@ class MocketAccessLayer: PocketAccessLayerProtocol {
     var delegate: ReadingListKit.ReadingListModelDelegate?
 
     var fetchSavesAction: () -> Void = { XCTAssert(false) } // Fail by default
-    var initApolloAction: () -> Void = { XCTAssert(false) }
     var getItemForURLAction: () -> ReadingListKit.PocketItem = {
         XCTAssert(false)
         return MockPocketItem(remoteID: "rID", givenUrl: "gURL")
@@ -35,10 +34,6 @@ class MocketAccessLayer: PocketAccessLayerProtocol {
 
     func fetchSaves(after cursor: String?) {
         fetchSavesAction()
-    }
-
-    func initApolloClient() {
-        initApolloAction()
     }
 
     func getItemForURL(_ urlString: String) async throws -> ReadingListKit.PocketItem {
@@ -80,4 +75,10 @@ struct MockPocketItem: PocketItem {
     var resolvedUrl: String?
     var image: String?
     var subtitle: String?
+}
+
+extension MoSoSession: ReadingListSession {}
+
+func sessionProvider() throws -> MoSoSession {
+    MoSoSession(token: "Token", guid: "GUID")
 }
