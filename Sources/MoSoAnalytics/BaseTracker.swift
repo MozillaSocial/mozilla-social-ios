@@ -23,6 +23,8 @@ public protocol BaseTracker {
                          additionalInfo: String?,
                          uiIdentifier: String?,
                          url: String?)
+    func trackAppDidBecomeActive()
+    func trackAppWillBackground()
 }
 
 struct GleanBaseTracker: BaseTracker {
@@ -83,5 +85,13 @@ struct GleanBaseTracker: BaseTracker {
                 url: url
             )
         )
+    }
+
+    func trackAppDidBecomeActive() {
+        GleanMetrics.Mobile.appOpen.record()
+    }
+
+    func trackAppWillBackground() {
+        GleanMetrics.Mobile.appBackground.record()
     }
 }

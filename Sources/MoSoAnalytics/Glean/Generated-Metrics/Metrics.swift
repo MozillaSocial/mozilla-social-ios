@@ -25,7 +25,7 @@ extension GleanMetrics {
             // Intentionally left private, no external user can instantiate a new global object.
         }
 
-        public static let info = BuildInfo(buildDate: DateComponents(calendar: Calendar.current, timeZone: TimeZone(abbreviation: "UTC"), year: 2023, month: 12, day: 5, hour: 16, minute: 38, second: 56))
+        public static let info = BuildInfo(buildDate: DateComponents(calendar: Calendar.current, timeZone: TimeZone(abbreviation: "UTC"), year: 2023, month: 12, day: 5, hour: 19, minute: 26, second: 24))
     }
 
     enum Backend {
@@ -80,7 +80,7 @@ extension GleanMetrics {
             CommonMetricData(
                 category: "identifiers",
                 name: "adjust_device_id",
-                sendInPings: ["baseline", "events"],
+                sendInPings: ["events"],
                 lifetime: .application,
                 disabled: false
             )
@@ -96,7 +96,7 @@ extension GleanMetrics {
             CommonMetricData(
                 category: "identifiers",
                 name: "fxa_account_id",
-                sendInPings: ["baseline", "events"],
+                sendInPings: ["events"],
                 lifetime: .application,
                 disabled: false
             )
@@ -112,7 +112,7 @@ extension GleanMetrics {
             CommonMetricData(
                 category: "identifiers",
                 name: "mastodon_account_handle",
-                sendInPings: ["baseline", "events"],
+                sendInPings: ["events"],
                 lifetime: .application,
                 disabled: false
             )
@@ -128,7 +128,7 @@ extension GleanMetrics {
             CommonMetricData(
                 category: "identifiers",
                 name: "mastodon_account_id",
-                sendInPings: ["baseline", "events"],
+                sendInPings: ["events"],
                 lifetime: .application,
                 disabled: false
             )
@@ -144,10 +144,49 @@ extension GleanMetrics {
             CommonMetricData(
                 category: "identifiers",
                 name: "user_agent",
-                sendInPings: ["baseline", "events"],
+                sendInPings: ["events"],
                 lifetime: .application,
                 disabled: false
             )
+        )
+
+    }
+
+    enum Mobile {
+        /// Event triggered when a user moves the mobile app to background by opening
+        /// another app, returning to the home screen, or quitting the app.
+        /// data_taxonomy:
+        ///   data_categories: [user.behavior]
+        ///   data_uses: [analytics.reporting]
+        ///   data_subjects: [customer, visitor]
+        ///   data_qualifier: [n/a]
+        static let appBackground = EventMetricType<NoExtras>( // generated from mobile.app_background
+            CommonMetricData(
+                category: "mobile",
+                name: "app_background",
+                sendInPings: ["events"],
+                lifetime: .ping,
+                disabled: false
+            )
+            , []
+        )
+
+        /// Event triggered when a user moves the mobile app to foreground by starting the
+        /// app or returning from the home screen/another app.
+        /// data_taxonomy:
+        ///   data_categories: [user.behavior]
+        ///   data_uses: [analytics.reporting]
+        ///   data_subjects: [customer, visitor]
+        ///   data_qualifier: [n/a]
+        static let appOpen = EventMetricType<NoExtras>( // generated from mobile.app_open
+            CommonMetricData(
+                category: "mobile",
+                name: "app_open",
+                sendInPings: ["events"],
+                lifetime: .ping,
+                disabled: false
+            )
+            , []
         )
 
     }

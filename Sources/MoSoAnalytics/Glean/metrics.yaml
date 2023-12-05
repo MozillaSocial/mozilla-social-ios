@@ -21,9 +21,6 @@ identifiers:
     expires: never
     send_in_pings:
       - events
-      - baseline
-    no_lint:
-      - BASELINE_PING
 
   mastodon_account_id:
     type: string
@@ -45,9 +42,6 @@ identifiers:
     expires: never
     send_in_pings:
       - events
-      - baseline
-    no_lint:
-      - BASELINE_PING
 
   mastodon_account_handle:
     type: string
@@ -69,9 +63,6 @@ identifiers:
     expires: never
     send_in_pings:
       - events
-      - baseline
-    no_lint:
-      - BASELINE_PING
 
   adjust_device_id:
     type: string
@@ -93,9 +84,6 @@ identifiers:
     expires: never
     send_in_pings:
       - events
-      - baseline
-    no_lint:
-      - BASELINE_PING
 
   user_agent:
     type: string
@@ -117,9 +105,6 @@ identifiers:
     expires: never
     send_in_pings:
       - events
-      - baseline
-    no_lint:
-      - BASELINE_PING
 
 ui:
   impression:
@@ -403,6 +388,49 @@ web:
             data_subjects: [customer, visitor]
             data_qualifier: [n/a]
         type: string
+
+mobile:
+  app_open:
+    type: event
+    description: >
+      Event triggered when a user moves the mobile app to foreground
+      by starting the app or returning from the home screen/another app.
+
+      data_taxonomy:
+        data_categories: [user.behavior]
+        data_uses: [analytics.reporting]
+        data_subjects: [customer, visitor]
+        data_qualifier: [n/a]
+    bugs:
+      - https://mozilla-hub.atlassian.net/browse/MSDO-49
+    data_reviews:
+      - https://docs.google.com/document/d/17vK3r7Sihb_S4-_8oKNoAraWeb_QiomC3UL-2W7PHgY/edit?usp=sharing
+    notification_emails:
+      - kdemtchouk@mozilla.com
+    expires: never
+    no_lint:
+      - COMMON_PREFIX
+
+  app_background:
+    type: event
+    description: >
+      Event triggered when a user moves the mobile app to background
+      by opening another app, returning to the home screen, or quitting the app.
+
+      data_taxonomy:
+        data_categories: [user.behavior]
+        data_uses: [analytics.reporting]
+        data_subjects: [customer, visitor]
+        data_qualifier: [n/a]
+    bugs:
+      - https://mozilla-hub.atlassian.net/browse/MSDO-49
+    data_reviews:
+      - https://docs.google.com/document/d/17vK3r7Sihb_S4-_8oKNoAraWeb_QiomC3UL-2W7PHgY/edit?usp=sharing
+    notification_emails:
+      - kdemtchouk@mozilla.com
+    expires: never
+    no_lint:
+      - COMMON_PREFIX
 
 backend:
   object_update:
