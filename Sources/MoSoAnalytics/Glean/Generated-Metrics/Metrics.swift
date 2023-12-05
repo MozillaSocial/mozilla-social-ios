@@ -25,7 +25,7 @@ extension GleanMetrics {
             // Intentionally left private, no external user can instantiate a new global object.
         }
 
-        public static let info = BuildInfo(buildDate: DateComponents(calendar: Calendar.current, timeZone: TimeZone(abbreviation: "UTC"), year: 2023, month: 12, day: 4, hour: 20, minute: 35, second: 19))
+        public static let info = BuildInfo(buildDate: DateComponents(calendar: Calendar.current, timeZone: TimeZone(abbreviation: "UTC"), year: 2023, month: 12, day: 5, hour: 16, minute: 38, second: 56))
     }
 
     enum Backend {
@@ -80,7 +80,7 @@ extension GleanMetrics {
             CommonMetricData(
                 category: "identifiers",
                 name: "adjust_device_id",
-                sendInPings: ["events"],
+                sendInPings: ["baseline", "events"],
                 lifetime: .application,
                 disabled: false
             )
@@ -96,7 +96,7 @@ extension GleanMetrics {
             CommonMetricData(
                 category: "identifiers",
                 name: "fxa_account_id",
-                sendInPings: ["events"],
+                sendInPings: ["baseline", "events"],
                 lifetime: .application,
                 disabled: false
             )
@@ -112,7 +112,7 @@ extension GleanMetrics {
             CommonMetricData(
                 category: "identifiers",
                 name: "mastodon_account_handle",
-                sendInPings: ["events"],
+                sendInPings: ["baseline", "events"],
                 lifetime: .application,
                 disabled: false
             )
@@ -128,7 +128,7 @@ extension GleanMetrics {
             CommonMetricData(
                 category: "identifiers",
                 name: "mastodon_account_id",
-                sendInPings: ["events"],
+                sendInPings: ["baseline", "events"],
                 lifetime: .application,
                 disabled: false
             )
@@ -144,7 +144,7 @@ extension GleanMetrics {
             CommonMetricData(
                 category: "identifiers",
                 name: "user_agent",
-                sendInPings: ["events"],
+                sendInPings: ["baseline", "events"],
                 lifetime: .application,
                 disabled: false
             )
