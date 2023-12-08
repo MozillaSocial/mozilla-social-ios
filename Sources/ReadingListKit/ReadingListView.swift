@@ -59,7 +59,7 @@ public struct ReadingListView: View {
                     .toolbarBackground(.visible, for: .navigationBar)
                     .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)
                     .onAppear {
-                        model.didDisplay(item: viewModel)
+                        model.didDisplayItem(with: viewModel.id)
                         model.trackReadingListItemImpression(itemURL: viewModel.contentURL)
                     }
                     .if(sizeClass == .regular) { view in

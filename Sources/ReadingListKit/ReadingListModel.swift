@@ -38,8 +38,13 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
     // MARK: - Fetch Reading List Items
 
-    func didDisplay(item: ReadingListCellViewModel) {
+    func didDisplayItem(with id: String) {
         if allItemsAreDownloaded() {
+            return
+        }
+
+        guard let item = item(with: id) else {
+            // Item not found, highlight an error?
             return
         }
 
@@ -47,6 +52,10 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         if readingListItems.firstIndex(of: item) == loadMoreThreshold {
             fetchMoreReadingList()
         }
+    }
+
+    private func item(with id: String) -> ReadingListCellViewModel? {
+        readingListItems.first(where: { $0.id == id })
     }
 
     func fetchMoreReadingList() {
