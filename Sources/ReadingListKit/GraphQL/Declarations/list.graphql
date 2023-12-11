@@ -1,0 +1,162 @@
+fragment CorpusItemSummary on CorpusItem {
+    publisher
+}
+
+fragment SavedItemParts on SavedItem {
+  url
+  remoteID: id
+  isArchived
+  isFavorite
+  _deletedAt
+  _createdAt
+  archivedAt
+  tags {
+    ...TagParts
+  }
+  item {
+    __typename
+    ...ItemParts
+    ...PendingItemParts
+  }
+  corpusItem {
+    __typename
+    ...CorpusItemSummary
+  }
+}
+
+fragment TagParts on Tag {
+  __typename
+  name
+  id
+}
+
+query FetchSaves($pagination: PaginationInput, $savedItemsFilter: SavedItemsFilter) {
+  user {
+    savedItems(pagination: $pagination, filter: $savedItemsFilter) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          __typename
+          ...SavedItemParts
+        }
+      }
+    }
+  }
+}
+
+mutation SaveItem($input: SavedItemUpsertInput!) {
+  upsertSavedItem(input: $input) {
+    __typename
+    ...SavedItemParts
+  }
+}
+
+mutation FavoriteItem($givenUrl: Url!, $timestamp: ISOString!) {
+  savedItemFavorite(givenUrl: $givenUrl, timestamp: $timestamp) {
+    id
+  }
+}
+
+mutation UnfavoriteItem($givenUrl: Url!, $timestamp: ISOString!) {
+  savedItemUnFavorite(givenUrl: $givenUrl, timestamp: $timestamp) {
+    id
+  }
+}
+
+mutation ArchiveItem($givenUrl: Url!, $timestamp: ISOString!) {
+  savedItemArchive(givenUrl: $givenUrl, timestamp: $timestamp) {
+    id
+  }
+}
+
+mutation DeleteItem($givenUrl: Url!, $timestamp: ISOString!) {
+  savedItemDelete(givenUrl: $givenUrl, timestamp: $timestamp)
+}
+
+mutation DeleteTag($id: ID!) {
+  deleteTag(id: $id)
+}
+
+mutation TagUpdate($input: TagUpdateInput!) {
+  updateTag(input: $input) {
+     ...TagParts
+  }
+}
+
+mutation SavedItemTag($input: SavedItemTagInput!, $timestamp: ISOString!) {
+  savedItemTag(input: $input, timestamp: $timestamp) {
+    __typename
+    ...SavedItemParts
+  }
+}
+
+mutation UpdateSavedItemRemoveTags($savedItemId: ID!) {
+  updateSavedItemRemoveTags(savedItemId: $savedItemId) {
+    __typename
+    ...SavedItemParts
+  }
+}
+
+query SavedItemByID($id: ID!) {
+  user {
+    savedItemById(id: $id) {
+      __typename
+      ...SavedItemParts
+    }
+  }
+}
+
+query ItemByURL($url: String!) {
+  itemByUrl(url: $url) {
+    ...ItemParts
+  }
+}
+
+query Tags($pagination: PaginationInput) {
+  user {
+    tags(pagination: $pagination) {
+      edges {
+        node {
+          __typename
+          ...TagParts
+        }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+      totalCount
+    }
+  }
+}
+
+query SearchSavedItems($term: String!, $pagination: PaginationInput, $filter: SearchFilterInput, $sort: SearchSortInput) {
+  user {
+    searchSavedItems(term: $term, pagination: $pagination, filter: $filter, sort: $sort) {
+      edges {
+        node {
+            savedItem {
+                __typename
+                ...SavedItemParts
+            }
+        }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+      totalCount
+    }
+  }
+}

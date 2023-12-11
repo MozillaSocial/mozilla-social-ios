@@ -17,6 +17,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/mozilla/glean-swift", from: "54.0.0"),
+        .package(url: "https://github.com/apollographql/apollo-ios.git", exact: "1.7.0"),
         .package(url: "https://github.com/Quick/Quick.git", from: "7.3.0"),
         .package(url: "https://github.com/Quick/Nimble.git", from: "13.0.0"),
     ],
@@ -44,7 +45,9 @@ let package = Package(
             ]
         ),
         .target(
-            name: "ReadingListKit"),
+            name: "ReadingListKit",
+            dependencies: ["MoSoCore", "DesignKit", "MoSoAnalytics", .product(name: "Apollo", package: "apollo-ios")]
+        ),
         .testTarget(
             name: "ReadingListKitTests",
             dependencies: ["ReadingListKit"]),

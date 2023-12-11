@@ -24,7 +24,7 @@ struct RootView: View {
                     }
                     .tag(Tab.discover)
 
-                ReadingListView()
+                configurator.makeReadingListTab()
                     .tabItem {
                         TabIcon(
                             imageName: selection.readingListImageName,
@@ -34,7 +34,7 @@ struct RootView: View {
                     }
                     .tag(Tab.readingList)
 
-                LoginView()
+                LoginView(sessionManager: configurator.session)
                 .tabItem {
                     Image(systemName: "person")
                 }

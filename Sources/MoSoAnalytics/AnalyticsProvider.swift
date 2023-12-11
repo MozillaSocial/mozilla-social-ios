@@ -11,7 +11,7 @@ import MoSoCore
 public final class AnalyticsProvider {
     public let baseTracker: BaseTracker
 
-    public init(session: MoSoSession, baseTracker: BaseTracker? = nil) {
+    public init(session: MoSoSessionManager, baseTracker: BaseTracker? = nil) {
         self.baseTracker = baseTracker ?? GleanBaseTracker(session: session)
         self.baseTracker.start()
     }
@@ -19,6 +19,11 @@ public final class AnalyticsProvider {
     /// Provides a concrete implementation of `DiscoverTracker`
     public func makeDiscoverTracker() -> DiscoverTracker {
         MoSoDiscoverTracker(baseTracker: baseTracker)
+    }
+
+    /// Provides a concrete implementation of `ReadingListTracker`
+    public func makeReadingListTracker() -> ReadingListTracker {
+        MoSoReadingListTracker(baseTracker: baseTracker)
     }
 
     /// Start the analytics service. Useful if it gets stopped after init

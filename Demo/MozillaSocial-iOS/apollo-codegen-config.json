@@ -1,0 +1,51 @@
+{
+    "schemaName": "PocketGraph",
+    "input": {
+        "operationSearchPaths": [
+            "../../Sources/ReadingListKit/GraphQL/Declarations/*.graphql"
+        ],
+        "schemaSearchPaths": [
+            "../../Sources/ReadingListKit/GraphQL/Declarations/schema.graphqls"
+        ]
+    },
+    "options": {
+        "selectionSetInitializers": {
+            "operations": false,
+            "namedFragments": true,
+            "localCacheMutations": true,
+        },
+        "pruneGeneratedFiles": true
+    },
+    "output": {
+        "testMocks": {
+            "none": {}
+        },
+        "schemaTypes": {
+            "path": "../../Sources/ReadingListKit/GraphQL/Generated/PocketGraph/",
+            "moduleType": {
+                        "embeddedInTarget": {
+                            "name": "ReadingListKit",
+                            "accessModifier": "internal"
+                        }
+                    }
+        },
+        "operations": {
+            "inSchemaModule": {}
+        }
+    },
+    "schemaDownloadConfiguration": {
+        "downloadMethod": {
+            "introspection": {
+                "endpointURL": "https://client-api.getpocket.com",
+                "httpMethod": {
+                    "POST": {}
+                },
+                "includeDeprecatedInputValues": true,
+                "outputFormat": "SDL"
+            }
+        },
+        "downloadTimeout": 60,
+        "headers": [],
+        "outputPath": "../../Sources/ReadingListKit/GraphQL/Declarations/schema.graphqls"
+    }
+}

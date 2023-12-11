@@ -39,12 +39,6 @@ class AuthenticationService: NSObject, ASWebAuthenticationPresentationContextPro
         .store(in: &subscribers)
     }
 
-    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        DispatchQueue.main.sync {
-            return ASPresentationAnchor()
-        }
-    }
-
     func launchOAUTH() {
         Task {
             guard let client = await registerApp() else {
@@ -135,6 +129,14 @@ class AuthenticationService: NSObject, ASWebAuthenticationPresentationContextPro
         }
 
         return nil
+    }
+
+    // MARK: - AuthenticationServices Delegate
+
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        DispatchQueue.main.sync {
+            return ASPresentationAnchor()
+        }
     }
 
     // MARK: - URL Builders

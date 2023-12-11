@@ -12,6 +12,7 @@ public extension Image {
 }
 
 public enum ImageCatalog: String {
+    case archive = "archive"
     case discover = "discover"
     case discoverFill = "discover.fill"
     case save = "save"

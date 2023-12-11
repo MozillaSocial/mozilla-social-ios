@@ -3,11 +3,27 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import SwiftUI
+import MoSoCore
 
 struct LoginView: View {
-    @StateObject var auth = AuthenticationService()
+    @StateObject var mosoAuth = AuthenticationService()
+    @StateObject var pocketAuth = PocketAuthenticationService(consumerKey: Keys.shared.pocketAPIConsumerKey)
+    @State var pocketAuthResponse: Response?
+    let sessionManager: MoSoSessionManager
 
     var body: some View {
+        VStack {
+            Spacer()
+            accountInfo
+                .overlay(loginOverlay)
+            Spacer()
+            Text("Signed in to Pocket")
+                .overlay(pocketLoginOverlay)
+            Spacer()
+        }
+    }
+
+    @ViewBuilder private var accountInfo: some View {
         VStack {
             HStack {
                 Image(systemName: "person.circle")
@@ -16,11 +32,11 @@ struct LoginView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Text("DisplayName:")
-                        Text(auth.accountDetails?.displayName ?? "-")
+                        Text(mosoAuth.accountDetails?.displayName ?? "-")
                     }
                     HStack {
                         Text("Username:")
-                        Text(auth.accountDetails?.username ?? "-")
+                        Text(mosoAuth.accountDetails?.username ?? "-")
                     }
                 }
             }
@@ -30,7 +46,7 @@ struct LoginView: View {
             VStack {
                 HStack {
                     Text("Followers:")
-                    if let count = auth.accountDetails?.followersCount {
+                    if let count = mosoAuth.accountDetails?.followersCount {
                         Text(String(count))
                     } else {
                         Text("-")
@@ -38,7 +54,7 @@ struct LoginView: View {
                 }
                 HStack {
                     Text("Following:")
-                    if let count = auth.accountDetails?.followingCount {
+                    if let count = mosoAuth.accountDetails?.followingCount {
                         Text(String(count))
                     } else {
                         Text("-")
@@ -46,7 +62,7 @@ struct LoginView: View {
                 }
                 HStack {
                     Text("Toots:")
-                    if let count = auth.accountDetails?.statusesCount {
+                    if let count = mosoAuth.accountDetails?.statusesCount {
                         Text(String(count))
                     } else {
                         Text("-")
@@ -57,11 +73,10 @@ struct LoginView: View {
             .background(Color.purple)
             .clipShape(.rect(cornerRadius: 10))
         }
-        .overlay(loginOverlay)
     }
 
     @ViewBuilder private var loginOverlay: some View {
-        if auth.authToken == nil {
+        if mosoAuth.authToken == nil {
             VStack {
                 Image("MoSoIcon")
                     .resizable()
@@ -69,7 +84,42 @@ struct LoginView: View {
                     .clipShape(.rect(cornerRadius: 10))
                 Spacer()
                 Button("Sign in/Sign up") {
-                    auth.launchOAUTH()
+                    mosoAuth.launchOAUTH()
+                }
+                .buttonStyle(.borderedProminent)
+                .padding()
+            }
+            .padding()
+            .background(Color.gray)
+            .clipShape(.rect(cornerRadius: 10))
+        }
+    }
+
+    @ViewBuilder private var pocketLoginOverlay: some View {
+        if pocketAuthResponse == nil {
+            VStack {
+                Image("pocketIcon")
+                    .resizable()
+                    .frame(width: 200, height: 200)
+                    .clipShape(.rect(cornerRadius: 10))
+                Spacer()
+                HStack {
+                    Button("Sign in") {
+                        Task {
+                            guard let authResponse = try? await pocketAuth.logIn() else { return }
+                            pocketAuthResponse = authResponse
+                            let newSession = MoSoSession(token: authResponse.accessToken, guid: authResponse.guid)
+                            sessionManager.user?.pocketSession = newSession
+                        }
+                    }
+                    Button("Sign up") {
+                        Task {
+                            guard let authResponse = try? await pocketAuth.signUp() else { return }
+                            pocketAuthResponse = authResponse
+                            let newSession = MoSoSession(token: authResponse.accessToken, guid: authResponse.guid)
+                            sessionManager.user?.pocketSession = newSession
+                        }
+                    }
                 }
                 .buttonStyle(.borderedProminent)
                 .padding()
@@ -82,5 +132,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    LoginView(sessionManager: MoSoSessionManager())
 }

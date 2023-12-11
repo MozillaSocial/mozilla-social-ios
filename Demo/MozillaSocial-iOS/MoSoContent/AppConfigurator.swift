@@ -5,13 +5,15 @@
 import DiscoverKit
 import MoSoAnalytics
 import MoSoCore
+import ReadingListKit
 import SwiftUI
 
 // TODO: this is a barebone example for now. Session will be received from login and auth services as needed
 struct AppConfigurator {
-    let session: MoSoSession
+    let session: MoSoSessionManager
     let analyticsProvider: AnalyticsProvider
     let discoverProvider: DiscoverProvider
+    let readingListProvider: ReadingListProvider
     let braze: MoSoBraze
 
     var loggedIn: Bool {
@@ -19,16 +21,19 @@ struct AppConfigurator {
     }
 
     init() {
-        session = MoSoSession()
+        session = MoSoSessionManager()
         analyticsProvider = AnalyticsProvider(session: session)
         discoverProvider  = DiscoverProvider(session: session, tracker: analyticsProvider.makeDiscoverTracker())
+        readingListProvider = ReadingListProvider(sessionProvider: session.pocketSession, consumerKey: Keys.shared.pocketAPIConsumerKey, tracker: analyticsProvider.makeReadingListTracker())
+
         braze = MoSoBraze(
             apiKey: Keys.shared.brazeAPIKey,
             endpoint: Keys.shared.brazeAPIEndpoint,
             groupId: Keys.shared.groupID
         )
         // TODO: replace this with actual user coming from login
-        login(user: MoSoUser(username: "test-user@mozilla.com", identifier: "12345678"))
+        let user = MoSoUser(username: "test-user@mozilla.com", identifier: "12345678")
+        self.login(user: user)
     }
 
     func login(user: MoSoUser) {
@@ -43,5 +48,10 @@ struct AppConfigurator {
     @MainActor
     func makeDiscoverTab() -> some View {
         discoverProvider.makeDiscoverRootView()
+    }
+
+    @MainActor
+    func makeReadingListTab() -> some View {
+        readingListProvider.makeReadingListView()
     }
 }

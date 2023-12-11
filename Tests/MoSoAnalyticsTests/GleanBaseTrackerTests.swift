@@ -15,11 +15,12 @@ final class GleanBaseTrackerTests: XCTestCase {
     func testImpression() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let tracker = GleanBaseTracker(session: MoSoSession(user: user))
+        let tracker = GleanBaseTracker(session: MoSoSessionManager(user: user))
         // When
         tracker.trackImpression(
             postID: "Post001",
             recommendationID: "Rec001",
+            itemURL: "item001",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression"
         )
@@ -41,11 +42,12 @@ final class GleanBaseTrackerTests: XCTestCase {
     func testTrackMultipleImpressions() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let tracker = GleanBaseTracker(session: MoSoSession(user: user))
+        let tracker = GleanBaseTracker(session: MoSoSessionManager(user: user))
         // When
         tracker.trackImpression(
             postID: "Post001",
             recommendationID: "Rec001",
+            itemURL: "Item001",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression"
         )
@@ -53,6 +55,7 @@ final class GleanBaseTrackerTests: XCTestCase {
         tracker.trackImpression(
             postID: "Post002",
             recommendationID: "Rec002",
+            itemURL: "Item002",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression"
         )
@@ -60,6 +63,7 @@ final class GleanBaseTrackerTests: XCTestCase {
         tracker.trackImpression(
             postID: "Post003",
             recommendationID: "Rec003",
+            itemURL: "Item003",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression"
         )
@@ -75,7 +79,7 @@ final class GleanBaseTrackerTests: XCTestCase {
     func testEngagement() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let tracker = GleanBaseTracker(session: MoSoSession(user: user))
+        let tracker = GleanBaseTracker(session: MoSoSessionManager(user: user))
         let action: EngagementAction = .general
         // When
         tracker.trackEngagement(
@@ -83,6 +87,7 @@ final class GleanBaseTrackerTests: XCTestCase {
             associatedValue: "someValue",
             postID: "Post001",
             recommendationID: "Rec001",
+            itemURL: "Item001",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression"
         )
@@ -106,13 +111,14 @@ final class GleanBaseTrackerTests: XCTestCase {
     func testTrackMultipleEngagements() {
         // Given
         let user = MoSoUser(username: "example@username.org", identifier: "myNickname")
-        let tracker = GleanBaseTracker(session: MoSoSession(user: user))
+        let tracker = GleanBaseTracker(session: MoSoSessionManager(user: user))
         // When
         tracker.trackEngagement(
             action: .general,
             associatedValue: "someValue",
             postID: "Post001",
             recommendationID: "Rec001",
+            itemURL: "Item001",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression"
         )
@@ -122,6 +128,7 @@ final class GleanBaseTrackerTests: XCTestCase {
             associatedValue: "someValue",
             postID: "Post002",
             recommendationID: "Rec002",
+            itemURL: "Item002",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression"
         )
@@ -131,6 +138,7 @@ final class GleanBaseTrackerTests: XCTestCase {
             associatedValue: "someValue",
             postID: "Post003",
             recommendationID: "Rec003",
+            itemURL: "Item003",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression"
         )
