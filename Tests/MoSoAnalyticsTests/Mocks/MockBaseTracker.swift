@@ -22,6 +22,7 @@ class MockBaseTracker: BaseTracker {
     var associatedValue: String?
     var additionalInfo: String?
     var uiIdentifier: String?
+    var url: String?
 
     init(session: MoSoSessionManager) {
         self.mastodonAccountID = session.user!.identifier
@@ -36,23 +37,29 @@ class MockBaseTracker: BaseTracker {
         stopExpectation?.fulfill()
     }
 
-    func trackImpression(postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
+    func trackAppDidBecomeActive() {
+    }
+
+    func trackAppWillBackground() {
+    }
+
+    func trackImpression(postID: String?, recommendationID: String?, additionalInfo: String?, uiIdentifier: String?, url: String?) {
         self.postID = postID
         self.recommendationID = recommendationID
-        self.itemURL = itemURL
         self.additionalInfo = additionalInfo
         self.uiIdentifier = uiIdentifier
+        self.url = url
         impressionExpectation?.fulfill()
     }
 
-    func trackEngagement(action: MoSoAnalytics.EngagementAction, associatedValue: String?, postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
+    func trackEngagement(action: MoSoAnalytics.EngagementAction, associatedValue: String?, postID: String?, recommendationID: String?, additionalInfo: String?, uiIdentifier: String?, url: String?) {
         self.engagementAction = action
         self.associatedValue = associatedValue
         self.postID = postID
         self.recommendationID = recommendationID
-        self.itemURL = itemURL
         self.additionalInfo = additionalInfo
         self.uiIdentifier = uiIdentifier
+        self.url = url
         engagementExpectation?.fulfill()
     }
 }

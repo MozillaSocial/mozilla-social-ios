@@ -8,6 +8,8 @@ import ReadingListKit
 import SwiftUI
 
 struct RootView: View {
+    @Environment(\.scenePhase)
+    var scenePhase
     @State private var selection: Tab = .discover
     let configurator: AppConfigurator
 
@@ -43,6 +45,13 @@ struct RootView: View {
             .toolbarBackground(Color(.mosoLayerColor1), for: .tabBar)
         }
         .accentColor(Color(.mosoIconColorAccent))
+        .onChange(of: scenePhase) { newPhase in
+                        if newPhase == .active {
+                            configurator.analyticsProvider.baseTracker.trackAppDidBecomeActive()
+                        } else if newPhase == .background {
+                            configurator.analyticsProvider.baseTracker.trackAppWillBackground()
+                        }
+                    }
     }
 }
 

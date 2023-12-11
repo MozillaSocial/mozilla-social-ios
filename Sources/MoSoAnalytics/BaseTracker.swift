@@ -13,16 +13,18 @@ public protocol BaseTracker {
     func stop()
     func trackImpression(postID: String?,
                          recommendationID: String?,
-                         itemURL: String?,
                          additionalInfo: String?,
-                         uiIdentifier: String?)
+                         uiIdentifier: String?,
+                         url: String?)
     func trackEngagement(action: EngagementAction,
                          associatedValue: String?,
                          postID: String?,
                          recommendationID: String?,
-                         itemURL: String?,
                          additionalInfo: String?,
-                         uiIdentifier: String?)
+                         uiIdentifier: String?,
+                         url: String?)
+    func trackAppDidBecomeActive()
+    func trackAppWillBackground()
 }
 
 struct GleanBaseTracker: BaseTracker {
@@ -47,17 +49,18 @@ struct GleanBaseTracker: BaseTracker {
 
     func trackImpression(postID: String?,
                          recommendationID: String?,
-                         itemURL: String?,
                          additionalInfo: String?,
-                         uiIdentifier: String?) {
+                         uiIdentifier: String?,
+                         url: String?) {
         GleanMetrics.Ui.impression.record(
             .init(
                 mastodonAccountHandle: session.user?.username,
                 mastodonAccountId: session.user?.identifier,
                 mastodonStatusId: postID,
-                recommendationId: recommendationID ?? itemURL, // Piggybacking here until we have clarity around how to report ReadingList events.
+                recommendationId: recommendationID,
                 uiAdditionalDetail: additionalInfo,
-                uiIdentifier: uiIdentifier
+                uiIdentifier: uiIdentifier,
+                url: url
             )
         )
     }
@@ -66,9 +69,9 @@ struct GleanBaseTracker: BaseTracker {
                          associatedValue: String?,
                          postID: String?,
                          recommendationID: String?,
-                         itemURL: String?,
                          additionalInfo: String?,
-                         uiIdentifier: String?) {
+                         uiIdentifier: String?,
+                         url: String?) {
         GleanMetrics.Ui.engagement.record(
             .init(
                 engagementType: action.description,
@@ -76,10 +79,19 @@ struct GleanBaseTracker: BaseTracker {
                 mastodonAccountHandle: session.user?.username,
                 mastodonAccountId: session.user?.identifier,
                 mastodonStatusId: postID,
-                recommendationId: recommendationID ?? itemURL, // Piggybacking here until we have clarity around how to report ReadingList events.
+                recommendationId: recommendationID,
                 uiAdditionalDetail: additionalInfo,
-                uiIdentifier: uiIdentifier
+                uiIdentifier: uiIdentifier,
+                url: url
             )
         )
+    }
+
+    func trackAppDidBecomeActive() {
+        GleanMetrics.Mobile.appOpen.record()
+    }
+
+    func trackAppWillBackground() {
+        GleanMetrics.Mobile.appBackground.record()
     }
 }

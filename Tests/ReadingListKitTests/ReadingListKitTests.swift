@@ -48,6 +48,8 @@ class MocketAccessLayer: PocketAccessLayerProtocol {
 class MockBaseTracker: BaseTracker {
     var startAction: () -> Void = { XCTAssert(false) } // Fail by default
     var stopAction: () -> Void = { XCTAssert(false) }
+    var trackAppDidBecomeActiveAction: () -> Void = { XCTAssert(false) }
+    var trackAppWillBackgroundAction: () -> Void = { XCTAssert(false) }
     var trackImpressionAction: () -> Void = { XCTAssert(false) }
     var trackEngagementAction: () -> Void = { XCTAssert(false) }
 
@@ -59,11 +61,19 @@ class MockBaseTracker: BaseTracker {
         stopAction()
     }
 
-    func trackImpression(postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
+    func trackAppDidBecomeActive() {
+        trackAppDidBecomeActiveAction()
+    }
+
+    func trackAppWillBackground() {
+        trackAppWillBackgroundAction()
+    }
+
+    func trackImpression(postID: String?, recommendationID: String?, additionalInfo: String?, uiIdentifier: String?, url: String?) {
         trackImpressionAction()
     }
 
-    func trackEngagement(action: MoSoAnalytics.EngagementAction, associatedValue: String?, postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
+    func trackEngagement(action: MoSoAnalytics.EngagementAction, associatedValue: String?, postID: String?, recommendationID: String?, additionalInfo: String?, uiIdentifier: String?, url: String?) {
         trackEngagementAction()
     }
 }
