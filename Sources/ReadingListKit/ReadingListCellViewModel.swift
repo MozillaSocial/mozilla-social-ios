@@ -9,5 +9,5 @@ struct ReadingListCellViewModel: Observable, Identifiable, Equatable {
     let title: String
     let subtitle: String
     let contentURL: String
-    let thumbnailURL: String
+    let thumbnailURL: String?
 }

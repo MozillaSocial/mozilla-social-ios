@@ -54,17 +54,22 @@ public struct ReadingListView: View {
     @ViewBuilder private var ReadingListContentView: some View {
         LazyVStack {
             ForEach(model.readingListItems, id: \.id) { viewModel in
-                ReadingListCell(model: viewModel, selectedRow: $selectedRow, archiveAction: self.archiveAction, shareAction: self.shareAction)
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbarBackground(.visible, for: .navigationBar)
-                    .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)
-                    .onAppear {
-                        model.didDisplay(item: viewModel)
-                        model.trackReadingListItemImpression(itemURL: viewModel.contentURL)
-                    }
-                    .if(sizeClass == .regular) { view in
-                        view.frame(width: Constants.readableWidth, alignment: .center)
-                    }
+                VStack {
+                    ReadingListCell(model: viewModel, selectedRow: $selectedRow, archiveAction: self.archiveAction, shareAction: self.shareAction)
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbarBackground(.visible, for: .navigationBar)
+                        .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)
+                        .onAppear {
+                            model.didDisplayItem(with: viewModel.id)
+                            model.trackReadingListItemImpression(itemURL: viewModel.contentURL)
+                        }
+                        .if(sizeClass == .regular) { view in
+                            view.frame(width: Constants.readableWidth, alignment: .center)
+                        }
+
+                    Divider()
+                }
+                .fixedSize(horizontal: true, vertical: false)
             }
             if model.allItemsAreDownloaded() == false && model.displayMode == .normal {
                 ProgressView()

@@ -22,11 +22,10 @@ public struct ReadingListCell: View {
                         .font(.footnote)
                 }
                 Spacer()
-                AsyncImage(url: URL(string: model.thumbnailURL)!) { phase in
+                AsyncImage(url: URL(string: model.thumbnailURL ?? "")) { phase in
                     switch phase {
                     case .empty:
-                        Image(systemName: "photo")
-                            .frame(width: Constants.thumbnailSize.width, height: Constants.thumbnailSize.height)
+                        EmptyView()
                     case .success(let image):
                         image.resizable()
                             .aspectRatio(contentMode: .fill)
