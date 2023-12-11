@@ -128,13 +128,11 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     // MARK: - ReadingListItem Helpers
 
     func readingListItem(from item: PocketItem) -> ReadingListCellViewModel {
-        let defaultImageURLString = "https://helios-i.mashable.com/imagery/articles/05fACELrEVc4kAfNQbhhcVh/hero-image.fill.size_1248x702.v1667556469.png"
-
         let id = item.remoteID
         let title = item.title ?? item.givenUrl
         let subtitle = item.subtitle
         let contentURL = item.resolvedUrl ?? item.givenUrl
-        let thumbnailURL = item.image ?? defaultImageURLString
+        let thumbnailURL = item.image
 
         return ReadingListCellViewModel(id: id, title: title, subtitle: subtitle ?? "", contentURL: contentURL, thumbnailURL: thumbnailURL)
     }
