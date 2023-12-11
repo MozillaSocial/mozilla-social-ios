@@ -20,7 +20,6 @@ final class GleanBaseTrackerTests: XCTestCase {
         tracker.trackImpression(
             postID: "Post001",
             recommendationID: "Rec001",
-            itemURL: "item001",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression",
             url: "www.url1.com"
@@ -48,7 +47,6 @@ final class GleanBaseTrackerTests: XCTestCase {
         tracker.trackImpression(
             postID: "Post001",
             recommendationID: "Rec001",
-            itemURL: "Item001",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression",
             url: "www.url1.com"
@@ -57,7 +55,6 @@ final class GleanBaseTrackerTests: XCTestCase {
         tracker.trackImpression(
             postID: "Post002",
             recommendationID: "Rec002",
-            itemURL: "Item002",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression",
             url: "www.url2.com"
@@ -66,7 +63,6 @@ final class GleanBaseTrackerTests: XCTestCase {
         tracker.trackImpression(
             postID: "Post003",
             recommendationID: "Rec003",
-            itemURL: "Item003",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression",
             url: "www.url3.com"
@@ -91,7 +87,6 @@ final class GleanBaseTrackerTests: XCTestCase {
             associatedValue: "someValue",
             postID: "Post001",
             recommendationID: "Rec001",
-            itemURL: "Item001",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression",
             url: "www.url1.com"
@@ -123,7 +118,6 @@ final class GleanBaseTrackerTests: XCTestCase {
             associatedValue: "someValue",
             postID: "Post001",
             recommendationID: "Rec001",
-            itemURL: "Item001",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression",
             url: "www.url1.com"
@@ -134,7 +128,6 @@ final class GleanBaseTrackerTests: XCTestCase {
             associatedValue: "someValue",
             postID: "Post002",
             recommendationID: "Rec002",
-            itemURL: "Item002",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression",
             url: "www.url2.com"
@@ -145,7 +138,6 @@ final class GleanBaseTrackerTests: XCTestCase {
             associatedValue: "someValue",
             postID: "Post003",
             recommendationID: "Rec003",
-            itemURL: "Item003",
             additionalInfo: "Some additional info",
             uiIdentifier: "example.event.impression",
             url: "www.url3.com"

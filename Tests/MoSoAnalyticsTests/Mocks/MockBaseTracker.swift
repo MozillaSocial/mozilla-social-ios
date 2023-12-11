@@ -37,30 +37,26 @@ class MockBaseTracker: BaseTracker {
         stopExpectation?.fulfill()
     }
 
-<<<<<<< HEAD
+    func trackAppDidBecomeActive() {
+    }
+
+    func trackAppWillBackground() {
+    }
+
     func trackImpression(postID: String?, recommendationID: String?, additionalInfo: String?, uiIdentifier: String?, url: String?) {
-=======
-    func trackImpression(postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
->>>>>>> develop
         self.postID = postID
         self.recommendationID = recommendationID
-        self.itemURL = itemURL
         self.additionalInfo = additionalInfo
         self.uiIdentifier = uiIdentifier
         self.url = url
         impressionExpectation?.fulfill()
     }
 
-<<<<<<< HEAD
     func trackEngagement(action: MoSoAnalytics.EngagementAction, associatedValue: String?, postID: String?, recommendationID: String?, additionalInfo: String?, uiIdentifier: String?, url: String?) {
-=======
-    func trackEngagement(action: MoSoAnalytics.EngagementAction, associatedValue: String?, postID: String?, recommendationID: String?, itemURL: String?, additionalInfo: String?, uiIdentifier: String?) {
->>>>>>> develop
         self.engagementAction = action
         self.associatedValue = associatedValue
         self.postID = postID
         self.recommendationID = recommendationID
-        self.itemURL = itemURL
         self.additionalInfo = additionalInfo
         self.uiIdentifier = uiIdentifier
         self.url = url
