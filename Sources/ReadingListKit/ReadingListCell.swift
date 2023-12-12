@@ -8,7 +8,6 @@ import DesignKit
 
 public struct ReadingListCell: View {
     let model: ReadingListCellViewModel
-    @Binding var selectedRow: ReadingListCellViewModel?
     let archiveAction: (String) -> Void
     let shareAction: (String) -> Void
 
@@ -68,9 +67,6 @@ public struct ReadingListCell: View {
         }
         .padding()
         .contentShape(Rectangle())
-        .onTapGesture {
-            selectedRow = model
-        }
     }
 
     // MARK: - Constants

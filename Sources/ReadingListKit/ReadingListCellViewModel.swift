@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct ReadingListCellViewModel: Observable, Identifiable, Equatable {
+struct ReadingListCellViewModel: Observable, Identifiable, Equatable, Hashable {
     var id: String
     let title: String
     let subtitle: String

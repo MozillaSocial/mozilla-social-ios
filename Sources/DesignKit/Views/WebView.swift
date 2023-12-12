@@ -6,18 +6,22 @@ import SwiftUI
 import WebKit
 
 // TODO: at this moment, this just loads an url in a web view. We will add a proper recommendation view after beta
-struct RecommendationDetailView: UIViewRepresentable {
-    let recommendation: Recommendation
+public struct WebView: UIViewRepresentable {
+    public let url: String
 
-    func makeUIView(context: Context) -> WKWebView {
+    public init(url: String) {
+        self.url = url
+    }
+
+    public func makeUIView(context: Context) -> WKWebView {
         let webview = WKWebView()
         webview.backgroundColor = UIColor(.mosoLayerColor1)
         return webview
     }
 
-    func updateUIView(_ webView: WKWebView, context: Context) {
+    public func updateUIView(_ webView: WKWebView, context: Context) {
         // TODO: this is just an example fallback, we need to add a proper error view
-        let url = URL(string: recommendation.url) ?? URL(string: "https.getpocket.com")!
+        let url = URL(string: url) ?? URL(string: "https.getpocket.com")!
         let request = URLRequest(url: url)
         webView.load(request)
     }
