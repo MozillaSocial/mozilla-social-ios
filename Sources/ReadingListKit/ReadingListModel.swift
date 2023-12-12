@@ -140,65 +140,6 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         return ReadingListCellViewModel(id: id, title: title, subtitle: subtitle ?? "", contentURL: contentURL, thumbnailURL: thumbnailURL)
     }
 
-    // MARK: - Delegate Methods
-
-    func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int) {
-        totalNumberOfItemsInReadingList = totalItemCount
-
-        displayMode = .normal
-        print("Set displayMode to: \(displayMode)")
-
-        if totalItemCount == 0 {
-            displayMode = .empty
-            print("Set displayMode to: \(displayMode)")
-        }
-
-        urlStrings.forEach { urlString in
-            Task {
-                guard let item = try? await pocketAccessLayer.getItemForURL(urlString) else { return }
-                let readingListItem = readingListItem(from: item)
-                await MainActor.run {
-                    readingListItems.append(readingListItem)
-                }
-            }
-        }
-    }
-
-    // MARK: - ReadingListItem Helpers
-
-    func readingListItem(from item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> ReadingListCellViewModel {
-        let defaultImageURLString = "https://helios-i.mashable.com/imagery/articles/05fACELrEVc4kAfNQbhhcVh/hero-image.fill.size_1248x702.v1667556469.png"
-
-        let id = item.remoteID
-        let title = item.title ?? item.givenUrl
-        let subtitle = subtitle(for: item)
-        let contentURL = item.resolvedUrl ?? item.givenUrl
-        let thumbnailURL = image(for: item) ?? defaultImageURLString
-
-        return ReadingListCellViewModel(id: id, title: title, subtitle: subtitle, contentURL: contentURL, thumbnailURL: thumbnailURL)
-    }
-
-    func image(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String? {
-        item.syndicatedArticle?.mainImage ?? item.topImageUrl ?? item.domainMetadata?.logo
-    }
-
-    func subtitle(for item: PocketGraph.ItemByURLQuery.Data.ItemByUrl) -> String {
-        let host = item.domainMetadata?.name ?? host(from: item.givenUrl)
-
-        guard let host = host else {
-            return ""
-        }
-
-        guard let timeToRead = item.timeToRead else { return host }
-
-        return host + " • " + String(describing: timeToRead) + " min"
-    }
-
-    func host(from url: String) -> String? {
-        guard let url = URL(string: url) else { return nil }
-        return url.host
-    }
-
     // MARK: - Notification Events
 
     @objc
