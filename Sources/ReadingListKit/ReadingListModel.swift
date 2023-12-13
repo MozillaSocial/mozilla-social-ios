@@ -36,7 +36,7 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
         fetchMoreReadingList()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(userAuthDidChange), name: .userAuthDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(userAuthDidChange(_:)), name: .userAuthDidChange, object: nil)
     }
 
     // MARK: - Fetch Reading List Items
@@ -143,11 +143,16 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     // MARK: - Notification Events
 
     @objc
-    func userAuthDidChange() {
+    func userAuthDidChange(_ notification: Notification) {
         readingListItems.removeAll()
-        displayMode = .normal
         paginationCursor = nil
-        fetchMoreReadingList()
+
+        if notification.userInfo?["hasToken"] as? Bool == true {
+            displayMode = .normal
+            fetchMoreReadingList()
+        } else {
+            displayMode = .loggedOut
+        }
     }
 
     // MARK: - Analytics Events

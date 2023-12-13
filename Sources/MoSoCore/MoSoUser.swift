@@ -11,7 +11,8 @@ public class MoSoUser {
     @KeychainStorage public var session: MoSoSession?
     @KeychainStorage public var pocketSession: MoSoSession? {
         didSet {
-            NotificationCenter.default.post(name: .userAuthDidChange, object: nil)
+            let hasToken = pocketSession != nil
+            NotificationCenter.default.post(name: .userAuthDidChange, object: nil, userInfo: ["hasToken": hasToken])
         }
     }
 
