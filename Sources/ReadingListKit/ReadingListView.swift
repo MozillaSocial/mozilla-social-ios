@@ -68,13 +68,12 @@ public struct ReadingListView: View {
             }
         }
         .navigationDestination(for: ReadingListCellViewModel.self) { viewModel in
-            WebView(url: viewModel.contentURL)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbarBackground(.visible, for: .navigationBar)
-                .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)
-                .onAppear {
-                    model.trackReadingListItemOpen(itemURL: viewModel.contentURL)
-                }
+            if let url = URL(string: viewModel.contentURL) {
+                WebViewContainer(url: url)
+                    .onAppear {
+                        model.trackReadingListItemOpen(itemURL: viewModel.contentURL)
+                    }
+            }
         }
     }
 
