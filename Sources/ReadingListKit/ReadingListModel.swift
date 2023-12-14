@@ -5,6 +5,7 @@
 import Foundation
 import Combine
 import MoSoAnalytics
+import MoSoCore
 
 protocol ReadingListModelDelegate: AnyObject {
     func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int, cursor: String?)
@@ -34,6 +35,8 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         pocketAccessLayer.delegate = self
 
         fetchMoreReadingList()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(userAuthDidChange(_:)), name: .userAuthDidChange, object: nil)
     }
 
     // MARK: - Fetch Reading List Items
@@ -135,6 +138,21 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         let thumbnailURL = item.image
 
         return ReadingListCellViewModel(id: id, title: title, subtitle: subtitle ?? "", contentURL: contentURL, thumbnailURL: thumbnailURL)
+    }
+
+    // MARK: - Notification Events
+
+    @objc
+    func userAuthDidChange(_ notification: Notification) {
+        readingListItems.removeAll()
+        paginationCursor = nil
+
+        if notification.userInfo?["hasToken"] as? Bool == true {
+            displayMode = .normal
+            fetchMoreReadingList()
+        } else {
+            displayMode = .loggedOut
+        }
     }
 
     // MARK: - Analytics Events
