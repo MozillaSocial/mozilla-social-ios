@@ -158,6 +158,14 @@ struct MyView: View {
 ## Contributing
 At this moment, only members of the Mozilla Social organization can contribute to this repo, open contribution will be available soon.
 
+We are currently committing generated files for two dependencies: Apollo and Glean
+Glean declarations and generated files are found in MoSoAnalytics/Glean.
+Glean has a Build Phase to regenerate it's Metrics file.
+
+Apollo generated files are found in ReadingListKit/GraphQL
+Apollo's files are generated on demand by the developer. 
+Instructions on how to do this can be found in our [Pocket README.](https://github.com/Pocket/pocket-ios#pocket-graph-api-schema)
+
 ## Setup Secrets File
 
 The MozillaSocial-iOS demo app requires a secrets.xcconfig file to run. If you are a Mozillan, you can obtain the actual secret keys from the team. Once obtained the keys, you can run the following command from the root directory:
