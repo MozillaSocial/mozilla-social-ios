@@ -3,6 +3,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import SwiftUI
+import DesignKit
 
 struct RecommendationsView: View {
     let recommendations: [Recommendation]
@@ -25,13 +26,15 @@ struct RecommendationsView: View {
                 Color(.mosoLayerColor1).ignoresSafeArea()
                     ListView(recommendations: recommendations)
                         .navigationDestination(for: Recommendation.self) { recommendation in
-                            RecommendationDetailView(recommendation: recommendation)
-                                .navigationBarTitleDisplayMode(.inline)
-                                .toolbarBackground(.visible, for: .navigationBar)
-                                .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)
-                                .onAppear {
-                                    viewModel.trackRecommendationOpen(recommendationID: recommendation.recommendationID)
-                                }
+                            if let url = URL(string: recommendation.url) {
+                                WebViewContainer(url: url)
+                                    .navigationBarTitleDisplayMode(.inline)
+                                    .toolbarBackground(.visible, for: .navigationBar)
+                                    .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)
+                                    .onAppear {
+                                        viewModel.trackRecommendationOpen(recommendationID: recommendation.recommendationID)
+                                    }
+                            }
                         }
                         .if(sizeClass == .regular) { view in
                             view.frame(width: RecommendationsView.maxReadableWidth, alignment: .center)

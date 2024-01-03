@@ -4,15 +4,13 @@
 
 import SwiftUI
 import Combine
+import DesignKit
 
 public struct ReadingListView: View {
     @StateObject var model: ReadingListModel
-    @State private var selectedRow: ReadingListCellViewModel?
 
     @Environment(\.horizontalSizeClass)
     var sizeClass
-    @Environment(\.openURL)
-    var openURL
 
     func archiveAction(item: String) {
         model.archive(item: item)
@@ -28,15 +26,6 @@ public struct ReadingListView: View {
             ScrollView {
                 ReadingListContentView
                 .navigationTitle(Text("Reading List"))
-            }
-            .onChange(of: selectedRow) { newValue in
-                guard let urlString = newValue?.contentURL,
-                      let url = URL(string: urlString) else {
-                    return
-                }
-                selectedRow = nil
-                openURL(url)
-                model.trackReadingListItemOpen(itemURL: urlString)
             }
             .onAppear {
                 model.trackReadingListViewImpression()
@@ -55,17 +44,20 @@ public struct ReadingListView: View {
         LazyVStack {
             ForEach(model.readingListItems, id: \.id) { viewModel in
                 VStack {
-                    ReadingListCell(model: viewModel, selectedRow: $selectedRow, archiveAction: self.archiveAction, shareAction: self.shareAction)
-                        .navigationBarTitleDisplayMode(.inline)
-                        .toolbarBackground(.visible, for: .navigationBar)
-                        .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)
-                        .onAppear {
-                            model.didDisplayItem(with: viewModel.id)
-                            model.trackReadingListItemImpression(itemURL: viewModel.contentURL)
-                        }
-                        .if(sizeClass == .regular) { view in
-                            view.frame(width: Constants.readableWidth, alignment: .center)
-                        }
+                    NavigationLink(value: viewModel) {
+                        ReadingListCell(model: viewModel, archiveAction: self.archiveAction, shareAction: self.shareAction)
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbarBackground(.visible, for: .navigationBar)
+                            .toolbarBackground(Color(.mosoLayerColor1), for: .navigationBar)
+                            .onAppear {
+                                model.didDisplayItem(with: viewModel.id)
+                                model.trackReadingListItemImpression(itemURL: viewModel.contentURL)
+                            }
+                            .if(sizeClass == .regular) { view in
+                                view.frame(width: Constants.readableWidth, alignment: .center)
+                            }
+                    }
+                    .buttonStyle(.plain)
 
                     Divider()
                 }
@@ -73,6 +65,14 @@ public struct ReadingListView: View {
             }
             if model.allItemsAreDownloaded() == false && model.displayMode == .normal {
                 ProgressView()
+            }
+        }
+        .navigationDestination(for: ReadingListCellViewModel.self) { viewModel in
+            if let url = URL(string: viewModel.contentURL) {
+                WebViewContainer(url: url)
+                    .onAppear {
+                        model.trackReadingListItemOpen(itemURL: viewModel.contentURL)
+                    }
             }
         }
     }
