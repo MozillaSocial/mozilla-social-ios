@@ -23,7 +23,7 @@ enum ReadingListDisplayMode {
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     private let analytics: ReadingListTracker
     private let paginationPageSize: Int = 30
-    private let loadMoreThresholdCutoff: Int = 5
+    private let loadMoreThresholdCutoff: Int = 29
 
     var pocketAccessLayer: PocketAccessLayerProtocol
     var totalNumberOfItemsInReadingList: Int?
