@@ -22,6 +22,8 @@ enum ReadingListDisplayMode {
 
 public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     private let analytics: ReadingListTracker
+    private let paginationPageSize: Int = 30
+    private let loadMoreThresholdCutoff: Int = 5
 
     var pocketAccessLayer: PocketAccessLayerProtocol
     var totalNumberOfItemsInReadingList: Int?
@@ -31,7 +33,7 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
 
     public init(sessionProvider: @escaping ReadingListSessionProvider, consumerKey: String, analyticsTracker: ReadingListTracker) {
         self.analytics = analyticsTracker
-        pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey)
+        pocketAccessLayer = PocketAccessLayer(sessionProvider, consumerKey, paginationPageSize)
         pocketAccessLayer.delegate = self
 
         fetchMoreReadingList()
@@ -51,7 +53,7 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
             return
         }
 
-        let loadMoreThreshold = readingListItems.count - 3
+        let loadMoreThreshold = readingListItems.count - loadMoreThresholdCutoff
         if readingListItems.firstIndex(of: item) == loadMoreThreshold {
             fetchMoreReadingList()
         }
