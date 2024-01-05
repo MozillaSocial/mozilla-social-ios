@@ -64,7 +64,10 @@ public struct ReadingListView: View {
                 .fixedSize(horizontal: true, vertical: false)
             }
             if model.allItemsAreDownloaded() == false && model.displayMode == .normal {
-                ItemPlaceholder()
+                ListLoadingPlaceholder()
+                    .if(sizeClass == .regular) { view in
+                        view.frame(width: Constants.readableWidth, alignment: .center)
+                    }
             }
         }
         .navigationDestination(for: ReadingListCellViewModel.self) { viewModel in
