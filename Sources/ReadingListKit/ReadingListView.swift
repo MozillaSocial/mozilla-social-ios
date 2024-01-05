@@ -64,7 +64,7 @@ public struct ReadingListView: View {
                 .fixedSize(horizontal: true, vertical: false)
             }
             if model.allItemsAreDownloaded() == false && model.displayMode == .normal {
-                ProgressView()
+                ItemPlaceholder()
             }
         }
         .navigationDestination(for: ReadingListCellViewModel.self) { viewModel in

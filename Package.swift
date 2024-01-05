@@ -20,6 +20,7 @@ let package = Package(
         .package(url: "https://github.com/apollographql/apollo-ios.git", exact: "1.7.0"),
         .package(url: "https://github.com/Quick/Quick.git", from: "7.3.0"),
         .package(url: "https://github.com/Quick/Nimble.git", from: "13.0.0"),
+        .package(url: "https://github.com/airbnb/lottie-spm.git", from: "4.3.4")
     ],
     targets: [
         .target(
@@ -52,7 +53,10 @@ let package = Package(
             name: "ReadingListKitTests",
             dependencies: ["ReadingListKit"]),
         .target(
-            name: "DesignKit"),
+            name: "DesignKit",
+            dependencies: [.product(name: "Lottie", package: "lottie-spm")],
+            resources: [.copy("Lottie")]
+        ),
         .testTarget(
             name: "DesignKitTests",
             dependencies: ["DesignKit"]),
