@@ -62,7 +62,10 @@ public struct ReadingListView: View {
                 }
             }
             if model.allItemsAreDownloaded() == false && model.displayMode == .normal {
-                ProgressView()
+                ListLoadingPlaceholder()
+                    .if(sizeClass == .regular) { view in
+                        view.frame(width: Constants.readableWidth, alignment: .center)
+                    }
             }
         }
         .navigationDestination(for: ReadingListCellViewModel.self) { viewModel in
