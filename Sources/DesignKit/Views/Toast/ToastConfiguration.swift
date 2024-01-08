@@ -4,9 +4,16 @@
 
 import Foundation
 
-struct ToastConfiguration: Equatable {
-  var style: ToastStyle
-  var message: String
-  var duration: Double = 3
-  var width: Double = .infinity
+public struct ToastConfiguration: Equatable {
+    var style: ToastStyle
+    var message: String
+    var duration: Double
+    var width: Double
+
+    public init(style: ToastStyle, message: String, duration: Double = 3, width: Double = .infinity) {
+        self.style = style
+        self.message = message
+        self.duration = duration
+        self.width = width
+    }
 }

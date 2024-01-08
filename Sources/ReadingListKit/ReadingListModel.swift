@@ -6,6 +6,7 @@ import Foundation
 import Combine
 import MoSoAnalytics
 import MoSoCore
+import DesignKit
 
 protocol ReadingListModelDelegate: AnyObject {
     func didFetchReadingListItems(urlStrings: [String], totalItemCount: Int, cursor: String?)
@@ -29,6 +30,7 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     var totalNumberOfItemsInReadingList: Int?
     @Published private(set) var displayMode: ReadingListDisplayMode = .normal
     @Published private(set) var readingListItems: [ReadingListCellViewModel] = []
+    @Published var toast: ToastConfiguration?
     private var paginationCursor: String?
 
     public init(sessionProvider: @escaping ReadingListSessionProvider, consumerKey: String, analyticsTracker: ReadingListTracker) {
@@ -119,6 +121,8 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
     func operationFailed(with error: PocketAccessLayerError) {
         if case PocketAccessLayerError.invalidAuthentication = error {
             displayMode = .loggedOut
+        } else if case PocketAccessLayerError.failedToArchiveItem = error {
+            toast = ToastConfiguration(style: .error, message: "Unable to Archive item")
         } else {
             displayMode = .error
         }
