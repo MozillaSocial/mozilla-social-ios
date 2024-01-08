@@ -17,6 +17,7 @@ public struct ReadingListCell: View {
                 VStack(alignment: .leading) {
                     Text(model.title)
                         .font(.headline)
+                        .lineLimit(2)
                     Text(model.subtitle)
                         .font(.footnote)
                 }

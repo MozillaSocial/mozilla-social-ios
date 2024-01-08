@@ -38,16 +38,17 @@ enum PocketAccessLayerState {
 
 class PocketAccessLayer: PocketAccessLayerProtocol {
     private let consumerKey: String
-    private let pageSize: GraphQLNullable<Int> = GraphQLNullable<Int>(integerLiteral: 20)
+    private let pageSize: GraphQLNullable<Int>
     private var apolloClient: ApolloClient?
     private var sessionProvider: ReadingListSessionProvider
     private(set) var state: PocketAccessLayerState = .idle
 
     weak var delegate: ReadingListModelDelegate?
 
-    init(_ authTokenProvider: @escaping ReadingListSessionProvider, _ consumerKey: String) {
+    init(_ authTokenProvider: @escaping ReadingListSessionProvider, _ consumerKey: String, _ pageSize: Int) {
         self.sessionProvider = authTokenProvider
         self.consumerKey = consumerKey
+        self.pageSize = GraphQLNullable<Int>(integerLiteral: pageSize)
         self.apolloClient = ApolloClient.createDefault(sessionProvider: sessionProvider, consumerKey: consumerKey)
     }
 
