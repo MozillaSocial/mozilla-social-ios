@@ -48,7 +48,7 @@ struct ListLoadingPlaceholder: View {
 
             Divider()
 
-            AnimationView(.loading)
+            AnimationView(.loading, looping: true)
         }
         .padding()
     }

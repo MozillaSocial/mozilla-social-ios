@@ -7,29 +7,31 @@ import Lottie
 
 public struct AnimationView: View {
     let animation: LottieAnimation
+    let loopMode: LottieLoopMode
 
-    public init(_ animation: PocketAnimation) {
+    public init(_ animation: Animation, looping: Bool) {
         self.animation = LottieAnimation.named(animation.rawValue, bundle: .module, subdirectory: "Lottie")!
+        self.loopMode = looping ? .loop : .playOnce
     }
 
     public var body: some View {
         LottieView(animation: animation)
-            .playing(loopMode: .loop)
+            .playing(loopMode: loopMode)
     }
 }
 
-public enum PocketAnimation: String, CaseIterable {
+public enum Animation: String, CaseIterable {
     case loading = "loading"
     case endOfFeed = "end-of-feed"
 }
 
 #Preview {
     List {
-        ForEach(PocketAnimation.allCases, id: \.rawValue) { animation in
+        ForEach(Animation.allCases, id: \.rawValue) { animation in
             HStack {
                 Text(animation.rawValue)
                 Spacer()
-                AnimationView(animation)
+                AnimationView(animation, looping: true)
                 Spacer()
             }
         }
