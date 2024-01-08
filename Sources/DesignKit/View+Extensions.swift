@@ -13,4 +13,8 @@ extension View {
             self
         }
     }
+
+    func toastView(config: Binding<ToastConfiguration?>) -> some View {
+        self.modifier(ToastModifier(configuration: config))
+      }
 }
