@@ -58,10 +58,8 @@ public struct ReadingListView: View {
                             }
                     }
                     .buttonStyle(.plain)
-
                     Divider()
                 }
-                .fixedSize(horizontal: true, vertical: false)
             }
             if model.allItemsAreDownloaded() == false && model.displayMode == .normal {
                 ProgressView()
