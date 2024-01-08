@@ -26,6 +26,7 @@ public typealias ReadingListSessionProvider = () throws -> ReadingListSession
 enum PocketAccessLayerError: Error {
     case failedToFetchList(_ reason: String)
     case failedToFetchItem(_ itemURLString: String)
+    case failedToArchiveItem(_ itemURLString: String)
     case invalidAuthentication
 }
 
@@ -134,9 +135,14 @@ class PocketAccessLayer: PocketAccessLayerProtocol {
         apolloClient?.perform(mutation: mutation) { [weak self] result in
             switch result {
             case .success(let data):
+                guard data.errors?.first == nil else {
+                    self?.delegate?.operationFailed(with: .failedToArchiveItem(item))
+                    return
+                }
+
                 self?.delegate?.removeItemFromList(item: item)
             case .failure(let error):
-                print(error)
+                self?.delegate?.operationFailed(with: .failedToArchiveItem(item))
             }
         }
     }

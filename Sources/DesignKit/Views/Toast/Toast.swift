@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct Toast: View {
+public struct Toast: View {
     let cornerRadius: CGFloat = 8
 
     var style: ToastStyle
@@ -12,7 +12,7 @@ struct Toast: View {
     var width = CGFloat.infinity
     var onCancelTapped: (() -> Void)
 
-    var body: some View {
+    public var body: some View {
         HStack(alignment: .center, spacing: 12) {
             Image(systemName: style.iconFileName)
                 .foregroundColor(style.themeColor)

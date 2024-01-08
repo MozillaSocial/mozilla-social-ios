@@ -37,6 +37,7 @@ public struct ReadingListView: View {
                     Text("Your Reading List is empty!")
                 }
             }
+            .toastView(config: $model.toast)
         }
     }
 
