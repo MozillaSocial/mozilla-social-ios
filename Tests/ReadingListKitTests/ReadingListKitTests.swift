@@ -82,7 +82,6 @@ struct MockPocketItem: PocketItem {
     var remoteID: String
     var title: String?
     var givenUrl: String
-    var resolvedUrl: String?
     var image: String?
     var subtitle: String?
 }

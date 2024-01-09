@@ -8,7 +8,6 @@ protocol PocketItem {
     var remoteID: String { get }
     var title: String? { get }
     var givenUrl: String { get }
-    var resolvedUrl: String? { get }
     var image: String? { get }
     var subtitle: String? { get }
 }
