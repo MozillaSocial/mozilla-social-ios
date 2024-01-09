@@ -136,7 +136,7 @@ public class ReadingListModel: ReadingListModelDelegate, ObservableObject {
         let id = item.remoteID
         let title = item.title ?? item.givenUrl
         let subtitle = item.subtitle
-        let contentURL = item.resolvedUrl ?? item.givenUrl
+        let contentURL = item.givenUrl
         let thumbnailURL = item.image
 
         return ReadingListCellViewModel(id: id, title: title, subtitle: subtitle ?? "", contentURL: contentURL, thumbnailURL: thumbnailURL)
