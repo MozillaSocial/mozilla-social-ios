@@ -17,8 +17,7 @@ struct SegmentedControl: View {
                 } label: {
                     VStack {
                         Text(segment)
-                            .font(.footnote)
-                            .fontWeight(.medium)
+                            .fontWeight(.heavy)
                             .foregroundStyle(selected == segment ? Color.accentColor : .secondary)
                         ZStack {
                             Rectangle()
