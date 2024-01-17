@@ -7,7 +7,12 @@ import SwiftUI
 public struct SegmentedControl: View {
     public let sources: [String]
     @Binding public var selected: String
-    @Namespace var namespace
+    @Namespace private var namespace
+
+    public init(sources: [String], selected: Binding<String>) {
+        self.sources = sources
+        _selected = selected
+    }
 
     public var body: some View {
         HStack {
@@ -43,6 +48,8 @@ private struct SegmentedControlPreviewWrapper: View {
     var body: some View {
         SegmentedControl(sources: ["One", "Two", "Three"], selected: $selected)
             .accentColor(.green)
+
+        Text("Selected Segment: \(selected)")
     }
 }
 
