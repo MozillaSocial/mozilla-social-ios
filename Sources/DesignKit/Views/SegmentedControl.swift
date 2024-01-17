@@ -4,12 +4,12 @@
 
 import SwiftUI
 
-struct SegmentedControl: View {
+public struct SegmentedControl: View {
     public let sources: [String]
     @Binding public var selected: String
     @Namespace var namespace
 
-    var body: some View {
+    public var body: some View {
         HStack {
             ForEach(sources, id: \.self) { segment in
                 Button {
