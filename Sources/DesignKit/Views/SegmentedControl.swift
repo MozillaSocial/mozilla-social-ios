@@ -5,30 +5,30 @@
 import SwiftUI
 
 public struct SegmentedControl: View {
-    public let sources: [String]
-    @Binding public var selected: String
+    public let sources: [LocalizedStringKey]
+    @Binding public var selected: LocalizedStringKey
     @Namespace private var namespace
 
-    public init(sources: [String], selected: Binding<String>) {
+    public init(sources: [LocalizedStringKey], selected: Binding<LocalizedStringKey>) {
         self.sources = sources
         _selected = selected
     }
 
     public var body: some View {
         HStack {
-            ForEach(sources, id: \.self) { segment in
+            ForEach(sources.indices) { segmentIndex in
                 Button {
-                    selected = segment
+                    selected = sources[segmentIndex]
                 } label: {
                     VStack {
-                        Text(segment)
+                        Text(sources[segmentIndex])
                             .fontWeight(.heavy)
-                            .foregroundStyle(selected == segment ? Color.accentColor : .secondary)
+                            .foregroundStyle(selected == sources[segmentIndex] ? Color.accentColor : .secondary)
                         ZStack {
                             Rectangle()
                                 .fill(.clear)
                                 .frame(height: 4)
-                            if selected == segment {
+                            if selected == sources[segmentIndex] {
                                 Rectangle()
                                     .fill(Color.accentColor)
                                     .frame(height: 4)
@@ -44,12 +44,12 @@ public struct SegmentedControl: View {
 }
 
 private struct SegmentedControlPreviewWrapper: View {
-    @State var selected = "One"
+    @State var selected: LocalizedStringKey = "One"
     var body: some View {
         SegmentedControl(sources: ["One", "Two", "Three"], selected: $selected)
             .accentColor(.green)
 
-        Text("Selected Segment: \(selected)")
+        Text("Selected Segment: ") + Text(selected)
     }
 }
 
