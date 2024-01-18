@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "MoSoContentKit",
     defaultLocalization: "en",
-    platforms: [.iOS("16"), .macOS("13")],
+    platforms: [.iOS("17"), .macOS("13")],
     products: [
         .library(name: "MoSoCore", targets: ["MoSoCore"]),
         .library(name: "MoSoClient", targets: ["MoSoClient"]),
