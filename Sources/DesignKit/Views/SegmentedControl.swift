@@ -22,8 +22,8 @@ public struct SegmentedControl: View {
                 } label: {
                     VStack {
                         Text(sources[segmentIndex])
-                            .fontWeight(.heavy)
                             .foregroundStyle(selected == sources[segmentIndex] ? Color.accentColor : .secondary)
+                            .lineLimit(1)
                         ZStack {
                             Rectangle()
                                 .fill(.clear)
